@@ -52,7 +52,7 @@ var productSchema = new mongoose.Schema(
         comment: { type: String },
       },
     ],
-    reviewCount: {
+    reviewPoint: {
       type: Number,
       default: 0,
     },

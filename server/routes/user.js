@@ -9,6 +9,9 @@ router.post("/refreshtoken", controllers.refreshLoginToken);
 router.get("/logout", controllers.logout);
 router.get("/forgotpassword", controllers.forgotPassword);
 router.put("/resetpassword", controllers.resetPassword);
+router.put("/address", [verifyLoginToken], controllers.updateUserAddress);
+router.put("/cart", [verifyLoginToken], controllers.addProductIntoUserCart);
+
 router.get("/", [verifyLoginToken, isAdmin], controllers.getAllUsers);
 router.delete("/", [verifyLoginToken, isAdmin], controllers.deleteUser);
 router.put("/current", [verifyLoginToken], controllers.updateUserByUser);

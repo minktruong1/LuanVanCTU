@@ -210,6 +210,53 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
   });
 });
 
+const updateUserAddress = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  if (!req.body.address) throw new Error("Missing inputs");
+  const response = await User.findByIdAndUpdate(
+    _id,
+    { $push: { address: req.body.address } },
+    { new: true }
+  ).select("-password -role -refreshToken");
+  return res.status(200).json({
+    success: response ? true : false,
+    updateUserAddress: response ? response : "Error when update user address",
+  });
+});
+
+const addProductIntoUserCart = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { pid, quantity } = req.body;
+  if (!pid || !quantity) throw new Error("Missing inputs");
+  const user = await User.findById(_id).select("cart");
+  const alreadyInCart = user?.cart?.find(
+    (element) => element.product.toString() === pid
+  );
+  if (alreadyInCart) {
+    const response = await User.updateOne(
+      { cart: { $elemMatch: alreadyInCart } },
+      { $set: { "cart.$.quantity": quantity } },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: response ? true : false,
+      updateCart: response ? response : "error when add product",
+    });
+  } else {
+    const response = await User.findByIdAndUpdate(
+      _id,
+      {
+        $push: { cart: { product: pid, quantity } },
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: response ? true : false,
+      updateCart: response ? response : "error when add product",
+    });
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -220,6 +267,8 @@ module.exports = {
   resetPassword,
   getAllUsers,
   deleteUser,
+  updateUserAddress,
   updateUserByUser,
   updateUserByAdmin,
+  addProductIntoUserCart,
 };

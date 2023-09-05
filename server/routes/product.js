@@ -9,7 +9,7 @@ router.put("/reviews", verifyLoginToken, controllers.reviews);
 
 router.put(
   "/uploadimg/:pid",
-  upload.single("images"),
+  upload.array("images", 6),
   controllers.uploadProductImg
 );
 router.put("/:pid", controllers.updateProduct);

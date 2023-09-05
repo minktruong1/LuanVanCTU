@@ -146,9 +146,21 @@ const reviews = asyncHandler(async (req, res) => {
   });
 });
 
+//Handle upload img to cloudinary
 const uploadProductImg = asyncHandler(async (req, res) => {
-  console.log(req.file);
-  return res.json("success");
+  const { pid } = req.params;
+  if (!req.files) throw new Error("Missing inputs");
+  const response = await Product.findByIdAndUpdate(
+    pid,
+    {
+      $push: { images: { $each: req.files.map((element) => element.path) } },
+    },
+    { new: true }
+  );
+  return res.status(200).json({
+    status: response ? true : false,
+    updatedProductImg: response ? response : "Error when upload product images",
+  });
 });
 
 module.exports = {

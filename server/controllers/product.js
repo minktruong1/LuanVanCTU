@@ -37,7 +37,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
   //Sort
   if (req.query.sort) {
-    const sortBy = req.query.sort.split(",").join("");
+    const sortBy = req.query.sort.split(",").join(" ");
     queryCommand = queryCommand.sort(sortBy);
   }
 
@@ -146,6 +146,11 @@ const reviews = asyncHandler(async (req, res) => {
   });
 });
 
+const uploadProductImg = asyncHandler(async (req, res) => {
+  console.log(req.file);
+  return res.json("success");
+});
+
 module.exports = {
   createProduct,
   getProduct,
@@ -153,4 +158,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   reviews,
+  uploadProductImg,
 };

@@ -2,7 +2,7 @@ const express = require("express");
 const colors = require("colors");
 require("dotenv").config();
 const dbConnect = require("./config/db.js");
-const initRoutes = require("./routes");
+const initRoutes = require("./routes/index.js");
 const cookieParser = require("cookie-parser");
 
 const app = express();

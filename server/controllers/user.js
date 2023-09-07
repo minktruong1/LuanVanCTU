@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const Product = require("../models/product.js");
 const asyncHandler = require("express-async-handler");
 const {
   tokenGeneration,
@@ -228,6 +229,14 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { pid, quantity } = req.body;
   if (!pid || !quantity) throw new Error("Missing inputs");
+
+  //Searching information about product throught product id
+  const product = await Product.findById(pid);
+  if (!product) {
+    throw new Error("Product not found");
+  }
+  const { price, description } = product;
+
   const user = await User.findById(_id).select("cart");
   const alreadyInCart = user?.cart?.find(
     (element) => element.product.toString() === pid
@@ -235,7 +244,13 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
   if (alreadyInCart) {
     const response = await User.updateOne(
       { cart: { $elemMatch: alreadyInCart } },
-      { $set: { "cart.$.quantity": quantity } },
+      {
+        $set: {
+          "cart.$.quantity": quantity,
+          "cart.$.price": price, //Add price into cart
+          "cart.$.description": description, //Add description into cart
+        },
+      },
       { new: true }
     );
     return res.status(200).json({
@@ -246,7 +261,7 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(
       _id,
       {
-        $push: { cart: { product: pid, quantity } },
+        $push: { cart: { product: pid, quantity, price, description } },
       },
       { new: true }
     );

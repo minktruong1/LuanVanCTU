@@ -1,0 +1,69 @@
+[{
+  "_id": {
+    "$oid": "64f7597aa0569f30f17b6aa4"
+  },
+  "title": "sample2",
+  "slug": "sample2",
+  "description": "Beautiful, wondeful, fantastic",
+  "brand": "USBC",
+  "price": 150,
+  "quantity": 7,
+  "sold": 0,
+  "images": [],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-05T16:38:18.974Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-05T16:38:18.974Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f75993a0569f30f17b6aa6"
+  },
+  "title": "Product1",
+  "slug": "product1",
+  "description": "Beautiful, wondeful, fantastic",
+  "brand": "USBC",
+  "price": 150,
+  "quantity": 7,
+  "sold": 0,
+  "images": [],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-05T16:38:43.522Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-05T16:38:43.522Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f7891e753ed71afb7a273f"
+  },
+  "title": "Testing11",
+  "slug": "testing11",
+  "description": "Beautiful, wondeful, fantastic",
+  "brand": "USBC",
+  "price": 150,
+  "quantity": 7,
+  "sold": 0,
+  "images": [],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-05T20:01:34.779Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-05T20:01:34.779Z"
+  },
+  "__v": 0
+}]

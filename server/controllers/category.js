@@ -1,40 +1,54 @@
 const Category = require("../models/category.js");
 const asyncHandler = require("express-async-handler");
 
+// Tạo một danh mục mới
 const createCategory = asyncHandler(async (req, res) => {
-  const response = await Category.create(req.body);
+  const { title, brand } = req.body;
+
+  const response = await Category.create({ title, brand });
+
   return res.json({
-    success: response ? true : false,
-    createdCategory: response ? response : "error when create category",
+    success: true,
+    createdCategory: response,
   });
 });
 
+// Lấy tất cả danh mục
 const getAllCategories = asyncHandler(async (req, res) => {
-  const response = await Category.find().select("title _id");
+  const response = await Category.find().select("title brand _id");
+
   return res.json({
-    success: response ? true : false,
-    Categories: response ? response : "error when get all categories",
+    success: true,
+    categories: response,
   });
 });
 
+// Cập nhật danh mục dựa trên ID
 const updateCategory = asyncHandler(async (req, res) => {
   const { cid } = req.params;
-  const response = await Category.findByIdAndUpdate(cid, req.body, {
-    new: true,
-  });
+  const { title, brand } = req.body;
+
+  const response = await Category.findByIdAndUpdate(
+    cid,
+    { title, brand },
+    { new: true }
+  );
+
   return res.json({
-    success: response ? true : false,
-    updatedCategory: response ? response : "error when update category",
+    success: true,
+    updatedCategory: response,
   });
 });
 
+// Xoá danh mục dựa trên ID
 const deleteCategory = asyncHandler(async (req, res) => {
   const { cid } = req.params;
+
   const response = await Category.findByIdAndDelete(cid);
 
   return res.json({
-    success: response ? true : false,
-    deletedCategory: response ? response : "error when delete category",
+    success: true,
+    deletedCategory: response,
   });
 });
 

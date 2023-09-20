@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* Custom react slick */
+button.slick-next {
+  right: 38px;
+  z-index: 10;
+}
+
+button.slick-prev {
+  left: 8px;
+  z-index: 10;
+}
+
+button.slick-next::before {
+  color: black;
+  content: "\276F";
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 50px;
+  height: 50px;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.slick-prev::before {
+  color: black;
+  content: "\276E";
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 50px;
+  height: 50px;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* End custom react slick */
+
+/* Animation css */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* End animation css */
+
+/* Navigation css */
+.border-divider {
+  position: relative;
+}
+
+.border-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  border-left: 2px solid #cfcfcf;
+  transform: translateX(-50%);
+}
+
+/* End navigation css */
+
+/* Side Bar css */
+.rounded-top-corners {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* End Side Bar css */
+
+/* Product hover effect */
+.hoverEffect {
+  transform: scale(1);
+  transition: transform 1.5s ease;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+}

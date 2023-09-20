@@ -13,9 +13,28 @@ const createCategory = asyncHandler(async (req, res) => {
   });
 });
 
+const uploadCategoryImage = asyncHandler(async (req, res) => {
+  const { cid } = req.params;
+
+  if (!req.file) throw new Error("Missing inputs");
+
+  const updatedCategory = await Category.findByIdAndUpdate(
+    cid,
+    { image: req.file.path }, // Assuming you're storing the image path in the 'image' field of your Category model
+    { new: true }
+  );
+
+  return res.status(200).json({
+    success: updatedCategory ? true : false,
+    updatedCategory: updatedCategory
+      ? updatedCategory
+      : "error when upload category image",
+  });
+});
+
 // Lấy tất cả danh mục
 const getAllCategories = asyncHandler(async (req, res) => {
-  const response = await Category.find().select("title brand _id");
+  const response = await Category.find();
 
   return res.json({
     success: true,
@@ -57,4 +76,5 @@ module.exports = {
   getAllCategories,
   updateCategory,
   deleteCategory,
+  uploadCategoryImage,
 };

@@ -1,69 +1,270 @@
 [{
   "_id": {
-    "$oid": "64f7597aa0569f30f17b6aa4"
+    "$oid": "64f9737b5c6977535754e738"
   },
-  "title": "sample2",
-  "slug": "sample2",
-  "description": "Beautiful, wondeful, fantastic",
-  "brand": "USBC",
-  "price": 150,
-  "quantity": 7,
-  "sold": 0,
-  "images": [],
+  "title": "Logitech G102",
+  "slug": "logitech-g102",
+  "description": "Although it has a very affordable price, the Logitech G102 Lightsync RGB Mouse is equipped with 16.8 million-color RGB LEDs. Choose one color or mix 3 colors, have built-in effects or create your own effects. The choice is yours ! You can also sync the mouse with other Logitech G LIGHTSYNC devices to help the camera angle become more synchronized and unique.",
+  "brand": "Logitech",
+  "price": 490000,
+  "category": "Mouse",
+  "quantity": 124,
+  "sold": 97,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694070222/LuanVan/ayorfnfrsxkduvlnu94j.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694070222/LuanVan/ksr16lenqacc5s57zbnc.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694070222/LuanVan/xbsbcuc3ginevncv9inh.jpg"
+  ],
   "origin": "American",
   "reviewPoint": 0,
   "reviews": [],
   "createdAt": {
-    "$date": "2023-09-05T16:38:18.974Z"
+    "$date": "2023-09-07T06:53:47.583Z"
   },
   "updatedAt": {
-    "$date": "2023-09-05T16:38:18.974Z"
+    "$date": "2023-09-07T07:03:40.530Z"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "64f75993a0569f30f17b6aa6"
+    "$oid": "64f977fb5c6977535754e73b"
   },
-  "title": "Product1",
-  "slug": "product1",
-  "description": "Beautiful, wondeful, fantastic",
-  "brand": "USBC",
-  "price": 150,
-  "quantity": 7,
-  "sold": 0,
-  "images": [],
+  "title": "Logitech B100",
+  "slug": "logitech-b100",
+  "description": "The Logitech B100 is a simple yet dependable optical mouse that focuses on core functionality and ease of use. Its comfortable design, precise tracking, and affordable price make it a popular choice for users seeking a no-frills, reliable pointing device for their computers.",
+  "brand": "Logitech",
+  "price": 80000,
+  "category": "Mouse",
+  "quantity": 231,
+  "sold": 192,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694070814/LuanVan/km3jsqr1rzl1xd65rouv.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694070814/LuanVan/oc3flzklpjqmdfwadwys.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694070813/LuanVan/qq5r9qbfqw30zdbbuyoj.jpg"
+  ],
   "origin": "American",
-  "reviewPoint": 0,
-  "reviews": [],
+  "reviewPoint": 4,
+  "reviews": [
+    {
+      "star": 4,
+      "owner": {
+        "$oid": "64f0e4a86033f91b478adccd"
+      },
+      "comment": "Chat luong kem",
+      "_id": {
+        "$oid": "6502a81242bff12996025a26"
+      }
+    }
+  ],
   "createdAt": {
-    "$date": "2023-09-05T16:38:43.522Z"
+    "$date": "2023-09-07T07:12:59.944Z"
   },
   "updatedAt": {
-    "$date": "2023-09-05T16:38:43.522Z"
+    "$date": "2023-09-14T06:28:35.207Z"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "64f7891e753ed71afb7a273f"
+    "$oid": "64f978ae5c6977535754e73e"
   },
-  "title": "Testing11",
-  "slug": "testing11",
-  "description": "Beautiful, wondeful, fantastic",
-  "brand": "USBC",
-  "price": 150,
-  "quantity": 7,
-  "sold": 0,
-  "images": [],
+  "title": "Logitech G703 Hero Lightspeed",
+  "slug": "logitech-g703-hero-lightspeed",
+  "description": "The Logitech G703 Hero Lightspeed is a top-tier wireless gaming mouse with an emphasis on precision, speed, and customization. It offers a high-quality gaming experience, making it a popular choice among competitive gamers and enthusiasts.",
+  "brand": "Logitech",
+  "price": 1790000,
+  "category": "Mouse",
+  "quantity": 93,
+  "sold": 43,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694071016/LuanVan/cbpaa9l0a4ciwiu9hwvn.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694071016/LuanVan/utubtkvoa3iyqduhbayl.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694071016/LuanVan/hd3f9yq6e5thkenzuoiw.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694071016/LuanVan/loev1dxhyx3uokkp6zod.jpg"
+  ],
   "origin": "American",
   "reviewPoint": 0,
   "reviews": [],
   "createdAt": {
-    "$date": "2023-09-05T20:01:34.779Z"
+    "$date": "2023-09-07T07:15:58.483Z"
   },
   "updatedAt": {
-    "$date": "2023-09-05T20:01:34.779Z"
+    "$date": "2023-09-07T07:16:54.313Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f991a05c6977535754e741"
+  },
+  "title": "Logitech G Pro Wireless",
+  "slug": "logitech-g-pro-wireless",
+  "description": "The Logitech G Pro Wireless is a top-tier gaming mouse that prioritizes performance, precision, and wireless reliability. It has gained a strong reputation among professional gamers for its exceptional sensor technology and customizable features. This mouse is an excellent choice for those looking to elevate their gaming experience.",
+  "brand": "Logitech",
+  "price": 1850000,
+  "category": "Mouse",
+  "quantity": 72,
+  "sold": 12,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694077407/LuanVan/heeu1moctlvqjbiojvye.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694077407/LuanVan/fg8xauyumkzbl2eawphq.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694077407/LuanVan/lv0zteeuhzisqjq6cwrg.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694077407/LuanVan/ujzb4vr5v3tyaqmygmx8.jpg"
+  ],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-07T09:02:24.487Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-07T09:03:25.591Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f995415c6977535754e744"
+  },
+  "title": "Logitech G502 X Plus",
+  "slug": "logitech-g502-x-plus",
+  "description": "Logitech G502 . This new type of switch possesses all the advantages that gamers have always wished for such as outstanding speed, excellent tactile feedback, almost immortal durability as well as the complete elimination of phenomenon. annoying double-click.",
+  "brand": "Logitech",
+  "price": 2900000,
+  "category": "Mouse",
+  "quantity": 60,
+  "sold": 2,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694078304/LuanVan/vimikeg9gisbtjpyogzz.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694078304/LuanVan/vcsad8xa5ocr1655hqrh.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694078304/LuanVan/zuj6itndztn5zui5gvzn.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694078305/LuanVan/ec0ppqvasslu89h40qr5.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694078304/LuanVan/xqi1vz4otjymiithsi6p.jpg"
+  ],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-07T09:17:53.950Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-07T09:18:22.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f99dfd5c6977535754e748"
+  },
+  "title": "Razer DeathAdder Essential",
+  "slug": "razer-deathadder-essential",
+  "description": "The Razer DeathAdder Essential is a popular gaming mouse produced by Razer Inc., a well-known manufacturer of gaming peripherals. Here is an introduction to the Razer DeathAdder Essential",
+  "brand": "Razer",
+  "price": 1900000,
+  "category": "Mouse",
+  "quantity": 23,
+  "sold": 10,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080641/LuanVan/dutxrxzoyrwyo4fepdud.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080641/LuanVan/sfgangcpanbizcn7utl1.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080641/LuanVan/mzxrlcvqadgw0jofwhns.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080641/LuanVan/gx7xcdmnorlilhjtyrky.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080641/LuanVan/qifobs3qrpto77ngxbwe.jpg"
+  ],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-07T09:55:09.041Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-07T09:57:19.740Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f99f0a5c6977535754e74b"
+  },
+  "title": "Razer Basilisk V3 (RZ01-04000100-R3M1)",
+  "slug": "razer-basilisk-v3-(rz01-04000100-r3m1)",
+  "description": "The Razer Basilisk V3 is designed for gamers who demand precise control, customization options, and comfort. Its advanced sensor, customizable features, and ergonomic design make it a suitable choice for competitive gaming and productivity tasks.",
+  "brand": "Razer",
+  "price": 1990000,
+  "category": "Mouse",
+  "quantity": 22,
+  "sold": 10,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080800/LuanVan/cuvvfemltuwknkf43jwi.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080801/LuanVan/ypvxgznmcqldy8by5zsh.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694080801/LuanVan/gvhiurrolaxmvms8h3yo.jpg"
+  ],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-07T09:59:38.859Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-07T09:59:59.788Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f9a11b5c6977535754e74e"
+  },
+  "title": "Logitech Pro X GX Blue Switch",
+  "slug": "logitech-pro-x-gx-blue-switch",
+  "description": "The Logitech Pro X GX Blue Switch is a mechanical key switch known for its audible click, tactile feedback, and durability. It's a popular choice for gaming keyboards, especially among users who enjoy the distinctive feel and sound of mechanical switches during typing and gaming sessions.",
+  "brand": "Razer",
+  "price": 1990000,
+  "category": "Keyboard",
+  "quantity": 220,
+  "sold": 98,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694081357/LuanVan/np3j2htaxsccbzxomhp0.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694081357/LuanVan/mu9xycgakfnmfucsqbsw.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694081356/LuanVan/xuzuxk78okrftdmkrpuy.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694081357/LuanVan/hju7oyqa3ohwcmwo4qzl.jpg"
+  ],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-07T10:08:27.137Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-07T10:09:15.155Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f9e9895c6977535754e751"
+  },
+  "title": "Logitech G Pro Gen 2",
+  "slug": "logitech-g-pro-gen-2",
+  "description": "The Logitech G Pro X Superlight is a high-performance gaming mouse known for its lightweight design, precise tracking, and customization options. It's designed to cater to the needs of competitive gamers who require speed, accuracy, and reliability during intense gaming sessions.",
+  "brand": "Razer",
+  "price": 1590000,
+  "category": "Headphone",
+  "quantity": 18,
+  "sold": 2,
+  "images": [
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694100242/LuanVan/gohgwziopboey6ffycd1.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694100242/LuanVan/xjfqegorjyoarizku7sk.jpg",
+    "https://res.cloudinary.com/dwq6xc5vl/image/upload/v1694100242/LuanVan/fggmwd8bvrzufcl25ua9.jpg"
+  ],
+  "origin": "American",
+  "reviewPoint": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": "2023-09-07T15:17:29.929Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-07T15:24:00.432Z"
   },
   "__v": 0
 }]

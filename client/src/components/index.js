@@ -7,3 +7,7 @@ export { default as Product } from "./Product.js";
 export { default as CountDown } from "./CountDown.js";
 export { default as MiniPoster } from "./MiniPoster.js";
 export { default as CustomSlider } from "./CustomSlider.js";
+export { default as UpperHeader } from "./UpperHeader.js";
+export { default as Footer } from "./Footer.js";
+export { default as InputField } from "./InputField.js";
+export { default as Button } from "./Button.js";

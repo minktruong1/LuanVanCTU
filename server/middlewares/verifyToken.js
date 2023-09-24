@@ -8,7 +8,7 @@ const verifyLoginToken = asyncHandler(async (req, res, next) => {
       if (err)
         return res.status(401).json({
           success: false,
-          mes: "Invalid access token",
+          message: "Invalid access token",
         });
       req.user = decode;
       // console.log(decode);
@@ -18,7 +18,7 @@ const verifyLoginToken = asyncHandler(async (req, res, next) => {
   } else {
     return res.status(401).json({
       success: false,
-      mes: "Require authentication !!!",
+      message: "Require authentication !!!",
     });
   }
 });

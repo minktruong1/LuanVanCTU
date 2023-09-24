@@ -1,10 +1,14 @@
 import React from "react";
 import { formatVND } from "../ultils/helpers";
 import { pointToStar } from "../ultils/helpers";
+import { Link } from "react-router-dom";
+import path from "../ultils/path";
 
 const Product = ({ productData, isNew }) => {
   return (
-    <div className="flex flex-col">
+    <Link
+      to={`/${path.PRODUCT_DETAIL}/${productData?._id}/${productData?.title}`}
+    >
       <div className="items-center mx-2 bg-white text-base border p-4">
         <div className=" relative ">
           <div className="overflow-hidden">
@@ -33,7 +37,7 @@ const Product = ({ productData, isNew }) => {
           <span>{`${formatVND(productData?.price)} VNĐ`}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

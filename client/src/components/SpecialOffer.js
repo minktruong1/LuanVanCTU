@@ -41,18 +41,6 @@ const SpecialOffer = () => {
     }
   };
 
-  useEffect(() => {
-    fetchProduct();
-    dispatch(apiGetNewProduct());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (targetTab === 1) setProducts(dailyDeal);
-    if (targetTab === 2) setProducts(topSeller);
-    // if (targetTab === 3) setProducts(justOnSellProduct);
-  }, [targetTab, dailyDeal]);
-
   //fetch daily deal offer
   const fetchDailyDeal = async () => {
     const response = await apiGetProducts({
@@ -105,6 +93,18 @@ const SpecialOffer = () => {
     };
   }, [seconds, minutes, hours, expireTime]);
 
+  useEffect(() => {
+    fetchProduct();
+    dispatch(apiGetNewProduct());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (targetTab === 1) setProducts(dailyDeal);
+    if (targetTab === 2) setProducts(topSeller);
+    if (targetTab === 3) setProducts(justOnSellProducts);
+  }, [targetTab, dailyDeal]);
+
   return (
     <>
       <div className="flex text-[20px] gap-8 pt-8 pb-8 h-[440px]">
@@ -113,7 +113,7 @@ const SpecialOffer = () => {
             {tabs.map((element) => (
               <span
                 key={element.id}
-                className={`w-full py-5 flex justify-center items-center cursor-pointer font-medium text-xl bg-white ${
+                className={`w-full py-4 flex justify-center items-center cursor-pointer font-medium text-xl bg-white ${
                   targetTab === element.id ? "bg-opacity-0 text-white" : ""
                 }`}
                 onClick={() => setTargetTab(element.id)}

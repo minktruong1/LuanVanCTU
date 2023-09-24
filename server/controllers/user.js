@@ -8,13 +8,35 @@ const {
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail.js");
 const crypto = require("crypto");
+const createToken = require("uniqid");
+
+// const registerUser = asyncHandler(async (req, res) => {
+//   const { email, password, firstName, lastName } = req.body;
+//   if (!email || !password || !firstName || !lastName) {
+//     return res.status(400).json({
+//       success: false,
+//       message: "Missing value",
+//     });
+//   }
+
+//   const user = await User.findOne({ email });
+//   if (user) {
+//     throw new Error("User already exist");
+//   } else {
+//     const newUser = await User.create(req.body);
+//     return res.status(200).json({
+//       success: newUser ? true : false,
+//       message: newUser ? "Register successful" : "Something go wrong",
+//     });
+//   }
+// });
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
-  if (!email || !password || !firstName || !lastName) {
+  const { email, password, firstName, lastName, mobile } = req.body;
+  if (!email || !password || !firstName || !lastName || !mobile) {
     return res.status(400).json({
       success: false,
-      mes: "Missing value",
+      message: "Missing value",
     });
   }
 
@@ -22,11 +44,55 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     throw new Error("User already exist");
   } else {
-    const newUser = await User.create(req.body);
-    return res.status(200).json({
-      success: newUser ? true : false,
-      mes: newUser ? "Register successful" : "Something go wrong",
+    const token = createToken();
+    res.cookie(
+      "registerData",
+      { ...req.body, token },
+      {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+      }
+    );
+
+    const html = `
+  Vui lòng nhấn vào đường link để hoàn thành việc đăng ký tài khoản, link hết hạn sau 15 phút.
+  <a href=${process.env.URL_SERVER}/api/user/register-confirm/${token}>Click here</a>
+  `;
+
+    await sendMail({ email, html, subject: "Confirm register" });
+
+    return res.json({
+      success: true,
+      message: "Check your email to confirm your information",
     });
+  }
+});
+
+const registerCheck = asyncHandler(async (req, res) => {
+  const cookie = req.cookies;
+  const { token } = req.params;
+  console.log(cookie);
+  console.log(token);
+
+  if (!cookie || cookie?.registerData?.token !== token) {
+    res.clearCookie("registerData");
+    return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
+  }
+
+  const newUser = await User.create({
+    email: cookie?.registerData?.email,
+    password: cookie?.registerData?.password,
+    mobile: cookie?.registerData?.mobile,
+    firstName: cookie?.registerData?.firstName,
+    lastName: cookie?.registerData?.lastName,
+  });
+
+  res.clearCookie("registerData");
+
+  if (newUser) {
+    return res.redirect(`${process.env.CLIENT_URL}/last-register/success`);
+  } else {
+    return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
   }
 });
 
@@ -118,7 +184,7 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 const forgotPassword = asyncHandler(async (req, res) => {
-  const { email } = req.query;
+  const { email } = req.body;
   if (!email) throw new Error("Missing email");
   const user = await User.findOne({ email });
   if (!user) throw new Error("User not found");
@@ -128,18 +194,21 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const html = `
   Click here to reset your password, this link
    will be expired after 15 minutes
-  <a href=${process.env.URL_SERVER}/api/user/reset-password/${resetToken}>Click here</a>
+  <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click here</a>
   `;
 
   const data = {
     email,
     html,
+    subject: "Reset your password",
   };
 
   const result = await sendMail(data);
   return res.status(200).json({
-    success: true,
-    result,
+    success: result.response?.includes("OK") ? true : false,
+    message: result.response?.includes("OK")
+      ? "Kiểm tra hộp thư của bạn"
+      : "Đã xảy ra lỗi",
   });
 });
 
@@ -286,4 +355,5 @@ module.exports = {
   updateUserByUser,
   updateUserByAdmin,
   addProductIntoUserCart,
+  registerCheck,
 };

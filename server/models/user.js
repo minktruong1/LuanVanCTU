@@ -41,7 +41,6 @@ var userSchema = new mongoose.Schema(
     ],
     address: {
       type: String,
-      required: true,
     },
     wishlist: [
       {
@@ -63,6 +62,9 @@ var userSchema = new mongoose.Schema(
       type: String,
     },
     passwordResetExpires: {
+      type: String,
+    },
+    registerToken: {
       type: String,
     },
   },

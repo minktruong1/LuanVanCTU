@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 const CategoriesList = () => {
   const { categories } = useSelector((state) => state.appReducer);
-  console.log(categories);
   return (
     <>
       <div className="bg-white">

@@ -13,18 +13,20 @@ const reactSlickSetting = {
 const CustomSlider = ({ products, targetTab }) => {
   return (
     <>
-      {products && (
-        <Slider {...reactSlickSetting}>
-          {products?.map((element, index) => (
-            <Product
-              key={index}
-              pid={element.id}
-              productData={element}
-              isNew={targetTab === 1 ? false : true}
-            />
-          ))}
-        </Slider>
-      )}
+      <div className="flex flex-col">
+        {products && (
+          <Slider {...reactSlickSetting}>
+            {products?.map((element, index) => (
+              <Product
+                key={index}
+                pid={element.id}
+                productData={element}
+                isNew={targetTab === 1 ? false : true}
+              />
+            ))}
+          </Slider>
+        )}
+      </div>
     </>
   );
 };

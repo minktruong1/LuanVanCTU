@@ -45,3 +45,47 @@ export const timeExchange = (d) => {
   const s = Math.floor((d % 3600) % 60);
   return { h, m, s };
 };
+
+export const formValidate = (payload, setInvalidFields) => {
+  //temp to count passed fields, if = 0 have permission to submit
+  let invalids = 0;
+
+  //slice payload in to [['key'], ['value']]
+  const formatPayload = Object.entries(payload);
+  for (let array of formatPayload) {
+    if (array[1].trim() === "") {
+      invalids++;
+      setInvalidFields((previous) => [
+        ...previous,
+        { name: array[0], message: "Vui lòng nhập" },
+      ]);
+    }
+  }
+  for (let array of formatPayload) {
+    switch (array[0]) {
+      case "email":
+        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!array[1].match(regex)) {
+          invalids++;
+          setInvalidFields((previous) => [
+            ...previous,
+            { name: array[0], message: "Email không hợp lệ" },
+          ]);
+        }
+        break;
+      case "password":
+        if (!array[1].length < 8) {
+          invalids++;
+          setInvalidFields((previous) => [
+            ...previous,
+            { name: array[0], message: "Mật khẩu phải trên 8 ký tự" },
+          ]);
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+  return invalids;
+};

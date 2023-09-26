@@ -10,7 +10,7 @@ const InputField = ({
   placeholder,
 }) => {
   return (
-    <div className="w-full relative">
+    <div className="w-full relative flex flex-col mb-2">
       {value.trim() !== "" && (
         <label
           htmlFor={nameKey}
@@ -23,9 +23,7 @@ const InputField = ({
       )}
       <input
         type={type || "text"}
-        name=""
-        id=""
-        className="px-4 py-2 border w-full my-2 outline-none "
+        className="px-4 py-2 border w-full mt-2 outline-none "
         placeholder={
           placeholder
             ? `${placeholder}`
@@ -33,9 +31,19 @@ const InputField = ({
         }
         value={value}
         onChange={(e) =>
-          setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))
+          setValue((prevData) => ({ ...prevData, [nameKey]: e.target.value }))
         }
+        onFocus={() => {
+          setInvalidFields([]);
+        }}
       />
+
+      {invalidFields &&
+        invalidFields.some((element) => element.name === nameKey) && (
+          <small className="text-[11px] text-red-600 italic">
+            {invalidFields.find((element) => element.name === nameKey)?.message}
+          </small>
+        )}
     </div>
   );
 };

@@ -1,13 +1,14 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { InputField, Button } from "../../components";
 import icons from "../../ultils/icons";
 import { apiRegister, apiLogin, apiForgotPassword } from "../../apis";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
-import { register } from "../../store/users/userSlice";
+import { login } from "../../store/users/userSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { formValidate } from "../../ultils/helpers";
 
 const { MdArrowBackIosNew } = icons;
 const Login = () => {
@@ -18,6 +19,7 @@ const Login = () => {
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [isRegister, setIsRegister] = useState(false);
+  const [invalidFields, setInvalidFields] = useState([]);
 
   const [payload, setPayload] = useState({
     email: "",
@@ -46,40 +48,52 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    resetPayload();
+  }, [isRegister]);
+
   const handleSubmit = useCallback(async () => {
     const { firstName, lastName, mobile, ...formData } = payload;
-    if (isRegister) {
-      const responseRegis = await apiRegister(payload);
-      console.log(responseRegis);
-      if (responseRegis.success) {
-        sweetAlert
-          .fire(
-            "Đăng ký thành công, hãy kiểm tra email của bạn đề hoàn tất việc tạo tài khoản.",
-            responseRegis.mes,
-            "success"
-          )
-          .then(() => {
-            setIsRegister(false);
-            resetPayload();
-          });
+
+    const invalidCount = isRegister
+      ? formValidate(payload, setInvalidFields)
+      : formValidate(formData, setInvalidFields);
+    console.log(invalidCount);
+
+    if (invalidCount === 0) {
+      if (isRegister) {
+        const responseRegis = await apiRegister(payload);
+        console.log(responseRegis);
+        if (responseRegis.success) {
+          sweetAlert
+            .fire(
+              "Đăng ký thành công, hãy kiểm tra email của bạn đề hoàn tất việc tạo tài khoản.",
+              responseRegis.mes,
+              "success"
+            )
+            .then(() => {
+              setIsRegister(false);
+              resetPayload();
+            });
+        } else {
+          sweetAlert.fire("Lỗi đăng ký", responseRegis.message, "error");
+        }
       } else {
-        sweetAlert.fire("Lỗi đăng ký", responseRegis.mes, "error");
+        const responseLogin = await apiLogin(formData);
+        if (responseLogin.success) {
+          dispatch(
+            login({
+              isLogin: true,
+              token: responseLogin.loginToken,
+              userData: responseLogin.userData,
+            })
+          );
+          navigate(`/${path.HOME}`);
+        } else {
+          sweetAlert.fire("Lỗi đăng nhập", responseLogin.mes, "error");
+        }
+        console.log(responseLogin);
       }
-    } else {
-      const responseLogin = await apiLogin(formData);
-      if (responseLogin.success) {
-        dispatch(
-          register({
-            isLogin: true,
-            token: responseLogin.loginToken,
-            userData: responseLogin.userData,
-          })
-        );
-        navigate(`/${path.HOME}`);
-      } else {
-        sweetAlert.fire("Lỗi đăng nhập", responseLogin.mes, "error");
-      }
-      console.log(responseLogin);
     }
   }, [payload, isRegister]);
 
@@ -101,12 +115,16 @@ const Login = () => {
                 setValue={setPayload}
                 nameKey="lastName"
                 placeholder="Họ"
+                invalidFields={invalidFields}
+                setInvalidFields={setInvalidFields}
               />
               <InputField
                 value={payload.firstName}
                 setValue={setPayload}
                 nameKey="firstName"
                 placeholder="Tên"
+                invalidFields={invalidFields}
+                setInvalidFields={setInvalidFields}
               />
             </div>
           )}
@@ -116,6 +134,8 @@ const Login = () => {
               setValue={setPayload}
               nameKey="email"
               placeholder=""
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
           )}
           {isRegister && (
@@ -124,6 +144,8 @@ const Login = () => {
               setValue={setPayload}
               nameKey="mobile"
               placeholder="Số điện thoại"
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
           )}
           {!isResetPassword && (
@@ -133,6 +155,8 @@ const Login = () => {
               nameKey="password"
               type="password"
               placeholder=""
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
           )}
 

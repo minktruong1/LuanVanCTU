@@ -56,7 +56,7 @@ var userSchema = new mongoose.Schema(
       type: String,
     },
     passwordChangeAt: {
-      type: String,
+      type: Date,
     },
     passwordResetToken: {
       type: String,

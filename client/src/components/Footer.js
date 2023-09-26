@@ -36,24 +36,33 @@ const Footer = () => {
               <div className="flex flex-row font-semibold mb-[8px]">
                 VỀ GGEAR
               </div>
-              {about.map((Element) => (
-                <Link className="hover:underline hover:text-red-600 pb-[6px]">
+              {about.map((Element, index) => (
+                <Link
+                  key={index}
+                  className="hover:underline hover:text-red-600 pb-[6px]"
+                >
                   {Element.title}
                 </Link>
               ))}
             </div>
             <div className="flex flex-col w-1/3">
               <div className="flex flex-row font-semibold">CHÍNH SÁCH</div>
-              {policy.map((Element) => (
-                <Link className="hover:underline hover:text-red-600 pb-[6px]">
+              {policy.map((Element, index) => (
+                <Link
+                  key={index}
+                  className="hover:underline hover:text-red-600 pb-[6px]"
+                >
                   {Element.title}
                 </Link>
               ))}
             </div>
             <div className="flex flex-col w-1/3">
               <div className="flex flex-row font-semibold">THÔNG TIN</div>
-              {detail.map((Element) => (
-                <Link className="hover:underline hover:text-red-600 pb-[6px]">
+              {detail.map((Element, index) => (
+                <Link
+                  key={index}
+                  className="hover:underline hover:text-red-600 pb-[6px]"
+                >
                   {Element.title}
                 </Link>
               ))}

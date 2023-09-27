@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Button } from "../../components";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiResetPassword } from "../../apis";
 import { toast } from "react-toastify";
+import path from "../../ultils/path";
 
 const RsPassword = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
 
   //Define token match with what u define in path
@@ -18,6 +21,7 @@ const RsPassword = () => {
     } else {
       toast.info(response.message);
     }
+    navigate(`/${path.LOGIN}`);
   };
 
   return (
@@ -30,7 +34,7 @@ const RsPassword = () => {
               <input
                 type="password"
                 className="px-4 py-2 border w-full my-2 outline-none"
-                placeholder="email@gmail.com"
+                placeholder="Mật khẩu mới"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

@@ -1,7 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { InputField, Button } from "../../components";
 import icons from "../../ultils/icons";
-import { apiRegister, apiLogin, apiForgotPassword } from "../../apis";
+import {
+  apiRegister,
+  apiLogin,
+  apiForgotPassword,
+  apiRegisterCheck,
+} from "../../apis";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
@@ -20,6 +25,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [isRegister, setIsRegister] = useState(false);
   const [invalidFields, setInvalidFields] = useState([]);
+
+  const [isRegisterConfirm, setIsRegisterConfirm] = useState(false);
+  const [registerToken, setRegisterToken] = useState("");
 
   const [payload, setPayload] = useState({
     email: "",
@@ -63,20 +71,18 @@ const Login = () => {
     if (invalidCount === 0) {
       if (isRegister) {
         const responseRegis = await apiRegister(payload);
-        console.log(responseRegis);
+        // console.log(responseRegis);
         if (responseRegis.success) {
           sweetAlert
             .fire(
-              "Đăng ký thành công, hãy kiểm tra email của bạn đề hoàn tất việc tạo tài khoản.",
-              responseRegis.mes,
+              "Hãy kiểm tra email của bạn để hoàn tất việc tạo tài khoản.",
+              responseRegis.message,
               "success"
             )
             .then(() => {
-              setIsRegister(false);
-              resetPayload();
+              setIsRegisterConfirm(true);
             });
         } else {
-          sweetAlert.fire("Lỗi đăng ký", responseRegis.message, "error");
         }
       } else {
         const responseLogin = await apiLogin(formData);
@@ -97,10 +103,34 @@ const Login = () => {
     }
   }, [payload, isRegister]);
 
+  const registerTokenCheck = async () => {
+    const responseRegisterTokenCheck = await apiRegisterCheck(registerToken);
+    if (responseRegisterTokenCheck.success) {
+      sweetAlert
+        .fire(
+          "Đăng ký thành công",
+          responseRegisterTokenCheck.message,
+          "success"
+        )
+        .then(() => {
+          setIsRegister(false);
+          setIsRegisterConfirm(false);
+          resetPayload();
+        });
+    } else {
+      sweetAlert.fire(
+        "Lỗi đăng ký",
+        responseRegisterTokenCheck.message,
+        "error"
+      );
+    }
+    setRegisterToken("");
+  };
+
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center  ">
       <div className="flex bg-white justify-center p-8 min-w-[544px] w-1/2 mt-[30px] mb-[30px]">
-        <div className="w-[80%] ">
+        <div className="w-[80%]">
           <h1 className="uppercase mb-[12px] text-xl font-medium flex justify-center">
             {isResetPassword
               ? "đặt lại mật khẩu"
@@ -202,6 +232,25 @@ const Login = () => {
             />
           )}
 
+          {isRegisterConfirm && isRegister && (
+            <>
+              <h4>Nhập mã xác nhận đã được gửi qua email</h4>
+              <input
+                type="text"
+                value={registerToken}
+                onChange={(e) => setRegisterToken(e.target.value)}
+                className="p-2 border outline-none"
+              />
+              <button
+                type="button"
+                className="px-4 py-2 text-white text-semibold bg-main"
+                onClick={registerTokenCheck}
+              >
+                Xác thực
+              </button>
+            </>
+          )}
+
           {isResetPassword ? (
             <div className="flex w-full justify-between mt-[20px]">
               <span>
@@ -221,7 +270,10 @@ const Login = () => {
                 {isRegister ? (
                   <span
                     className="text-blue-500 cursor-pointer flex items-center justify-center"
-                    onClick={() => setIsRegister(false)}
+                    onClick={() => {
+                      setIsRegister(false);
+                      setIsRegisterConfirm(false);
+                    }}
                   >
                     <MdArrowBackIosNew />
                     Trở lại

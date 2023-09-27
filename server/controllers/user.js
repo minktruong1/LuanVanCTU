@@ -45,55 +45,66 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exist");
   } else {
     const token = createToken();
-    res.cookie(
-      "registerData",
-      { ...req.body, token },
-      {
-        httpOnly: true,
-        maxAge: 60 * 60 * 1000,
-      }
-    );
+    const emailTransform = btoa(email) + "@" + token;
+    const newUser = await User.create({
+      email: emailTransform,
+      password,
+      firstName,
+      lastName,
+      mobile,
+    });
+    if (newUser) {
+      const html = `<h2>Sao chép và dán đoạn mã sau:</h2><br/><blockquote>${token}</blockquote>`;
+      await sendMail({ email, html, subject: "Confirm register" });
+    }
 
-    const html = `
-  Vui lòng nhấn vào đường link để hoàn thành việc đăng ký tài khoản, link hết hạn sau 15 phút.
-  <a href=${process.env.URL_SERVER}/api/user/register-confirm/${token}>Click here</a>
-  `;
-
-    await sendMail({ email, html, subject: "Confirm register" });
+    setTimeout(async () => {
+      await User.deleteOne({ email: emailTransform });
+    }, [300000]);
 
     return res.json({
-      success: true,
-      message: "Check your email to confirm your information",
+      success: newUser ? true : false,
+      message: newUser ? "Hãy kiểm tra hộp thư" : "Lỗi đăng ký",
     });
   }
 });
 
 const registerCheck = asyncHandler(async (req, res) => {
-  const cookie = req.cookies;
+  // const cookie = req.cookies;
   const { token } = req.params;
-  console.log(cookie);
-  console.log(token);
+  const notActiveEmail = await User.findOne({ email: new RegExp(`${token}$`) });
 
-  if (!cookie || cookie?.registerData?.token !== token) {
-    res.clearCookie("registerData");
-    return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
+  if (notActiveEmail) {
+    notActiveEmail.email = atob(notActiveEmail?.email?.split("@")[0]);
+    notActiveEmail.save();
   }
 
-  const newUser = await User.create({
-    email: cookie?.registerData?.email,
-    password: cookie?.registerData?.password,
-    mobile: cookie?.registerData?.mobile,
-    firstName: cookie?.registerData?.firstName,
-    lastName: cookie?.registerData?.lastName,
+  return res.json({
+    success: notActiveEmail ? true : false,
+    message: notActiveEmail
+      ? "Complete create account, go to login"
+      : "Register check fail",
   });
+  // if (!cookie || cookie?.registerData?.token !== token) {
+  //   res.clearCookie("registerData");
+  //   return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
+  // }
 
-  res.clearCookie("registerData");
+  // const newUser = await User.create({
+  //   email: cookie?.registerData?.email,
+  //   password: cookie?.registerData?.password,
+  //   mobile: cookie?.registerData?.mobile,
+  //   firstName: cookie?.registerData?.firstName,
+  //   lastName: cookie?.registerData?.lastName,
+  // });
 
-  if (newUser) {
-    return res.redirect(`${process.env.CLIENT_URL}/last-register/success`);
-  } else {
-    return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
-  }
+  // res.clearCookie("registerData");
+
+  // if (newUser) {
+  //   return res.redirect(`${process.env.CLIENT_URL}/last-register/success`);
+  // } else {
+  //   return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
+  // }
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -141,7 +152,7 @@ const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(_id).select("-refreshToken -password -role");
   return res.status(200).json({
     success: user ? true : false,
-    message: user ? user : "User not found",
+    getUser: user ? user : "User not found",
   });
 });
 

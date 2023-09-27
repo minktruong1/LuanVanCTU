@@ -74,11 +74,12 @@ export const formValidate = (payload, setInvalidFields) => {
         }
         break;
       case "password":
-        if (!array[1].length < 8) {
+        console.log(array[1]);
+        if (array[1].length <= 8) {
           invalids++;
           setInvalidFields((previous) => [
             ...previous,
-            { name: array[0], message: "Mật khẩu phải trên 8 ký tự" },
+            { name: array[0], message: "Mật khẩu phải 8 ký tự trở lên" },
           ]);
         }
         break;

@@ -72,7 +72,7 @@ const getProduct = asyncHandler(async (req, res) => {
   const productSearch = await Product.findById(pid);
   return res.status(200).json({
     success: productSearch ? true : false,
-    createdProduct: productSearch ? productSearch : "Error when get product",
+    getProduct: productSearch ? productSearch : "Error when get product",
   });
 });
 
@@ -84,7 +84,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   });
   return res.status(200).json({
     success: updateProduct ? true : false,
-    createdProduct: updateProduct ? updateProduct : "Error when update product",
+    updateProduct: updateProduct ? updateProduct : "Error when update product",
   });
 });
 
@@ -93,7 +93,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
   const deleteProduct = await Product.findByIdAndDelete(pid);
   return res.status(200).json({
     success: deleteProduct ? true : false,
-    createdProduct: deleteProduct ? deleteProduct : "Error when delete product",
+    deleteProduct: deleteProduct ? deleteProduct : "Error when delete product",
   });
 });
 

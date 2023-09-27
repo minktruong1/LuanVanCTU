@@ -13,6 +13,7 @@ module.exports = {
         main: "#ea1c00",
         darkRed: "#be1529",
         webBackground: "#ececec",
+        overlay: "rgba(0,0,0,0.5)",
         upperHeaderColor: "#e7e7e7",
       },
       color: {

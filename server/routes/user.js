@@ -3,7 +3,7 @@ const controllers = require("../controllers/user.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 
 router.post("/register", controllers.registerUser);
-router.get("/register-confirm/:token", controllers.registerCheck);
+router.put("/register-confirm/:token", controllers.registerCheck);
 router.post("/login", controllers.loginUser);
 router.get("/current", verifyLoginToken, controllers.getUser);
 router.post("/refreshtoken", controllers.refreshLoginToken);

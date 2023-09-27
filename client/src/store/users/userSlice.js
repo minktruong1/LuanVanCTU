@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import * as actions from "./asyncActions";
 
 export const userSlice = createSlice({
   name: "user",
@@ -6,33 +7,36 @@ export const userSlice = createSlice({
     isLogin: false,
     currentData: null,
     token: null,
+    isLoading: false,
   },
   reducers: {
     login: (state, action) => {
-      console.log(action);
       state.isLogin = action.payload.isLogin;
-      state.currentData = action.payload.userData;
       state.token = action.payload.token;
     },
+    logout: (state, action) => {
+      state.isLogin = false;
+      state.token = null;
+    },
   },
-  //   Code xử lý async action
-  //   extraReducers: (builder) => {
-  //     builder.addCase(actions.apiGetNewProduct.pending, (state) => {
-  //       state.isLoading = true;
-  //     });
+  // Code xử lý async action
+  extraReducers: (builder) => {
+    builder.addCase(actions.apiGetCurrentAccount.pending, (state) => {
+      state.isLoading = true;
+    });
 
-  //     builder.addCase(actions.apiGetNewProduct.fulfilled, (state, action) => {
-  //       state.isLoading = false;
-  //       state.justOnSellProducts = action.payload;
-  //     });
+    builder.addCase(actions.apiGetCurrentAccount.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.currentData = action.payload;
+    });
 
-  //     builder.addCase(actions.apiGetNewProduct.rejected, (state, action) => {
-  //       state.isLoading = false;
-  //       state.errorMessage = action.payload.message;
-  //     });
-  //   },
+    builder.addCase(actions.apiGetCurrentAccount.rejected, (state, action) => {
+      state.isLoading = false;
+      state.currentData = null;
+    });
+  },
 });
 
-export const { login } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 
 export default userSlice.reducer;

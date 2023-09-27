@@ -7,7 +7,15 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Làm gì đó trước khi request dược gửi đi
-    return config;
+    let localLoginToken = window.localStorage.getItem("persist:shop/user");
+    if (localLoginToken && typeof localLoginToken === "string") {
+      localLoginToken = JSON.parse(localLoginToken);
+      const loginToken = JSON.parse(localLoginToken?.token);
+      config.headers = { Authorization: `Bearer ${loginToken}` };
+      return config;
+    } else {
+      return config;
+    }
   },
   function (error) {
     // Làm gì đó với lỗi request

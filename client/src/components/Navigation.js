@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom";
 const Navigation = () => {
   return (
     <>
-      <div className="w-full bg-white flex justify-center items-center border-b-2">
-        <div className="w-main h-[48px] text-sm font-semibold py-2 flex justify-center items-center">
+      <div className="w-full h-[48px] bg-white flex justify-center items-center border-b-2">
+        <div className="w-main text-sm font-semibold py-2 flex justify-center items-center">
           {navigation.map((element, index) => (
             <div
               className={`px-6 ${

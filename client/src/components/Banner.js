@@ -27,7 +27,7 @@ const Banner = ({ images }) => {
 
   return (
     <div className="relative w-full ">
-      <div className="overflow-hidden w-full h-full rounded-lg">
+      <div className="overflow-hidden w-full h-full rounded">
         <img
           src={images[currentSlide]}
           alt={`Slide ${currentSlide + 1}`}

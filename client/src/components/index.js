@@ -11,3 +11,7 @@ export { default as UpperHeader } from "./UpperHeader.js";
 export { default as Footer } from "./Footer.js";
 export { default as InputField } from "./InputField.js";
 export { default as Button } from "./Button.js";
+export { default as Breadcrumb } from "./Breadcrumb.js";
+export { default as QuantitySelector } from "./QuantitySelector.js";
+export { default as SearchItem } from "./SearchItem.js";
+export { default as InputSelector } from "./InputSelector.js";

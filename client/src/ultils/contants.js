@@ -49,3 +49,22 @@ export const navigation = [
     path: `/${path.WARRANTY}`,
   },
 ];
+
+export const sorts = [
+  {
+    id: 1,
+    value: "price",
+    text: "Giá tăng dần",
+  },
+  {
+    id: 2,
+    value: "-price",
+    text: "Giá giảm dần",
+  },
+
+  // {
+  //   id: 3,
+  //   value: "price",
+  //   text: "Giá tăng dần",
+  // },
+];

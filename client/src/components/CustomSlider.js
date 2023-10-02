@@ -15,7 +15,7 @@ const CustomSlider = ({ products, targetTab }) => {
     <>
       <div className="flex flex-col">
         {products && (
-          <Slider {...reactSlickSetting}>
+          <Slider {...reactSlickSetting} className="custom">
             {products?.map((element, index) => (
               <Product
                 key={index}

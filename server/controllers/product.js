@@ -27,13 +27,33 @@ const getAllProducts = asyncHandler(async (req, res) => {
     /\b(gte|gt|lt|lte)\b/g,
     (matchedEl) => `$${matchedEl}`
   );
+
   const formatQueries = JSON.parse(queryString);
+  let categoryQueryFields = {};
 
   //Filtering(title, price)
   if (queries?.title) {
     formatQueries.title = { $regex: queries.title, $options: "i" };
   }
-  let queryCommand = Product.find(formatQueries);
+
+  if (queries?.category) {
+    delete formatQueries.category;
+    const cateArray = queries.category?.split(",");
+
+    const cateQuery = cateArray.map((element) => ({
+      category: {
+        $regex: element,
+        $options: "i",
+      },
+    }));
+    categoryQueryFields = { $or: cateQuery };
+  }
+
+  // if (queries?.brand) {
+  //   const
+  // }
+  const groupQuery = { ...categoryQueryFields, ...formatQueries };
+  let queryCommand = Product.find(groupQuery);
 
   //Sort
   if (req.query.sort) {
@@ -56,7 +76,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
   //Running query
   try {
     const response = await queryCommand;
-    const counts = await Product.find(formatQueries).countDocuments();
+    const counts = await Product.find(groupQuery).countDocuments();
     return res.status(200).json({
       success: response ? true : false,
       counts,

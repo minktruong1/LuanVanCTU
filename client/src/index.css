@@ -3,18 +3,47 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+.transparent-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Màu nền trong suốt */
+}
+
+/* CSS animation */
+@keyframes zoom-in-out {
+  0% {
+    transform: scale(0); /* Không thay đổi kích thước ban đầu */
+    opacity: 0.5; /* Độ mờ ban đầu */
+  }
+  100% {
+    transform: scale(1); /* Thu nhỏ 20% */
+    opacity: 1; /* Trở nên rõ hơn */
+  }
+}
+/* End CSS animation */
+
+p {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
+
 /* Custom react slick */
-button.slick-next {
+.custom button.slick-next {
   right: 38px;
   z-index: 10;
 }
 
-button.slick-prev {
+.custom button.slick-prev {
   left: 8px;
   z-index: 10;
 }
 
-button.slick-next::before {
+.custom button.slick-next::before {
   color: black;
   content: "\276F";
   background-color: rgba(0, 0, 0, 0.2);
@@ -26,7 +55,7 @@ button.slick-next::before {
   align-items: center;
 }
 
-button.slick-prev::before {
+.custom button.slick-prev::before {
   color: black;
   content: "\276E";
   background-color: rgba(0, 0, 0, 0.2);
@@ -38,6 +67,63 @@ button.slick-prev::before {
   align-items: center;
 }
 
+/* React slick in product detail */
+.product-detail-slick button.slick-next {
+  right: 18px;
+  top: 50%;
+  z-index: 10;
+}
+
+.product-detail-slick button.slick-prev {
+  left: 14px;
+  top: 50%;
+  z-index: 10;
+}
+
+.product-detail-slick button.slick-next::before {
+  color: black;
+  content: "\276F";
+  background-color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 25px;
+  text-align: center;
+}
+
+.product-detail-slick button.slick-prev::before {
+  color: black;
+  content: "\276E";
+  background-color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 25px;
+  text-align: center;
+}
+
+.product-detail-slick button.slick-next::before,
+.product-detail-slick button.slick-prev::before {
+  animation: zoom-in-out 0.3s ease alternate;
+}
+
+.product-detail-slick button.slick-next::before,
+.product-detail-slick button.slick-prev::before {
+  display: none;
+}
+
+.product-detail-slick:hover > button.slick-next::before,
+.product-detail-slick:hover > button.slick-prev::before {
+  display: block;
+}
 /* End custom react slick */
 
 /* Animation css */
@@ -118,4 +204,49 @@ button.slick-prev::before {
 .account-model_hover:hover + .account-model,
 .account-model_hover:hover ~ .account-model {
   display: block;
+}
+
+/* react-masonry-css */
+/* .my-masonry-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+} */
+/* 
+.my-masonry-grid_column {
+  background-clip: padding-box;
+  margin-bottom: 20px;
+}
+
+.my-masonry-grid_column > div {
+  margin-bottom: 20px;
+} */
+
+/* End react-masonry-css */
+
+/* Filter modal */
+.filter-modal::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  transform: rotate(45deg);
+  background: #fff;
+  position: absolute;
+  top: -4px;
+  left: 18px;
+  visibility: visible;
+}
+/* End filter modal */
+
+/* CSS search item */
+input[type="checkbox"]:checked + label {
+  border: 1px solid #1985fa;
+  color: #1985fa;
+  font-weight: 500;
+}
+
+input[type="checkbox"] + label {
+  border: 1px solid black;
+  color: black;
 }

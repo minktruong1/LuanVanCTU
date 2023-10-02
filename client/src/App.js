@@ -50,7 +50,7 @@ function App() {
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />}></Route>
           <Route
-            path={path.PRODUCT_DETAIL__PID__TITLE}
+            path={path.PRODUCT_DETAIL__CATEGORY__PID__TITLE}
             element={<ProductDetail />}
           ></Route>
           <Route path={path.PRODUCTS} element={<Products />}></Route>

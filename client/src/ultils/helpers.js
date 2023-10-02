@@ -21,18 +21,18 @@ export const pointToStar = (number) => {
 
   // Đổ sao nguyên
   for (let i = 0; i < integerStars; i++) {
-    stars.push(<AiFillStar color="yellow" />);
+    stars.push(<AiFillStar color="#ff8a00" />);
   }
 
-  // Nếu có số thập phân và còn chỗ trống, đổ thêm một sao màu vàng
+  // Nếu có số thập phân và còn chỗ trống, đổ thêm 1/2 sao màu vàng
   if (number !== integerStars && stars.length < 5) {
-    stars.push(<MdOutlineStarHalf color="yellow" />);
+    stars.push(<MdOutlineStarHalf color="#ff8a00" />);
   }
 
   // Đổ sao trống cho số điểm còn thiếu
   const remainingStars = 5 - stars.length;
   for (let i = 0; i < remainingStars; i++) {
-    stars.push(<AiOutlineStar color="yellow" />);
+    stars.push(<AiOutlineStar color="#ff8a00" />);
   }
 
   return stars;

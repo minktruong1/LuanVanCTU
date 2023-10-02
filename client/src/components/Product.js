@@ -2,27 +2,37 @@ import React from "react";
 import { formatVND } from "../ultils/helpers";
 import { pointToStar } from "../ultils/helpers";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
 
-const Product = ({ productData, isNew }) => {
+const Product = ({ productData, isNew, isHot }) => {
   return (
     <Link
-      to={`/${path.PRODUCT_DETAIL}/${productData?._id}/${productData?.title}`}
+      to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
+        productData?.title
+      }`}
     >
-      <div className="items-center mx-2 bg-white text-base border p-4">
+      <div className="items-center mx-2 mb-4 bg-white text-base border p-4">
         <div className=" relative ">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden flex justify-center">
             <img
               src={productData?.images[0] || ""}
               alt=""
-              className="w-[148px] h-[148px] object-cover hoverEffect"
+              className="w-[148px] h-[148px] object-contain hoverEffect"
             />
           </div>
-          <div className="absolute bg-topSellerSticker bottom-0 left-0 object-cover w-[74px] h-[36px] rounded-lg ">
-            <div className="absolute top-1 left-4 justify-center text-lg line-clamp-1 text-red-300">
-              {isNew ? "New!" : "Hot!"}
+          {isNew && (
+            <div className="absolute bg-topSellerSticker bottom-0 left-0 object-cover w-[74px] h-[36px] rounded ">
+              <div className="absolute top-1 left-4 justify-center text-lg line-clamp-1 text-red-300">
+                New!
+              </div>
             </div>
-          </div>
+          )}
+          {isHot && (
+            <div className="absolute bg-topSellerSticker bottom-0 left-0 object-cover w-[74px] h-[36px] rounded ">
+              <div className="absolute top-1 left-4 justify-center text-lg line-clamp-1 text-red-300">
+                Hot!
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-2 mt-[12px] items-start w-full">
           <span className="line-clamp-1">{productData?.title}</span>

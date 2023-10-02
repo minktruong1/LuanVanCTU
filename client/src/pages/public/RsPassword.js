@@ -39,11 +39,9 @@ const RsPassword = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div className="flex items-center justify-center w-full">
-                <Button
-                  name="Gửi yêu cầu"
-                  handleOnClick={handleResetPassword}
-                  wFull
-                />
+                <Button handleOnClick={handleResetPassword} wFull>
+                  Gửi yêu cầu
+                </Button>
               </div>
             </div>
           </div>

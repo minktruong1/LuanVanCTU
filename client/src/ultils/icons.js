@@ -9,6 +9,7 @@ import {
   MdOutlineStarHalf,
   MdArrowBackIosNew,
   MdWavingHand,
+  MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { PiNotepadLight, PiHandCoins } from "react-icons/pi";
 import {
@@ -18,6 +19,7 @@ import {
   BsFacebook,
   BsYoutube,
   BsFillTriangleFill,
+  BsFillHouseFill,
 } from "react-icons/bs";
 import {
   AiOutlineUser,
@@ -28,11 +30,12 @@ import {
 } from "react-icons/ai";
 import { TiTags } from "react-icons/ti";
 import { RxVideo } from "react-icons/rx";
-import { BiSearch, BiLogOut } from "react-icons/bi";
+import { BiSearch, BiLogOut, BiSolidDownArrow } from "react-icons/bi";
 import { ImMinus } from "react-icons/im";
 import { FaQuestionCircle, FaListUl } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
 import { LuUserCog } from "react-icons/lu";
+import { GiCheckMark } from "react-icons/gi";
 const icons = {
   TfiHeadphoneAlt,
   MdOutlineLocationOn,
@@ -66,6 +69,10 @@ const icons = {
   RiBillLine,
   LuUserCog,
   BiLogOut,
+  MdOutlineKeyboardArrowRight,
+  BsFillHouseFill,
+  GiCheckMark,
+  BiSolidDownArrow,
 };
 
 export default icons;

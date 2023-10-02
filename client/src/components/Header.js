@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-10">
+      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-50">
         <div className="w-main h-[88px] py-[20px] flex justify-between ">
           <Link className="flex" to={`/${path.HOME}`}>
             <img
@@ -42,7 +42,7 @@ const Header = () => {
             />
           </Link>
 
-          <form className="flex bg-white w-1/3 rounded-lg">
+          <form className="flex bg-white w-1/3 rounded">
             <div className="flex items-center w-full">
               <input className="w-[85%] m-2 focus:outline-none border:none" />
               <button className="w-[15%] flex items-center justify-center">
@@ -90,7 +90,7 @@ const Header = () => {
             </div>
             {isLogin ? (
               <>
-                <div className="account-model_hover bg-darkRed rounded-lg flex flex-row px-4 items-center relative">
+                <div className="account-model_hover bg-darkRed rounded flex flex-row px-4 items-center relative">
                   <div className=" flex flex-row items-center ">
                     <span className="flex gap-4 items-center text-[24px] pr-2">
                       <AiOutlineUser />
@@ -134,10 +134,7 @@ const Header = () => {
                 </div>
               </>
             ) : (
-              <Link
-                to={`/${path.LOGIN}`}
-                className="flex bg-darkRed rounded-lg"
-              >
+              <Link to={`/${path.LOGIN}`} className="flex bg-darkRed rounded">
                 <div className="flex flex-row px-4 items-center">
                   <span className="flex gap-4 justify-center text-[24px] pr-2">
                     <AiOutlineUser />

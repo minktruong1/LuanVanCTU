@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-const Button = ({ name, handleOnClick, style, wFull }) => {
+const Button = ({ children, handleOnClick, style, wFull }) => {
   return (
     <>
       <button
@@ -16,7 +16,7 @@ const Button = ({ name, handleOnClick, style, wFull }) => {
           handleOnClick && handleOnClick();
         }}
       >
-        <span>{name}</span>
+        {children}
       </button>
     </>
   );

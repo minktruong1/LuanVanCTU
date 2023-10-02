@@ -16,17 +16,19 @@ import { toast } from "react-toastify";
 import { formValidate } from "../../ultils/helpers";
 
 const { MdArrowBackIosNew } = icons;
+
 const Login = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const [isResetPassword, setIsResetPassword] = useState(false);
-  const [email, setEmail] = useState("");
   const [isRegister, setIsRegister] = useState(false);
+  const [isRegisterConfirm, setIsRegisterConfirm] = useState(false);
+
+  const [email, setEmail] = useState("");
   const [invalidFields, setInvalidFields] = useState([]);
 
-  const [isRegisterConfirm, setIsRegisterConfirm] = useState(false);
   const [registerToken, setRegisterToken] = useState("");
 
   const [payload, setPayload] = useState({
@@ -201,11 +203,9 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <div className="flex items-center justify-center w-full">
-                <Button
-                  name="Gửi yêu cầu"
-                  handleOnClick={handleForgotPassword}
-                  wFull
-                />
+                <Button handleOnClick={handleForgotPassword} wFull>
+                  Gửi yêu cầu
+                </Button>
               </div>
             </div>
           )}
@@ -225,11 +225,9 @@ const Login = () => {
           </div>
 
           {!isResetPassword && (
-            <Button
-              name={isRegister ? "Đăng ký" : "Đăng nhập"}
-              handleOnClick={handleSubmit}
-              wFull
-            />
+            <Button handleOnClick={handleSubmit} wFull>
+              {isRegister ? "Đăng ký" : "Đăng nhập"}
+            </Button>
           )}
 
           {isRegisterConfirm && isRegister && (

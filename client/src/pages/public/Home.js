@@ -18,7 +18,7 @@ const Home = () => {
   const { isLogin, currentData } = useSelector((state) => state.user);
   console.log({ isLogin, currentData });
   return (
-    <>
+    <div className="w-main">
       <div className="flex mt-4">
         <div className="flex flex-row gap-5">
           <div className="w-[20%] flex-auto">
@@ -53,7 +53,7 @@ const Home = () => {
       <div className="w-full">
         <Blogs />
       </div>
-    </>
+    </div>
   );
 };
 

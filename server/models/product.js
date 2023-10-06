@@ -50,6 +50,7 @@ var productSchema = new mongoose.Schema(
         star: { type: Number },
         owner: { type: mongoose.Types.ObjectId, ref: "User" },
         comment: { type: String },
+        updatedAt: { type: Date },
       },
     ],
     reviewPoint: {

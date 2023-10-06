@@ -25,7 +25,7 @@ const Breadcrumb = ({ title, category }) => {
             >
               {index === 0 ? (
                 <span className="text-[16px] flex capitalize">
-                  <span className="mr-[4px] text-[17px]">
+                  <span className="mr-[4px] text-[17px] ">
                     <BsFillHouseFill />
                   </span>
                   {breadcrumb}
@@ -44,7 +44,9 @@ const Breadcrumb = ({ title, category }) => {
               <span className="ml-[10px] mr-[10px] text-[11px]">{"/"}</span>
             )}
             {index === count.length - 1 && (
-              <span className="text-[16px] text-[#6d6e72]">{breadcrumb}</span>
+              <span className="text-[16px] text-[#6d6e72] capitalize">
+                {breadcrumb}
+              </span>
             )}
           </React.Fragment>
         ))}

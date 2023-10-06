@@ -8,6 +8,7 @@ export const userSlice = createSlice({
     currentData: null,
     token: null,
     isLoading: false,
+    message: "",
   },
   reducers: {
     login: (state, action) => {
@@ -17,6 +18,9 @@ export const userSlice = createSlice({
     logout: (state, action) => {
       state.isLogin = false;
       state.token = null;
+    },
+    clearMessage: (state) => {
+      state.message = "";
     },
   },
   // Code xử lý async action
@@ -28,15 +32,19 @@ export const userSlice = createSlice({
     builder.addCase(actions.apiGetCurrentAccount.fulfilled, (state, action) => {
       state.isLoading = false;
       state.currentData = action.payload;
+      state.isLogin = true;
     });
 
     builder.addCase(actions.apiGetCurrentAccount.rejected, (state, action) => {
       state.isLoading = false;
       state.currentData = null;
+      state.isLogin = false;
+      state.token = null;
+      state.message = "Phiên đăng nhập hết hạn";
     });
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, clearMessage } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -8,6 +8,7 @@ import {
 import {
   Breadcrumb,
   InputSelector,
+  Pagination,
   Product,
   SearchItem,
 } from "../../components";
@@ -32,7 +33,7 @@ const Products = () => {
   const fetchProductByCate = async (queries) => {
     const response = await apiGetProducts(queries);
     if (response.success) {
-      setProducts(response.products);
+      setProducts(response);
     }
   };
 
@@ -57,19 +58,21 @@ const Products = () => {
         ],
       };
       delete queries.price;
+    } else {
+      if (queries.from) {
+        queries.price = { gte: queries.from };
+      }
+      if (queries.to) {
+        queries.price = { lte: queries.to };
+      }
     }
 
-    if (queries.from) {
-      queries.price = { gte: queries.from };
-    }
-    if (queries.to) {
-      queries.price = { lte: queries.to };
-    }
     delete queries.from;
     delete queries.to;
 
     console.log(queries);
     fetchProductByCate({ ...priceFilterQuery, ...queries });
+    window.scrollTo(0, 0);
   }, [params]);
 
   const changeActiveBox = useCallback(
@@ -91,14 +94,16 @@ const Products = () => {
   );
 
   useEffect(() => {
-    navigate({
-      pathname: `/${category}`,
-      search: createSearchParams({ sort }).toString(),
-    });
+    if (sort) {
+      navigate({
+        pathname: `/${category}`,
+        search: createSearchParams({ sort }).toString(),
+      });
+    }
   }, [sort]);
 
   return (
-    <div className="w-full">
+    <div className="w-main">
       <div className="pt-[18px] pb-[18px]">
         <Breadcrumb category={category} />
       </div>
@@ -127,13 +132,13 @@ const Products = () => {
             </div>
           </div>
         </div>
-        <div className="">
+        <div>
           <Masonry
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid flex mb-[20px]"
             columnClassName="my-masonry-grid_column "
           >
-            {products?.map((element) => (
+            {products?.products?.map((element) => (
               <Product
                 key={element._id}
                 pid={element.id}
@@ -142,6 +147,9 @@ const Products = () => {
             ))}
           </Masonry>
         </div>
+      </div>
+      <div className="flex justify-center">
+        <Pagination totalCount={products?.counts} />
       </div>
     </div>
   );

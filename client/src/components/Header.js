@@ -1,38 +1,55 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import icons from "../ultils/icons.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import path from "../ultils/path";
 import { apiGetCurrentAccount } from "../store/users/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/users/userSlice";
+import { logout, clearMessage } from "../store/users/userSlice";
+import sweetAlert from "sweetalert2";
+
+const {
+  TfiHeadphoneAlt,
+  MdOutlineLocationOn,
+  PiNotepadLight,
+  BsCart3,
+  AiOutlineUser,
+  BiSearch,
+  MdWavingHand,
+  RiBillLine,
+  LuUserCog,
+  BiLogOut,
+} = icons;
 
 const Header = () => {
-  const {
-    TfiHeadphoneAlt,
-    MdOutlineLocationOn,
-    PiNotepadLight,
-    BsCart3,
-    AiOutlineUser,
-    BiSearch,
-    MdWavingHand,
-    RiBillLine,
-    LuUserCog,
-    BiLogOut,
-  } = icons;
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLogin, currentData } = useSelector((state) => state.user);
+  const { isLogin, currentData, message } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (isLogin) {
-      dispatch(apiGetCurrentAccount());
-    }
+    const setTimeoutGetCurrent = setTimeout(() => {
+      if (isLogin) {
+        dispatch(apiGetCurrentAccount());
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(setTimeoutGetCurrent);
+    };
   }, [dispatch, isLogin]);
+
+  useEffect(() => {
+    if (message) {
+      sweetAlert.fire("Chú ý", message, "info").then(() => {
+        dispatch(clearMessage());
+        navigate(`/${path.LOGIN}`);
+      });
+    }
+  }, [message]);
 
   return (
     <>
-      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-50">
+      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-40">
         <div className="w-main h-[88px] py-[20px] flex justify-between ">
           <Link className="flex" to={`/${path.HOME}`}>
             <img
@@ -88,7 +105,7 @@ const Header = () => {
                 <span className="flex ">hàng</span>
               </span>
             </div>
-            {isLogin ? (
+            {isLogin && currentData ? (
               <>
                 <div className="account-model_hover bg-darkRed rounded flex flex-row px-4 items-center relative">
                   <div className=" flex flex-row items-center ">

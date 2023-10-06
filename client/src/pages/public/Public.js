@@ -15,9 +15,7 @@ const Public = () => {
         <Header />
         <Navigation />
         <div className="w-full flex flex-col items-center bg-webBackground ">
-          <div className="w-main">
-            <Outlet />
-          </div>
+          <Outlet />
         </div>
         <Footer />
       </div>

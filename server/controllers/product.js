@@ -89,7 +89,13 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
 const getProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
-  const productSearch = await Product.findById(pid);
+  const productSearch = await Product.findById(pid).populate({
+    path: "reviews",
+    populate: {
+      path: "owner",
+      select: "firstName lastName avatar",
+    },
+  });
   return res.status(200).json({
     success: productSearch ? true : false,
     getProduct: productSearch ? productSearch : "Error when get product",
@@ -119,7 +125,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 const reviews = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { star, comment, pid } = req.body;
+  const { star, comment, pid, updatedAt } = req.body;
   if (!star || !pid) throw new Error("Missing input");
   const productTarget = await Product.findById(pid);
   const alreadyReview = productTarget?.reviews?.find(
@@ -134,7 +140,11 @@ const reviews = asyncHandler(async (req, res) => {
         reviews: { $elemMatch: alreadyReview },
       },
       {
-        $set: { "reviews.$.star": star, "ratings.$.comment": comment },
+        $set: {
+          "reviews.$.star": star,
+          "reviews.$.comment": comment,
+          "reviews.$.updatedAt": updatedAt,
+        },
       },
       { new: true }
     );
@@ -142,7 +152,7 @@ const reviews = asyncHandler(async (req, res) => {
     const response = await Product.findByIdAndUpdate(
       pid,
       {
-        $push: { reviews: { star, comment, owner: _id } },
+        $push: { reviews: { star, comment, owner: _id, updatedAt } },
       },
       { new: true }
     );

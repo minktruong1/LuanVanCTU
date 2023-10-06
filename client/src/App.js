@@ -14,9 +14,10 @@ import {
 } from "./pages/public/index.js";
 import path from "./ultils/path.js";
 import { apiGetCategories } from "./store/app/asyncActions.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Warranty from "./pages/public/Warranty.js";
 import CouponsList from "./pages/public/CouponsList.js";
+import Modal from "./components/Modal.js";
 
 //About toastify
 import { ToastContainer } from "react-toastify";
@@ -25,12 +26,17 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const dispatch = useDispatch();
 
+  const { isShowModal, modalContent } = useSelector(
+    (state) => state.appReducer
+  );
+
   useEffect(() => {
     dispatch(apiGetCategories());
   }, []);
 
   return (
-    <div className="min-h-screen font-main">
+    <div className="min-h-screen font-main relative">
+      {isShowModal && <Modal>{modalContent}</Modal>}
       <ToastContainer
         position="top-right"
         autoClose={3000}

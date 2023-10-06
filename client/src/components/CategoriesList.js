@@ -19,7 +19,9 @@ const CategoriesList = () => {
                   />
                 </div>
               </div>
-              <div className="text-center mb-[8px]">{element.title}</div>
+              <div className="text-center mb-[8px] capitalize">
+                {element.title}
+              </div>
             </div>
           ))}
         </div>

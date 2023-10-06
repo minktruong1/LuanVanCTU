@@ -6,8 +6,17 @@ export const appSlice = createSlice({
   initialState: {
     categories: null,
     isLoading: false,
+    isShowModal: false,
+    modalContent: null,
+    //getRatingProductImage: "",
   },
-  reducers: {},
+  reducers: {
+    showModal: (state, action) => {
+      state.isShowModal = action.payload.isShowModal;
+      state.modalContent = action.payload.modalContent;
+      //state.getRatingProductImage = action.payload.getRatingProductImage;
+    },
+  },
 
   extraReducers: (builder) => {
     //Starting action
@@ -33,6 +42,6 @@ export const appSlice = createSlice({
   },
 });
 
-// export const {} = appSlice.actions;
+export const { showModal } = appSlice.actions;
 
 export default appSlice.reducer;

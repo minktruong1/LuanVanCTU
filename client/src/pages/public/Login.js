@@ -143,17 +143,17 @@ const Login = () => {
           {isRegister && (
             <div className="flex items-center gap-2">
               <InputField
-                value={payload.lastName}
+                value={payload.firstName}
                 setValue={setPayload}
-                nameKey="lastName"
+                nameKey="firstName"
                 placeholder="Họ"
                 invalidFields={invalidFields}
                 setInvalidFields={setInvalidFields}
               />
               <InputField
-                value={payload.firstName}
+                value={payload.lastName}
                 setValue={setPayload}
-                nameKey="firstName"
+                nameKey="lastName"
                 placeholder="Tên"
                 invalidFields={invalidFields}
                 setInvalidFields={setInvalidFields}

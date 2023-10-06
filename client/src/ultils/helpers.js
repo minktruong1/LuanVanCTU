@@ -74,8 +74,7 @@ export const formValidate = (payload, setInvalidFields) => {
         }
         break;
       case "password":
-        console.log(array[1]);
-        if (array[1].length <= 8) {
+        if (array[1].length < 8) {
           invalids++;
           setInvalidFields((previous) => [
             ...previous,
@@ -89,4 +88,10 @@ export const formValidate = (payload, setInvalidFields) => {
     }
   }
   return invalids;
+};
+
+export const listPageRange = (start, end) => {
+  const length = end + 1 - start;
+
+  return Array.from({ length }, (_, index) => start + index);
 };

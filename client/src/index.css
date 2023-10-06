@@ -12,6 +12,10 @@
   background-color: rgba(0, 0, 0, 0); /* Màu nền trong suốt */
 }
 
+.border-vanilla-red {
+  border: 1px solid #e4031c;
+}
+
 /* CSS animation */
 @keyframes zoom-in-out {
   0% {

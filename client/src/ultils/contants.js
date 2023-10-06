@@ -21,7 +21,7 @@ export const navigation = [
     id: 2,
     icon: <FaListUl />,
     value: "Tất cả sản phẩm",
-    path: `/${path.PRODUCTS}`,
+    path: `/all-products`,
   },
   {
     id: 3,
@@ -67,4 +67,27 @@ export const sorts = [
   //   value: "price",
   //   text: "Giá tăng dần",
   // },
+];
+
+export const starOptions = [
+  {
+    id: 1,
+    text: "Kém",
+  },
+  {
+    id: 2,
+    text: "Tệ",
+  },
+  {
+    id: 3,
+    text: "Bình thường",
+  },
+  {
+    id: 4,
+    text: "Tốt",
+  },
+  {
+    id: 5,
+    text: "Rất tốt",
+  },
 ];

@@ -18,6 +18,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
 
   // Must match with path
   const { category } = useParams();
+  const [params] = useSearchParams();
 
   const [selected, setSelected] = useState([]);
 
@@ -63,16 +64,26 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
   };
 
   useEffect(() => {
-    if (selected.length > 0) {
-      navigate({
-        pathname: `/${category}`,
-        search: createSearchParams({
-          category: selected.join(","),
-        }).toString(),
-      });
-    } else if (selected.length === 0) {
-      navigate(`/${category}`);
+    let newParam = [];
+    for (let i of params.entries()) {
+      newParam.push(i);
     }
+
+    const queries = {};
+    for (let i of newParam) {
+      queries[i[0]] = i[1];
+    }
+
+    if (selected.length > 0) {
+      queries.category = selected.join(",");
+      queries.page = 1;
+    } else {
+      delete queries.category;
+    }
+    navigate({
+      pathname: `/${category}`,
+      search: createSearchParams(queries).toString(),
+    });
   }, [selected]);
 
   useEffect(() => {
@@ -81,20 +92,37 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
     }
   }, [type]);
 
+  useEffect(() => {
+    if (price.from && price.to && price.from > price.to) {
+      alert("Nhập lại giá trị");
+    }
+  }, [price]);
+
   const debouncePriceFrom = useDebounce(price.from, 1000);
   const debouncePriceTo = useDebounce(price.to, 1000);
 
   useEffect(() => {
-    const data = {};
+    let newParam = [];
+    for (let i of params.entries()) {
+      newParam.push(i);
+    }
+    const queries = {};
+    for (let i of newParam) {
+      queries[i[0]] = i[1];
+    }
+
+    // queries.page = 1;
     if (Number(price.from) > 0) {
-      data.from = price.from;
-    }
+      queries.from = price.from;
+    } else delete queries.from;
     if (Number(price.to) > 0) {
-      data.to = price.to;
-    }
+      queries.to = price.to;
+    } else delete queries.to;
+
+    queries.page = 1;
     navigate({
       pathname: `/${category}`,
-      search: createSearchParams(data).toString(),
+      search: createSearchParams(queries).toString(),
     });
   }, [debouncePriceFrom, debouncePriceTo]);
 
@@ -110,7 +138,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
       {onChoice === name && (
         <>
           <div className="transparent-bg z-10"></div>
-          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 w-[550px]">
+          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 min-w-[550px] ">
             {type === "checkbox" && (
               <div onClick={(e) => e.stopPropagation()} className="p-1">
                 <div className="flex flex-wrap items-center gap-2">

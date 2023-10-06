@@ -12,7 +12,7 @@ module.exports = {
       backgroundColor: {
         main: "#e30019",
         darkRed: "#be1529",
-        webBackground: "#ececec",
+        webBackground: "#f5f5f5",
         overlay: "rgba(0,0,0,0.5)",
         upperHeaderColor: "#e7e7e7",
       },
@@ -43,12 +43,15 @@ module.exports = {
         "slide-top-sm": "slide-top-sm 5s linear both;",
       },
       flex: {
+        1: "1 1 0%",
         2: "2 2 0%",
         3: "3 3 0%",
         4: "4 4 0%",
         5: "5 5 0%",
         6: "6 6 0%",
         7: "7 7 0%",
+        8: "8 8 0%",
+        9: "9 9 0%",
       },
       dropShadow: {
         "4xl": "0 2px 10px rgba(0, 0, 0, 0.35)",

@@ -32,7 +32,7 @@ import { TiTags } from "react-icons/ti";
 import { RxVideo } from "react-icons/rx";
 import { BiSearch, BiLogOut, BiSolidDownArrow } from "react-icons/bi";
 import { ImMinus } from "react-icons/im";
-import { FaQuestionCircle, FaListUl } from "react-icons/fa";
+import { FaQuestionCircle, FaListUl, FaTimes } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
 import { LuUserCog } from "react-icons/lu";
 import { GiCheckMark } from "react-icons/gi";
@@ -73,6 +73,7 @@ const icons = {
   BsFillHouseFill,
   GiCheckMark,
   BiSolidDownArrow,
+  FaTimes,
 };
 
 export default icons;

@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 
-const Button = ({ children, handleOnClick, style, wFull }) => {
+const Button = ({ children, handleOnClick, style, wFull, type = "button" }) => {
   return (
     <>
       <button
-        type="button"
+        type={type}
         className={
           style
             ? style

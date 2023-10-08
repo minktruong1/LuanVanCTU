@@ -54,7 +54,28 @@ const registerUser = asyncHandler(async (req, res) => {
       mobile,
     });
     if (newUser) {
-      const html = `<h2>Sao chép và dán đoạn mã sau:</h2><br/><blockquote>${token}</blockquote>`;
+      const html = `
+        <div style="text-align: center;">
+          <h2 style="font-size: 20px; color: #333; margin-bottom: 20px;">Sao chép và dán đoạn mã sau:</h2>
+          <div style="border: 1px solid #ccc; padding: 10px; background-color: #f0f0f0;">
+            ${token}
+          </div>
+          <button style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; margin-top: 20px; cursor: pointer;" id="copyButton">Copy Mã</button>
+        </div>
+        <script>
+          document.getElementById("copyButton").addEventListener("click", function() {
+            var tokenText = document.querySelector("div[style*='background-color: #f0f0f0;']");
+            var range = document.createRange();
+            range.selectNode(tokenText);
+            window.getSelection().removeAllRanges(); // Clear previous selections.
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges(); // Clear the selection.
+            alert("Mã đã được sao chép!");
+          });
+        </script>
+      `;
+
       await sendMail({ email, html, subject: "Confirm register" });
     }
 
@@ -149,11 +170,76 @@ const loginUser = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
-  const user = await User.findById(_id).select("-refreshToken -password -role");
+  const user = await User.findById(_id).select("-refreshToken -password ");
   return res.status(200).json({
     success: user ? true : false,
     getUser: user ? user : "User not found",
   });
+});
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const queries = { ...req.query };
+  //list type of filter
+  const exclusiveFields = ["limit", "sort", "page", "fields"];
+  exclusiveFields.forEach((element) => {
+    delete queries[element];
+  });
+
+  //syntax normalization
+  let queryString = JSON.stringify(queries);
+  queryString = queryString.replace(
+    /\b(gte|gt|lt|lte)\b/g,
+    (matchedEl) => `$${matchedEl}`
+  );
+
+  const formatQueries = JSON.parse(queryString);
+
+  //Filtering(title, price)
+  if (queries?.name) {
+    formatQueries.name = { $regex: queries.title, $options: "i" };
+  }
+
+  if (req.query.queryCollect) {
+    delete formatQueries.queryCollect;
+    formatQueries["$or"] = [
+      { firstName: { $regex: req.query.queryCollect, $options: "i" } },
+      { lastName: { $regex: req.query.queryCollect, $options: "i" } },
+      { email: { $regex: req.query.queryCollect, $options: "i" } },
+    ];
+  }
+
+  let queryCommand = User.find(formatQueries);
+
+  //Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    queryCommand = queryCommand.sort(sortBy);
+  }
+
+  //Range
+  if (req.query.fields) {
+    const fields = req.query.fields.split(",").join("");
+    queryCommand = queryCommand.select(fields);
+  }
+
+  //Pagination
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || process.env.LIMIT_PRODUCTS;
+  const skip = (page - 1) * limit;
+  queryCommand.skip(skip).limit(limit);
+
+  //Running query
+  try {
+    const response = await queryCommand;
+    const counts = await User.find(formatQueries).countDocuments();
+    return res.status(200).json({
+      success: response ? true : false,
+      counts,
+      userList: response ? response : "Error when get user List",
+    });
+  } catch (err) {
+    throw new Error(err.message);
+  }
 });
 
 const refreshLoginToken = asyncHandler(async (req, res) => {
@@ -246,21 +332,12 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
-const getAllUsers = asyncHandler(async (req, res) => {
-  const result = await User.find().select("-refreshToken -password -role");
-  return res.status(200).json({
-    success: result ? true : false,
-    users: result,
-  });
-});
-
 const deleteUser = asyncHandler(async (req, res) => {
-  const { _id } = req.query;
-  if (!_id) throw new Error("Missing inputs");
-  const result = await User.findByIdAndDelete(_id);
+  const { uid } = req.params;
+  const result = await User.findByIdAndDelete(uid);
   return res.status(200).json({
     success: result ? true : false,
-    deleteUser: result
+    message: result
       ? `User with email ${result.email} has been deleted`
       : `Can't found your user`,
   });
@@ -287,7 +364,7 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
   }).select("-password -role -refreshToken");
   return res.status(200).json({
     success: result ? true : false,
-    updateUser: result ? result : `Can't found your user`,
+    message: result ? "Cập nhật thành công" : `Lỗi khi cập nhật`,
   });
 });
 
@@ -352,6 +429,14 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
   }
 });
 
+const adminCreateUser = asyncHandler(async (req, res) => {
+  const response = await User.create(users);
+  return res.status(200).json({
+    success: response ? true : false,
+    users: response ? response : "fail",
+  });
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -367,4 +452,5 @@ module.exports = {
   updateUserByAdmin,
   addProductIntoUserCart,
   registerCheck,
+  adminCreateUser,
 };

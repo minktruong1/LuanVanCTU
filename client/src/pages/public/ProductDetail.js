@@ -48,7 +48,6 @@ const ProductDetail = () => {
     }
     apiReview({ star: point, comment: comment, pid, updatedAt: Date.now() });
     dispatch(showModal({ isShowModal: false, modalContent: null }));
-    // rerender();
     setTimeout(() => {
       fetchProductData();
     }, 1000);
@@ -89,9 +88,9 @@ const ProductDetail = () => {
     }
   };
 
-  const rerender = useCallback(() => {
-    setUpdateRatingBar(!updateRatingBar);
-  }, [updateRatingBar]);
+  // const rerender = useCallback(() => {
+  //   setUpdateRatingBar(!updateRatingBar);
+  // }, [updateRatingBar]);
 
   const fetchProductData = async () => {
     const response = await apiGetProductDetail(pid);

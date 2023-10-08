@@ -17,7 +17,7 @@ const RatingModal = ({ productImage, productName, handleCollectReview }) => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="bg-white w-[1140px] h-[420px] flex sticky top-[19%] left-[13%] relative"
+      className="bg-white w-[1140px] h-[420px] flex fixed top-[19%] left-[13%] "
     >
       <div className="w-[30%] bg-main relative">
         <div className="absolute bg-main right-[-8px] top-1/2 rotate-45 w-[20px] h-[20px]"></div>

@@ -3,6 +3,8 @@ const controllers = require("../controllers/user.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 
 router.post("/register", controllers.registerUser);
+router.post("/mock", controllers.adminCreateUser);
+
 router.put("/register-confirm/:token", controllers.registerCheck);
 router.post("/login", controllers.loginUser);
 router.get("/current", verifyLoginToken, controllers.getUser);
@@ -13,8 +15,8 @@ router.put("/resetpassword", controllers.resetPassword);
 router.put("/address", [verifyLoginToken], controllers.updateUserAddress);
 router.put("/cart", [verifyLoginToken], controllers.addProductIntoUserCart);
 
-router.get("/", [verifyLoginToken, isAdmin], controllers.getAllUsers);
-router.delete("/", [verifyLoginToken, isAdmin], controllers.deleteUser);
+router.get("/", controllers.getAllUsers); //[verifyLoginToken, isAdmin],
+router.delete("/:uid", [verifyLoginToken, isAdmin], controllers.deleteUser);
 router.put("/current", [verifyLoginToken], controllers.updateUserByUser);
 router.put("/:uid", [verifyLoginToken, isAdmin], controllers.updateUserByAdmin);
 

@@ -18,6 +18,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Warranty from "./pages/public/Warranty.js";
 import CouponsList from "./pages/public/CouponsList.js";
 import Modal from "./components/Modal.js";
+import {
+  AdminLayout,
+  CreateProduct,
+  Dashboard,
+  ManageOrders,
+  ManageProducts,
+  ManageUsers,
+} from "./pages/admin/index.js";
+import { CustomerLayout, Profile } from "./pages/customer/index.js";
 
 //About toastify
 import { ToastContainer } from "react-toastify";
@@ -70,7 +79,21 @@ function App() {
           <Route path={path.WARRANTY} element={<Warranty />}></Route>
           <Route path={path.LOGIN} element={<Login />}></Route>
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>
+          <Route path={path.ALL} element={<Home />}></Route>
         </Route>
+
+        <Route path={path.ADMIN} element={<AdminLayout />}>
+          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.MANAGE_ORDERS} element={<ManageOrders />} />
+          <Route path={path.MANAGE_PRODUCTS} element={<ManageProducts />} />
+          <Route path={path.MANAGE_USER} element={<ManageUsers />} />
+          <Route path={path.CREATE_PRODUCT} element={<CreateProduct />} />
+        </Route>
+
+        <Route path={path.CUSTOMER} element={<CustomerLayout />}>
+          <Route path={path.PROFILE} element={<Profile />} />
+        </Route>
+
         <Route path={path.LAST_REGISTER} element={<LastRegister />}></Route>
       </Routes>
     </div>

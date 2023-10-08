@@ -19,6 +19,7 @@ const {
   RiBillLine,
   LuUserCog,
   BiLogOut,
+  AiOutlineControl,
 } = icons;
 
 const Header = () => {
@@ -135,10 +136,22 @@ const Header = () => {
                         <RiBillLine className="mr-2 text-[16px]" />
                         <span>Đơn hàng của tôi</span>
                       </div>
-                      <div className="flex items-center h-[34px] justify-start hover:underline cursor-pointer">
+                      <Link
+                        to={`/${path.CUSTOMER}/${path.PROFILE}`}
+                        className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"
+                      >
                         <LuUserCog className="mr-2 text-[16px]" />
                         <span>Thông tin cá nhân</span>
-                      </div>
+                      </Link>
+                      {currentData.role === "admin" && (
+                        <Link
+                          to={`/${path.ADMIN}/${path.DASHBOARD}`}
+                          className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"
+                        >
+                          <AiOutlineControl className="mr-2 text-[16px]" />
+                          <span>Admin panel</span>
+                        </Link>
+                      )}
                       <div
                         onClick={() => dispatch(logout())}
                         className="flex items-center h-[34px] border-t justify-start hover:underline cursor-pointer"

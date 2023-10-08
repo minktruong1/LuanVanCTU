@@ -21,7 +21,7 @@ const config = {
 
 const userConfig = {
   ...config,
-  whitelist: ["isLogin", "token"],
+  whitelist: ["isLogin", "token", "currentData"],
 };
 
 export const store = configureStore({

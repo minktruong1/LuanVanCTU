@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { InputField, Button } from "../../components";
+import { InputField, Button, Loading } from "../../components";
 import icons from "../../ultils/icons";
 import {
   apiRegister,
@@ -14,6 +14,7 @@ import { login } from "../../store/users/userSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { formValidate } from "../../ultils/helpers";
+import { showModal } from "../../store/app/appSlice";
 
 const { MdArrowBackIosNew } = icons;
 
@@ -72,7 +73,9 @@ const Login = () => {
 
     if (invalidCount === 0) {
       if (isRegister) {
+        dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
         const responseRegis = await apiRegister(payload);
+        dispatch(showModal({ isShowModal: false, modalContent: null }));
         // console.log(responseRegis);
         if (responseRegis.success) {
           sweetAlert

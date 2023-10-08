@@ -27,6 +27,7 @@ import {
   AiOutlineStar,
   AiFillInstagram,
   AiFillTwitterCircle,
+  AiOutlineControl,
 } from "react-icons/ai";
 import { TiTags } from "react-icons/ti";
 import { RxVideo } from "react-icons/rx";
@@ -74,6 +75,7 @@ const icons = {
   GiCheckMark,
   BiSolidDownArrow,
   FaTimes,
+  AiOutlineControl,
 };
 
 export default icons;

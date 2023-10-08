@@ -91,3 +91,59 @@ export const starOptions = [
     text: "Rất tốt",
   },
 ];
+
+export const adminSidebar = [
+  {
+    id: 1,
+    type: "SINGLE",
+    text: "Dashboard",
+    path: `/${path.ADMIN}/${path.DASHBOARD}`,
+  },
+  {
+    id: 2,
+    type: "SINGLE",
+    text: "Manage users",
+    path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+  },
+  {
+    id: 3,
+    type: "PARENT",
+    text: "Manage products",
+    submenu: [
+      {
+        text: "Create product",
+        path: `/${path.ADMIN}/${path.CREATE_PRODUCT}`,
+      },
+      {
+        text: "Manage products",
+        path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`,
+      },
+    ],
+  },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Manage orders",
+    path: `/${path.ADMIN}/${path.MANAGE_ORDERS}`,
+  },
+];
+
+export const userRole = [
+  {
+    text: "admin",
+  },
+  {
+    text: "user",
+  },
+];
+
+export const userStatus = [
+  {
+    isBlock: true,
+    text: "block",
+  },
+  {
+    isBlock: false,
+    text: "active",
+  },
+];

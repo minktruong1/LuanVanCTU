@@ -46,7 +46,7 @@ const InputField = ({
 
       {invalidFields?.some((element) => element.name === nameKey) && (
         <small className="text-[11px] text-red-600 italic">
-          {invalidFields.find((element) => element.name === nameKey)?.message}
+          {invalidFields?.find((element) => element.name === nameKey)?.message}
         </small>
       )}
     </div>

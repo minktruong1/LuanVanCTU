@@ -130,20 +130,22 @@ export const adminSidebar = [
 
 export const userRole = [
   {
+    value: "admin",
     text: "admin",
   },
   {
+    value: "user",
     text: "user",
   },
 ];
 
 export const userStatus = [
   {
-    isBlock: true,
+    value: true,
     text: "block",
   },
   {
-    isBlock: false,
+    value: false,
     text: "active",
   },
 ];

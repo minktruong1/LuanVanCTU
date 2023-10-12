@@ -1,6 +1,6 @@
 import React, { memo, Fragment, useState } from "react";
 import { adminSidebar } from "../ultils/contants";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 
@@ -20,10 +20,13 @@ const AdminSidebar = () => {
 
   return (
     <div className=" bg-[#10163a] h-full py-4">
-      <div className="flex flex-col justify-center items-center py-2 ">
+      <Link
+        to={"/admin/dashboard"}
+        className="flex flex-col justify-center items-center py-2 "
+      >
         <span className="text-4xl font-extrabold">WORK STATION</span>
-      </div>
-      <div>
+      </Link>
+      <div className="text-lg">
         {adminSidebar.map((element) => (
           <Fragment key={element.id}>
             {element.type === "SINGLE" && (

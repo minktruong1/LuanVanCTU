@@ -19,6 +19,7 @@ import { showModal } from "../../store/app/appSlice";
 import path from "../../ultils/path";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 const { GiCheckMark } = icons;
 
@@ -251,7 +252,12 @@ const ProductDetail = () => {
           <div className="flex flex-col w-[60%] border rounded bg-white">
             <div className="p-[24px] pt-[16px] pb-[16px] ">
               <h2 className="text-[22px] font-semibold">Mô tả sản phẩm</h2>
-              <div>{product?.description}</div>
+              <div
+                className="text-sm"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(product?.description),
+                }}
+              ></div>
             </div>
           </div>
           <div className="flex flex-col w-[40%] border rounded bg-white">

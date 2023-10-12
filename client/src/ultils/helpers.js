@@ -95,3 +95,24 @@ export const listPageRange = (start, end) => {
 
   return Array.from({ length }, (_, index) => start + index);
 };
+
+// export const fileToBase64 = (filename, filepath) => {
+//   return new Promise((resolve) => {
+//     var file = new File([filename], filepath);
+//     var reader = new FileReader();
+//     reader.onload = function (event) {
+//       resolve(event.target.result);
+//     };
+//     reader.readAsDataURL(file);
+//   });
+// };
+
+export function getBase64(file) {
+  if (!file) return "";
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}

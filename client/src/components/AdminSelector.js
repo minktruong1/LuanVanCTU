@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import clsx from "clsx";
 
-const UserUpdateSelector = ({
+const AdminSelector = ({
   label,
   options = [],
   register,
@@ -13,23 +13,19 @@ const UserUpdateSelector = ({
   defaultValue,
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={clsx("flex flex-col gap-2", style)}>
       {label && <label htmlFor={id}>{label}</label>}
       <select
         defaultValue={defaultValue}
         id={id}
         {...register(id, validate)}
-        className={clsx("form-select", fullWidth && "w-full", style)}
+        className={clsx("form-select ", fullWidth && "w-full")}
       >
         <option value="">--Chọn--</option>
-        {id === "role" &&
-          options?.map((element) => (
-            <option value={element?.text}>{element?.text}</option>
-          ))}
-        {id === "isBlocked" &&
-          options?.map((element) => (
-            <option value={element?.isBlock}>{element?.text}</option>
-          ))}
+
+        {options?.map((element) => (
+          <option value={element?.value}>{element?.text}</option>
+        ))}
       </select>
       {errors[id] && (
         <small className="text-xs text-red-500">{errors[id]?.message}</small>
@@ -38,4 +34,4 @@ const UserUpdateSelector = ({
   );
 };
 
-export default memo(UserUpdateSelector);
+export default memo(AdminSelector);

@@ -4,12 +4,26 @@ const slugify = require("slugify");
 // const { query } = require("express");
 
 const createProduct = asyncHandler(async (req, res) => {
-  if (Object.keys(req.body).length === 0) throw new Error("Missing inputs");
-  if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
+  const { title, price, description, brand, category } = req.body;
+  let images = req.files; // Thay đổi này để lấy danh sách các tệp
+
+  if (!(title && price && description && brand && category)) {
+    throw new Error("Missing inputs");
+  }
+
+  req.body.slug = slugify(title);
+
+  // Chuyển đổi danh sách tệp thành mảng các đường dẫn hình ảnh
+  if (images) {
+    images = images.map((file) => file.path);
+    req.body.images = images;
+  }
+
   const newProduct = await Product.create(req.body);
+
   return res.status(200).json({
     success: newProduct ? true : false,
-    createdProduct: newProduct ? newProduct : "Error when create product",
+    message: newProduct ? "Tạo sản phẩm mới thành công" : "Lỗi tạo sản phẩm",
   });
 });
 
@@ -31,11 +45,10 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const formatQueries = JSON.parse(queryString);
   let categoryQueryFields = {};
 
-  //Filtering(title, price)
+  // Filtering(title, price);
   if (queries?.title) {
     formatQueries.title = { $regex: queries.title, $options: "i" };
   }
-
   if (queries?.category) {
     delete formatQueries.category;
     const cateArray = queries.category?.split(",");
@@ -49,10 +62,24 @@ const getAllProducts = asyncHandler(async (req, res) => {
     categoryQueryFields = { $or: cateQuery };
   }
 
-  // if (queries?.brand) {
-  //   const
-  // }
-  const groupQuery = { ...categoryQueryFields, ...formatQueries };
+  let queryBlock = {};
+  if (queries?.query) {
+    delete formatQueries.query;
+    queryBlock = {
+      $or: [
+        { title: { $regex: queries.query, $options: "i" } },
+        { category: { $regex: queries.query, $options: "i" } },
+        { brand: { $regex: queries.query, $options: "i" } },
+        // { description: { $regex: queries.query, $options: "i" } },
+      ],
+    };
+  }
+
+  const groupQuery = {
+    ...categoryQueryFields,
+    ...formatQueries,
+    ...queryBlock,
+  };
   let queryCommand = Product.find(groupQuery);
 
   //Sort
@@ -63,7 +90,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
   //Range
   if (req.query.fields) {
-    const fields = req.query.fields.split(",").join("");
+    const fields = req.query.fields.split(",").join(" ");
     queryCommand = queryCommand.select(fields);
   }
 
@@ -73,7 +100,18 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const skip = (page - 1) * limit;
   queryCommand.skip(skip).limit(limit);
 
-  //Running query
+  // Running query
+  // queryCommand.exec(async (err, response) => {
+  //   if (err) {
+  //     throw new Error(err.message);
+  //   }
+  //   const counts = await Product.find(query).countDocuments();
+  //   return res.status(200).json({
+  //     success: response ? true : false,
+  //     counts,
+  //     products: response ? response : "Error when get product",
+  //   });
+  // });
   try {
     const response = await queryCommand;
     const counts = await Product.find(groupQuery).countDocuments();
@@ -104,13 +142,22 @@ const getProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
-  if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
+  let updatedImages = req?.files; // Sử dụng let thay vì const
+
+  if (updatedImages) {
+    updatedImages = updatedImages.map((file) => file.path);
+    req.body.images = updatedImages; // Sử dụng updatedImages thay vì images
+  }
+
+  if (req.body && req.body.title) {
+    req.body.slug = slugify(req.body.title);
+  }
   const updateProduct = await Product.findByIdAndUpdate(pid, req.body, {
     new: true,
   });
   return res.status(200).json({
     success: updateProduct ? true : false,
-    updateProduct: updateProduct ? updateProduct : "Error when update product",
+    message: updateProduct ? "Cập nhật thành công" : "Lỗi cập nhật",
   });
 });
 
@@ -119,7 +166,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
   const deleteProduct = await Product.findByIdAndDelete(pid);
   return res.status(200).json({
     success: deleteProduct ? true : false,
-    deleteProduct: deleteProduct ? deleteProduct : "Error when delete product",
+    message: deleteProduct ? "Xóa thành công" : "Xóa thất bại",
   });
 });
 

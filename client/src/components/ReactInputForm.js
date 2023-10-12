@@ -11,10 +11,11 @@ const ReactInputForm = ({
   type = "text",
   placeholder,
   defaultValue,
+  style,
   fullWidth,
 }) => {
   return (
-    <div className="">
+    <div className={clsx("", style)}>
       {label && <label htmlFor={id}>{label}</label>}
       <input
         type={type}

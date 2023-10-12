@@ -131,7 +131,6 @@ const Login = () => {
     }
     setRegisterToken("");
   };
-
   return (
     <div className="flex justify-center  ">
       <div className="flex bg-white justify-center p-8 min-w-[544px] w-1/2 mt-[30px] mb-[30px]">

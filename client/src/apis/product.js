@@ -19,3 +19,22 @@ export const apiReview = (data) =>
     method: "PUT",
     data,
   });
+
+export const apiCreateProduct = (data) =>
+  axios({
+    url: "/product/",
+    method: "POST",
+    data,
+  });
+
+export const apiUpdateProduct = (data, pid) =>
+  axios({
+    url: "/product/" + pid,
+    method: "PUT",
+    data,
+  });
+export const apiDeleteProduct = (pid) =>
+  axios({
+    url: "/product/" + pid,
+    method: "DELETE",
+  });

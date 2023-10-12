@@ -16,7 +16,7 @@ const AdminLayout = () => {
       <div className="w-[300px]  fixed top-0 bottom-0 left-0">
         <AdminSidebar />
       </div>
-      <div className="w-[380px]"></div>
+      <div className="w-[374px]"></div>
       <div className="w-full flex-auto text-black">
         <Outlet />
       </div>

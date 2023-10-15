@@ -28,3 +28,6 @@ export { default as ReactInputForm } from "./ReactInputForm.js";
 export { default as Select } from "./Select.js";
 export { default as AdminSelector } from "./AdminSelector.js";
 export { default as MarkdownEditor } from "./MarkdownEditor.js";
+export { default as CustomerSidebar } from "./CustomerSidebar.js";
+export { default as CartPopup } from "./CartPopup.js";
+export { default as CartItem } from "./CartItem.js";

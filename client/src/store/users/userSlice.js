@@ -9,6 +9,7 @@ export const userSlice = createSlice({
     token: null,
     isLoading: false,
     message: "",
+    currentCart: [],
   },
   reducers: {
     login: (state, action) => {
@@ -25,6 +26,18 @@ export const userSlice = createSlice({
     clearMessage: (state) => {
       state.message = "";
     },
+    updateCart: (state, action) => {
+      console.log(action);
+      const { pid, quantity } = action.payload;
+      const updateItem = state.currentCart.find(
+        (element) => element.product?._id === pid
+      );
+      if (updateItem) {
+        updateItem.quantity = quantity;
+      } else {
+        state.message = "Loi cap nhat so luong";
+      }
+    },
   },
   // Code xử lý async action
   extraReducers: (builder) => {
@@ -36,6 +49,7 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.currentData = action.payload;
       state.isLogin = true;
+      state.currentCart = action.payload.cart;
     });
 
     builder.addCase(actions.apiGetCurrentAccount.rejected, (state, action) => {
@@ -48,6 +62,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, logout, clearMessage } = userSlice.actions;
+export const { login, logout, clearMessage, updateCart } = userSlice.actions;
 
 export default userSlice.reducer;

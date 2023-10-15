@@ -28,10 +28,12 @@ import {
   AiFillInstagram,
   AiFillTwitterCircle,
   AiOutlineControl,
+  AiOutlineHeart,
+  AiFillHeart,
 } from "react-icons/ai";
 import { TiTags } from "react-icons/ti";
 import { RxVideo } from "react-icons/rx";
-import { BiSearch, BiLogOut, BiSolidDownArrow } from "react-icons/bi";
+import { BiSearch, BiLogOut, BiSolidDownArrow, BiTrash } from "react-icons/bi";
 import { ImMinus } from "react-icons/im";
 import { FaQuestionCircle, FaListUl, FaTimes } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
@@ -76,6 +78,9 @@ const icons = {
   BiSolidDownArrow,
   FaTimes,
   AiOutlineControl,
+  AiOutlineHeart,
+  AiFillHeart,
+  BiTrash,
 };
 
 export default icons;

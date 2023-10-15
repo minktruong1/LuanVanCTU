@@ -4,6 +4,7 @@ import {
   useSearchParams,
   useNavigate,
   createSearchParams,
+  useLocation,
 } from "react-router-dom";
 import {
   Breadcrumb,
@@ -29,15 +30,17 @@ const Products = () => {
   const [activeBox, setActiveBox] = useState(null);
   const [sort, setSort] = useState("");
   const [params] = useSearchParams();
+  const { category } = useParams();
 
   const fetchProductByCate = async (queries) => {
-    const response = await apiGetProducts(queries);
-    if (response.success) {
-      setProducts(response);
+    if (category === "all-products") {
+      const response = await apiGetProducts({ ...queries });
+      if (response.success) setProducts(response);
+    } else {
+      const response = await apiGetProducts({ ...queries, category });
+      if (response.success) setProducts(response);
     }
   };
-
-  const { category } = useParams();
 
   useEffect(() => {
     const queries = Object.fromEntries([...params]);
@@ -63,7 +66,6 @@ const Products = () => {
     delete queries.from;
     delete queries.to;
 
-    console.log(queries);
     fetchProductByCate({ ...priceFilterQuery, ...queries });
     window.scrollTo(0, 0);
   }, [params]);

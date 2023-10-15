@@ -154,13 +154,13 @@ const ManageProducts = () => {
                 <td>
                   <span
                     onClick={() => setEditProductTab(element)}
-                    className="underline cursor-pointer mr-2 text-[#1982f8]"
+                    className="underline cursor-pointer mr-2 text-canClick"
                   >
                     Edit
                   </span>
                   <span
                     onClick={() => handleDeleteProduct(element._id)}
-                    className="underline cursor-pointer text-[#1982f8]"
+                    className="underline cursor-pointer text-canClick"
                   >
                     Delete
                   </span>

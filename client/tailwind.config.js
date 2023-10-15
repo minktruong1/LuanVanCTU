@@ -12,13 +12,17 @@ module.exports = {
       backgroundColor: {
         main: "#e30019",
         darkRed: "#be1529",
-        webBackground: "#f5f5f5",
+        webBackground: "#ECECEC",
         overlay: "rgba(0,0,0,0.5)",
         upperHeaderColor: "#e7e7e7",
       },
       color: {
         main: "#e30019",
         hoverText: "#e60019",
+      },
+      colors: {
+        canClick: "#1982f8",
+        main: "#e31b23",
       },
       backgroundImage: {
         hotDealImg: "url('./assets/hotDealBg.png')",

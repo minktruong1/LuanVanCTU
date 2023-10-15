@@ -7,7 +7,7 @@ const Pagination = ({ totalCount }) => {
   const [params] = useSearchParams();
   const pagination = usePagination(totalCount, +params.get("page") || 1);
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 mb-8">
       {pagination?.map((element) => (
         <PageItems key={element}>{element}</PageItems>
       ))}

@@ -7,6 +7,8 @@ import { apiGetCurrentAccount } from "../store/users/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, clearMessage } from "../store/users/userSlice";
 import sweetAlert from "sweetalert2";
+import CartPopup from "./CartPopup";
+import { showCartPopup } from "../store/app/appSlice";
 
 const {
   TfiHeadphoneAlt,
@@ -26,6 +28,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogin, currentData, message } = useSelector((state) => state.user);
+  const { isShowCartPopup } = useSelector((state) => state.appReducer);
 
   useEffect(() => {
     const setTimeoutGetCurrent = setTimeout(() => {
@@ -97,14 +100,29 @@ const Header = () => {
                 <span className="flex ">đơn hàng</span>
               </span>
             </div>
-            <div className="flex flex-row px-4 items-center">
-              <span className="flex gap-4 items-center text-[24px] pr-2">
-                <BsCart3 />
-              </span>
-              <span>
-                <span className="flex ">Giỏ</span>
-                <span className="flex ">hàng</span>
-              </span>
+            <div
+              onMouseEnter={() => dispatch(showCartPopup())}
+              onMouseLeave={() => dispatch(showCartPopup())}
+              className="flex flex-row px-4 items-center"
+            >
+              <Link
+                to={`/${path.MAIN_CART}`}
+                className="flex flex-row px-4 items-center relative"
+              >
+                <span className="flex gap-4 items-center text-[24px] pr-2">
+                  <BsCart3 />
+                </span>
+                <span>
+                  <span className="flex ">Giỏ</span>
+                  <span className="flex ">hàng</span>
+                </span>
+                <div className="bg-black top-[38px] w-[100px] right-0 absolute model-top-arrowHolding"></div>
+              </Link>
+              {isShowCartPopup && (
+                <div className="absolute top-[88px] right-[282px] cursor-default">
+                  <CartPopup />
+                </div>
+              )}
             </div>
             {isLogin && currentData ? (
               <>
@@ -117,7 +135,7 @@ const Header = () => {
                       <span className="flex ">Xin chào,</span>
                       <span className="flex ">{currentData?.lastName}</span>
                     </span>
-                    <div className="bg-black top-[48px] right-0 absolute model-top-arrowHolding"></div>
+                    <div className="bg-black top-[48px] right-0 absolute w-[120px] model-top-arrowHolding"></div>
                   </div>
                 </div>
                 <div className="account-model">

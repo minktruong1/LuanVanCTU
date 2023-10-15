@@ -133,7 +133,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
         <div className="mb-4 w-fit">
           <span
             onClick={() => setEditProductTab(null)}
-            className="underline text-[#1982f8] flex items-center cursor-pointer"
+            className="underline text-canClick flex items-center cursor-pointer"
           >
             <MdArrowBackIosNew />
             Trở về

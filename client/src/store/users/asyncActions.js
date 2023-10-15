@@ -5,7 +5,9 @@ export const apiGetCurrentAccount = createAsyncThunk(
   "user/current",
   async (data, { rejectWithValue }) => {
     const response = await apis.apiGetCurrentUser();
-    if (!response.success) return rejectWithValue(response);
+    if (!response.success) {
+      return rejectWithValue(response);
+    }
     return response.getUser;
   }
 );

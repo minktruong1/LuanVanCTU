@@ -3,10 +3,8 @@ import upperImg from "../assets/upperHeader.jpg";
 
 const UpperHeader = () => {
   return (
-    <div className="h-[55px] w-full flex justify-center bg-upperHeaderColor">
-      <div className="">
-        <img alt="" src={upperImg} className="h-full w-full object-cover" />
-      </div>
+    <div className="max-h-[55px] w-full flex justify-center bg-upperHeaderColor">
+      <img alt="" src={upperImg} className="h-full w-full object-cover" />
     </div>
   );
 };

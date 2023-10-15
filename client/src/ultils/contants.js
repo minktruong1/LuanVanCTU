@@ -128,6 +128,33 @@ export const adminSidebar = [
   },
 ];
 
+export const customerSidebar = [
+  {
+    id: 1,
+    type: "SINGLE",
+    text: "Thông tin tài khoản",
+    path: `/${path.CUSTOMER}/${path.PROFILE}`,
+  },
+  {
+    id: 2,
+    type: "SINGLE",
+    text: "Giỏ hàng",
+    path: `/${path.CUSTOMER}/${path.CART}`,
+  },
+  {
+    id: 3,
+    type: "SINGLE",
+    text: "Lịch sử mua sắm",
+    path: `/${path.CUSTOMER}/${path.ORDER_HISTORY}`,
+  },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Danh sách yêu thích",
+    path: `/${path.CUSTOMER}/${path.FAV_PRODUCTS}`,
+  },
+];
+
 export const userRole = [
   {
     value: "admin",

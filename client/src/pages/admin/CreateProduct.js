@@ -100,6 +100,7 @@ const CreateProduct = () => {
 
   return (
     <div className="w-full relative">
+      <div className="h-[75px]"></div>
       <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b fixed top-0 bg-webBackground z-50">
         <h1>Thêm sản phẩm</h1>
       </div>

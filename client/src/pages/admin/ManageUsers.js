@@ -163,13 +163,13 @@ const ManageUsers = () => {
                     <td className="py-2 px-4 ">
                       <span
                         onClick={() => setEditUser(element)}
-                        className="underline cursor-pointer mr-2 text-[#1982f8]"
+                        className="underline cursor-pointer mr-2 text-canClick"
                       >
                         Edit
                       </span>
                       <span
                         onClick={() => handleDelete(element._id)}
-                        className="underline cursor-pointer text-[#1982f8]"
+                        className="underline cursor-pointer text-canClick"
                       >
                         Delete
                       </span>
@@ -273,7 +273,7 @@ const ManageUsers = () => {
                         <td className="">
                           <span
                             onClick={() => setEditUser(null)}
-                            className="mr-[16px] underline text-[#1982f8] cursor-pointer"
+                            className="mr-[16px] underline text-canClick cursor-pointer"
                           >
                             Trở về
                           </span>

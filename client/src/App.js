@@ -11,6 +11,8 @@ import {
   PaymentInstruction,
   LastRegister,
   RsPassword,
+  MainCart,
+  Checkout,
 } from "./pages/public/index.js";
 import path from "./ultils/path.js";
 import { apiGetCategories } from "./store/app/asyncActions.js";
@@ -25,8 +27,15 @@ import {
   ManageOrders,
   ManageProducts,
   ManageUsers,
-} from "./pages/admin/index.js";
-import { CustomerLayout, Profile } from "./pages/customer/index.js";
+} from "./pages/admin/";
+
+import {
+  CustomerLayout,
+  Profile,
+  Cart,
+  FavoriteProducts,
+  OrderHistory,
+} from "./pages/customer/index.js";
 
 //About toastify
 import { ToastContainer } from "react-toastify";
@@ -78,7 +87,9 @@ function App() {
           ></Route>
           <Route path={path.WARRANTY} element={<Warranty />}></Route>
           <Route path={path.LOGIN} element={<Login />}></Route>
+          <Route path={path.MAIN_CART} element={<MainCart />}></Route>
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>
+          <Route path={path.CHECKOUT} element={<Checkout />}></Route>
           <Route path={path.ALL} element={<Home />}></Route>
         </Route>
 
@@ -92,6 +103,9 @@ function App() {
 
         <Route path={path.CUSTOMER} element={<CustomerLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />
+          <Route path={path.CART} element={<Cart />} />
+          <Route path={path.FAV_PRODUCTS} element={<FavoriteProducts />} />
+          <Route path={path.ORDER_HISTORY} element={<OrderHistory />} />
         </Route>
 
         <Route path={path.LAST_REGISTER} element={<LastRegister />}></Route>

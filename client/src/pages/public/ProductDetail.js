@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { apiGetProductDetail } from "../../apis";
+import {
+  createSearchParams,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { apiGetProductDetail, apiUpdateCart } from "../../apis";
 import {
   Breadcrumb,
   Button,
@@ -20,6 +24,9 @@ import path from "../../ultils/path";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { apiGetCurrentAccount } from "../../store/users/asyncActions";
 
 const { GiCheckMark } = icons;
 
@@ -34,13 +41,14 @@ const reactSlickSetting = {
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { pid, title, category } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [chooseImage, setChooseImage] = useState(null);
   const [updateRatingBar, setUpdateRatingBar] = useState(false);
 
-  const { isLogin } = useSelector((state) => state.user);
+  const { isLogin, currentData } = useSelector((state) => state.user);
 
   const handleCollectReview = async ({ comment, point }) => {
     if (!comment && !point && pid) {
@@ -160,6 +168,35 @@ const ProductDetail = () => {
     setChooseImage(element);
   };
 
+  const handleAddToCart = async () => {
+    if (!currentData) {
+      return sweetAlert
+        .fire({
+          title: "Lỗi",
+          text: "Hãy đăng nhập",
+          icon: "info",
+          cancelButtonAriaLabel: "Hủy",
+          showCancelButton: true,
+          confirmButtonText: "Tới trang đăng nhập",
+        })
+        .then((rs) => {
+          if (rs.isConfirmed) {
+            navigate({
+              pathname: `/${path.LOGIN}`,
+              search: createSearchParams({
+                redirect: location.pathname,
+              }).toString(),
+            });
+          }
+        });
+    }
+    const response = await apiUpdateCart({ pid: product?._id, quantity });
+    if (response.success) {
+      toast.success(response.message);
+      dispatch(apiGetCurrentAccount());
+    }
+  };
+
   return (
     <>
       <div className="w-main ">
@@ -244,7 +281,7 @@ const ProductDetail = () => {
                   {product?.quantity} sản phẩm có sẵn
                 </span>
               </div>
-              <Button>Thêm vào giỏ hàng</Button>
+              <Button handleOnClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
             </div>
           </div>
         </div>

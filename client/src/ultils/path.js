@@ -2,8 +2,9 @@ const path = {
   PUBLIC: "/",
   HOME: "",
   ALL: "*",
-  LOGIN: "login",
   PRODUCTS: ":category",
+  LOGIN: "login",
+  MAIN_CART: "main-cart",
   BLOGS: "blogs",
   OUR_SERVICES: "services",
   WARRANTY: "warranty",
@@ -14,6 +15,7 @@ const path = {
   PRODUCT_DETAIL: "product",
   LAST_REGISTER: "last-register/:status",
   RESET_PASSWORD: "reset-password/:token",
+  CHECKOUT: "checkout",
 
   //admin path
   ADMIN: "admin",
@@ -26,6 +28,9 @@ const path = {
   //customer path
   CUSTOMER: "customer",
   PROFILE: "profile",
+  CART: "my-cart",
+  ORDER_HISTORY: "order-history",
+  FAV_PRODUCTS: "favorite-list",
 };
 
 export default path;

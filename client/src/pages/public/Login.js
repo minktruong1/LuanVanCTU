@@ -15,13 +15,14 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { formValidate } from "../../ultils/helpers";
 import { showModal } from "../../store/app/appSlice";
+import { useSearchParams } from "react-router-dom";
 
 const { MdArrowBackIosNew } = icons;
 
 const Login = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
 
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -99,7 +100,9 @@ const Login = () => {
               userData: responseLogin.userData,
             })
           );
-          navigate(`/${path.HOME}`);
+          searchParams.get("redirect")
+            ? navigate(searchParams.get("redirect"))
+            : navigate(`/${path.HOME}`);
         } else {
           sweetAlert.fire("Lỗi đăng nhập", responseLogin.mes, "error");
         }
@@ -227,7 +230,7 @@ const Login = () => {
           </div>
 
           {!isResetPassword && (
-            <Button handleOnClick={handleSubmit} wFull>
+            <Button handleOnClick={handleSubmit} widthFull>
               {isRegister ? "Đăng ký" : "Đăng nhập"}
             </Button>
           )}

@@ -16,7 +16,6 @@ const imagesLink = [
 
 const Home = () => {
   const { isLogin, currentData } = useSelector((state) => state.user);
-  console.log({ isLogin, currentData });
   return (
     <div className="w-main">
       <div className="flex mt-4">

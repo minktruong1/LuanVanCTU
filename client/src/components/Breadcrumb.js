@@ -20,7 +20,7 @@ const Breadcrumb = ({ title, category }) => {
         .map(({ match, breadcrumb }, index, count) => (
           <React.Fragment key={index}>
             <Link
-              className="flex items-center text-[#1982f8]"
+              className="flex items-center text-canClick"
               to={match.pathname}
             >
               {index === 0 ? (

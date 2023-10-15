@@ -10,11 +10,11 @@ import {
 const Public = () => {
   return (
     <>
-      <div className="w-full flex flex-col items-center ">
+      <div className="w-full max-h-screen overflow-y-auto flex flex-col items-center ">
         <UpperHeader />
         <Header />
         <Navigation />
-        <div className="w-full flex flex-col items-center bg-webBackground ">
+        <div className="w-full flex flex-col items-center bg-webBackground">
           <Outlet />
         </div>
         <Footer />

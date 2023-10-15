@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatVND } from "../ultils/helpers";
 import { pointToStar } from "../ultils/helpers";
 import { Link } from "react-router-dom";
+import icons from "../ultils/icons";
+
+const { AiOutlineHeart, AiFillHeart } = icons;
 
 const Product = ({ productData, isNew, isHot }) => {
+  const [favorite, setFavorite] = useState(false);
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+    console.log("love!!");
+  };
+
   return (
-    <Link
-      to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
-        productData?.title
-      }`}
-    >
-      <div className="items-center mx-2 mb-4 bg-white text-base border p-4">
-        <div className=" relative ">
+    <div>
+      <div className="items-center m-2 bg-white text-base border p-4">
+        <Link
+          to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
+            productData?.title
+          }`}
+          className="relative"
+        >
           <div className="overflow-hidden flex justify-center">
             <img
               src={productData?.images[0] || ""}
@@ -33,9 +43,16 @@ const Product = ({ productData, isNew, isHot }) => {
               </div>
             </div>
           )}
-        </div>
+        </Link>
         <div className="flex flex-col gap-2 mt-[12px] items-start w-full">
-          <span className="line-clamp-1">{productData?.title}</span>
+          <Link
+            to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
+              productData?.title
+            }`}
+            className="line-clamp-1"
+          >
+            {productData?.title}
+          </Link>
           <span className="flex items-center text-yellow-500">
             {pointToStar(productData?.reviewPoint)?.map((element, index) => (
               <span key={index}>{element}</span>
@@ -44,10 +61,20 @@ const Product = ({ productData, isNew, isHot }) => {
               {productData?.reviewPoint.toFixed(1)}
             </span>
           </span>
-          <span>{`${formatVND(productData?.price)} VNĐ`}</span>
+          <div className="flex w-full justify-between items-center">
+            <div>{`${formatVND(productData?.price)}đ`}</div>
+            <div
+              onClick={() => handleFavorite()}
+              className="text-[22px] cursor-pointer text-main"
+            >
+              <span title="Yêu thích">
+                {favorite ? <AiFillHeart /> : <AiOutlineHeart />}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

@@ -170,7 +170,15 @@ const loginUser = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
-  const user = await User.findById(_id).select("-refreshToken -password ");
+  const user = await User.findById(_id)
+    .select("-refreshToken -password ")
+    .populate({
+      path: "cart",
+      populate: {
+        path: "product",
+        select: "title images price quantity category",
+      },
+    });
   return res.status(200).json({
     success: user ? true : false,
     getUser: user ? user : "User not found",
@@ -345,14 +353,20 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 const updateUserByUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  if (!_id || Object.keys(req.body).length === 0)
+  const { firstName, lastName, email, mobile } = req.body;
+  const data = { firstName, lastName, email, mobile };
+  if (req.file) data.avatar = req.file.path;
+  if (!_id || Object.keys(req.body).length === 0) {
     throw new Error("Missing inputs");
-  const result = await User.findByIdAndUpdate(_id, req.body, {
+  }
+  const result = await User.findByIdAndUpdate(_id, data, {
     new: true,
   }).select("-password -role -refreshToken");
   return res.status(200).json({
     success: result ? true : false,
-    updateUser: result ? result : `Can't found your user`,
+    message: result
+      ? "Cập nhật thông tin người dùng thành công"
+      : `Lỗi cập nhật`,
   });
 });
 
@@ -385,15 +399,9 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { pid, quantity } = req.body;
-  if (!pid || !quantity) throw new Error("Missing inputs");
-
-  //Searching information about product throught product id
-  const product = await Product.findById(pid);
-  if (!product) {
-    throw new Error("Product not found");
+  if (!pid || !quantity) {
+    throw new Error("Missing inputs");
   }
-  const { price, description } = product;
-
   const user = await User.findById(_id).select("cart");
   const alreadyInCart = user?.cart?.find(
     (element) => element.product.toString() === pid
@@ -404,29 +412,55 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
       {
         $set: {
           "cart.$.quantity": quantity,
-          "cart.$.price": price, //Add price into cart
-          "cart.$.description": description, //Add description into cart
+          "cart.$.price": price,
         },
       },
       { new: true }
     );
     return res.status(200).json({
       success: response ? true : false,
-      updateCart: response ? response : "error when add product",
+      message: response ? "Cập nhật giỏ hàng thành công" : "Lỗi thêm giỏ hàng",
     });
   } else {
     const response = await User.findByIdAndUpdate(
       _id,
       {
-        $push: { cart: { product: pid, quantity, price, description } },
+        $push: { cart: { product: pid, quantity } },
       },
       { new: true }
     );
     return res.status(200).json({
       success: response ? true : false,
-      updateCart: response ? response : "error when add product",
+      message: response ? "Thêm sản phẩm thành công" : "Lỗi thêm sản phẩm",
     });
   }
+});
+
+const removeProductFromCart = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { pid } = req.params;
+
+  const user = await User.findById(_id).select("cart");
+  const alreadyInCart = user?.cart?.find(
+    (element) => element.product.toString() === pid
+  );
+  if (!alreadyInCart) {
+    return res.status(200).json({
+      success: true,
+      message: "Cập nhật giỏ hàng thành công",
+    });
+  }
+  const response = await User.findByIdAndUpdate(
+    _id,
+    { $pull: { cart: { product: pid } } },
+    { new: true }
+  );
+  return res.status(200).json({
+    success: response ? true : false,
+    message: response
+      ? "Cập nhật giỏ hàng thành công"
+      : "Lỗi cập nhật giỏ hàng",
+  });
 });
 
 const adminCreateUser = asyncHandler(async (req, res) => {
@@ -453,4 +487,5 @@ module.exports = {
   addProductIntoUserCart,
   registerCheck,
   adminCreateUser,
+  removeProductFromCart,
 };

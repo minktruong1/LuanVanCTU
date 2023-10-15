@@ -203,8 +203,7 @@ p {
 }
 
 .model-top-arrowHolding {
-  width: 120px;
-  height: 20px;
+  height: 26px;
   z-index: 20;
   /* visibility: hidden; */
   opacity: 0;

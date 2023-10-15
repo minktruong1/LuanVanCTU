@@ -15,7 +15,7 @@ const ReactInputForm = ({
   fullWidth,
 }) => {
   return (
-    <div className={clsx("", style)}>
+    <div className={clsx("max-h-[42px]", style)}>
       {label && <label htmlFor={id}>{label}</label>}
       <input
         type={type}

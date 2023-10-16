@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { apiRemoveProductFromCart } from "../apis";
+import { apiRemoveProductFromCart, apiUpdateCart } from "../apis";
 import { useDispatch } from "react-redux";
 import { apiGetCurrentAccount } from "../store/users/asyncActions";
 import { toast } from "react-toastify";
@@ -51,7 +51,7 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
     );
   }, [quantitySelect]);
 
-  // console.log(updateCart);
+  console.log(element);
   return (
     <div className="flex mb-6">
       <div className="w-[20%] flex flex-col items-center">

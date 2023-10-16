@@ -28,7 +28,7 @@ const MainCart = () => {
 
       <div className="w-main flex justify-center items-center mb-6">
         <div className="flex flex-col">
-          <div className="bg-white w-[600px]">
+          <div className="bg-white w-[600px] rounded">
             <div className="p-4">
               <Link
                 to={`/all-products`}

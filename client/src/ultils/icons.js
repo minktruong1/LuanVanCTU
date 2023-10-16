@@ -10,6 +10,7 @@ import {
   MdArrowBackIosNew,
   MdWavingHand,
   MdOutlineKeyboardArrowRight,
+  MdLocationPin,
 } from "react-icons/md";
 import { PiNotepadLight, PiHandCoins } from "react-icons/pi";
 import {
@@ -81,6 +82,7 @@ const icons = {
   AiOutlineHeart,
   AiFillHeart,
   BiTrash,
+  MdLocationPin,
 };
 
 export default icons;

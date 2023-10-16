@@ -27,7 +27,6 @@ export const userSlice = createSlice({
       state.message = "";
     },
     updateCart: (state, action) => {
-      console.log(action);
       const { pid, quantity } = action.payload;
       const updateItem = state.currentCart.find(
         (element) => element.product?._id === pid

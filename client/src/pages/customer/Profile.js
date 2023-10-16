@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ReactInputForm } from "../../components";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,9 @@ const Profile = () => {
   } = useForm();
   const dispatch = useDispatch();
   const { currentData } = useSelector((state) => state.user);
+
+  const [updateUserAddress, setUpdateUserAddress] = useState(false);
+
   useEffect(() => {
     reset({
       firstName: currentData?.firstName,
@@ -22,11 +25,12 @@ const Profile = () => {
       email: currentData?.email,
       mobile: currentData?.mobile,
       avatar: currentData?.avatar,
+      address: currentData?.address,
     });
   }, [currentData]);
 
   const handleUpdateProfile = async (data) => {
-    console.log(data);
+    setUpdateUserAddress(false);
     const formData = new FormData();
     if (data.avatar.length > 0) {
       formData.append("avatar", data.avatar[0]);
@@ -42,10 +46,20 @@ const Profile = () => {
       toast.error(response.message);
     }
   };
+
+  const handleUpdateAddress = () => {
+    setUpdateUserAddress(!updateUserAddress);
+    if (updateUserAddress === true) {
+      reset({
+        address: currentData?.address,
+      });
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit(handleUpdateProfile)}
-      className="w-full bg-white rounded-sm"
+      className="w-full bg-white rounded"
     >
       <div className="p-[16px] text-[24px] font-medium flex justify-between">
         <h1>Thông tin tài khoản</h1>
@@ -127,6 +141,30 @@ const Profile = () => {
               fullWidth
               placeholder="Số điện thoại người dùng"
             />
+          </div>
+        </div>
+        <div className="flex items-center mb-4 relative">
+          <label className="flex-3 text-right">Địa chỉ</label>
+          {updateUserAddress ? (
+            <div className="flex-7 ml-8">
+              <ReactInputForm
+                register={register}
+                errors={errors}
+                id="address"
+                fullWidth
+                placeholder="Địa chỉ người dùng"
+              />
+            </div>
+          ) : (
+            <div className="flex-7 ml-8">
+              <span>{currentData?.address}</span>
+            </div>
+          )}
+          <div
+            onClick={() => handleUpdateAddress()}
+            className=" absolute right-[-80px] text-canClick underline cursor-pointer"
+          >
+            <span>{updateUserAddress ? "Hủy" : "Thay đổi"}</span>
           </div>
         </div>
         <div className="w-full flex justify-center mt-4">

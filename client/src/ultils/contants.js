@@ -96,26 +96,26 @@ export const adminSidebar = [
   {
     id: 1,
     type: "SINGLE",
-    text: "Dashboard",
+    text: "Thống kê",
     path: `/${path.ADMIN}/${path.DASHBOARD}`,
   },
   {
     id: 2,
     type: "SINGLE",
-    text: "Manage users",
+    text: "Quản lý tài khoản",
     path: `/${path.ADMIN}/${path.MANAGE_USER}`,
   },
   {
     id: 3,
     type: "PARENT",
-    text: "Manage products",
+    text: "Quản lý sản phẩm",
     submenu: [
       {
-        text: "Create product",
+        text: "Tạo sản phẩm mới",
         path: `/${path.ADMIN}/${path.CREATE_PRODUCT}`,
       },
       {
-        text: "Manage products",
+        text: "Danh sách sản phẩm",
         path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`,
       },
     ],
@@ -123,8 +123,20 @@ export const adminSidebar = [
   {
     id: 4,
     type: "SINGLE",
-    text: "Manage orders",
+    text: "Quản lý đơn hàng",
     path: `/${path.ADMIN}/${path.MANAGE_ORDERS}`,
+  },
+  {
+    id: 5,
+    type: "SINGLE",
+    text: "Quản lý bài viết",
+    path: `/${path.ADMIN}/${path.MANAGE_BLOG}`,
+  },
+  {
+    id: 6,
+    type: "SINGLE",
+    text: "Quản lý danh mục sản phẩm",
+    path: `/${path.ADMIN}/${path.MANAGE_CATE}`,
   },
 ];
 
@@ -138,17 +150,11 @@ export const customerSidebar = [
   {
     id: 2,
     type: "SINGLE",
-    text: "Giỏ hàng",
-    path: `/${path.CUSTOMER}/${path.CART}`,
-  },
-  {
-    id: 3,
-    type: "SINGLE",
     text: "Lịch sử mua sắm",
     path: `/${path.CUSTOMER}/${path.ORDER_HISTORY}`,
   },
   {
-    id: 4,
+    id: 3,
     type: "SINGLE",
     text: "Danh sách yêu thích",
     path: `/${path.CUSTOMER}/${path.FAV_PRODUCTS}`,

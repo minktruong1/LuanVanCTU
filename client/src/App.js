@@ -24,6 +24,8 @@ import {
   AdminLayout,
   CreateProduct,
   Dashboard,
+  ManageBlog,
+  ManageCate,
   ManageOrders,
   ManageProducts,
   ManageUsers,
@@ -99,11 +101,12 @@ function App() {
           <Route path={path.MANAGE_PRODUCTS} element={<ManageProducts />} />
           <Route path={path.MANAGE_USER} element={<ManageUsers />} />
           <Route path={path.CREATE_PRODUCT} element={<CreateProduct />} />
+          <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
+          <Route path={path.MANAGE_CATE} element={<ManageCate />} />
         </Route>
 
         <Route path={path.CUSTOMER} element={<CustomerLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />
-          <Route path={path.CART} element={<Cart />} />
           <Route path={path.FAV_PRODUCTS} element={<FavoriteProducts />} />
           <Route path={path.ORDER_HISTORY} element={<OrderHistory />} />
         </Route>

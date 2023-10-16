@@ -100,18 +100,6 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const skip = (page - 1) * limit;
   queryCommand.skip(skip).limit(limit);
 
-  // Running query
-  // queryCommand.exec(async (err, response) => {
-  //   if (err) {
-  //     throw new Error(err.message);
-  //   }
-  //   const counts = await Product.find(query).countDocuments();
-  //   return res.status(200).json({
-  //     success: response ? true : false,
-  //     counts,
-  //     products: response ? response : "Error when get product",
-  //   });
-  // });
   try {
     const response = await queryCommand;
     const counts = await Product.find(groupQuery).countDocuments();

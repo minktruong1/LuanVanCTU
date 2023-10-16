@@ -9,7 +9,6 @@ import {
 import { useForm } from "react-hook-form";
 import { formValidate, getBase64 } from "../../ultils/helpers";
 import { toast } from "react-toastify";
-import { FaTimes } from "react-icons/fa";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../store/app/appSlice";

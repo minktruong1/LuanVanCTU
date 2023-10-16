@@ -9,6 +9,7 @@ import { logout, clearMessage } from "../store/users/userSlice";
 import sweetAlert from "sweetalert2";
 import CartPopup from "./CartPopup";
 import { showCartPopup } from "../store/app/appSlice";
+import { Badge } from "antd";
 
 const {
   TfiHeadphoneAlt,
@@ -27,7 +28,9 @@ const {
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLogin, currentData, message } = useSelector((state) => state.user);
+  const { isLogin, currentData, currentCart, message } = useSelector(
+    (state) => state.user
+  );
   const { isShowCartPopup } = useSelector((state) => state.appReducer);
 
   useEffect(() => {
@@ -53,7 +56,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-40">
+      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-50">
         <div className="w-main h-[88px] py-[20px] flex justify-between ">
           <Link className="flex" to={`/${path.HOME}`}>
             <img
@@ -109,9 +112,15 @@ const Header = () => {
                 to={`/${path.MAIN_CART}`}
                 className="flex flex-row px-4 items-center relative"
               >
-                <span className="flex gap-4 items-center text-[24px] pr-2">
-                  <BsCart3 />
-                </span>
+                <Badge
+                  offset={[-12, 2]}
+                  count={currentCart?.length}
+                  size="small"
+                  showZero
+                  className="flex gap-4 items-center text-[24px] pr-2"
+                >
+                  <BsCart3 color="white" />
+                </Badge>
                 <span>
                   <span className="flex ">Giỏ</span>
                   <span className="flex ">hàng</span>

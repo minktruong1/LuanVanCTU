@@ -33,8 +33,16 @@ export const apiUpdateProduct = (data, pid) =>
     method: "PUT",
     data,
   });
+
 export const apiDeleteProduct = (pid) =>
   axios({
     url: "/product/" + pid,
     method: "DELETE",
+  });
+
+export const apiCreateOrder = (data) =>
+  axios({
+    url: "/order/",
+    method: "POST",
+    data,
   });

@@ -6,35 +6,21 @@ const asyncHandler = require("express-async-handler");
 
 const createOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { coupon } = req.body;
-  const userCart = await User.findById(_id)
-    .select("cart")
-    .populate("cart.product", "title price description");
+  const { productList, totalPrice, address, status } = req.body;
 
-  const productList = userCart?.cart?.map((element) => ({
-    productName: element.product._id,
-    count: element.quantity,
-    description: element.product.description,
-    price: element.product.price,
-  }));
-
-  let totalBeforeDiscount = userCart?.cart?.reduce(
-    (sum, element) => element.product.price * element.quantity + sum,
-    0
-  );
-  let lastPrice = totalBeforeDiscount;
-
-  if (coupon) {
-    const applyCoupon = await Coupon.findById(coupon);
-    if (applyCoupon) {
-      const discountAmount = (totalBeforeDiscount * applyCoupon.discount) / 100;
-      lastPrice = totalBeforeDiscount - discountAmount;
-      lastPrice = parseFloat(lastPrice.toFixed(2)); // Làm tròn đến 2 chữ số thập phân
-    }
+  const data = {
+    productList,
+    totalPrice,
+    buyer: _id,
+    address,
+  };
+  if (status) {
+    data.status = status;
   }
-
-  const dataStructor = { productList, lastPrice, buyer: _id, coupon };
-  const result = await Order.create(dataStructor);
+  const result = await Order.create(data);
+  if (result) {
+    await User.findByIdAndUpdate(_id, { address, cart: [] });
+  }
 
   return res.json({
     success: result ? true : false,
@@ -59,7 +45,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 });
 
 const getUserOrder = asyncHandler(async (req, res) => {
-  const { _id } = req.params;
+  const { _id } = req.user;
   const response = await Order.find({ Buyer: _id });
   return res.json({
     success: response ? true : false,

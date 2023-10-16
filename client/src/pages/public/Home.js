@@ -7,6 +7,7 @@ import {
 import CategoriesList from "../../components/CategoriesList.js";
 import Blogs from "../../components/BlogsMap.js";
 import { useSelector } from "react-redux";
+import ProductSuggestion from "../../components/ProductSuggestion.js";
 
 const imagesLink = [
   "https://theme.hstatic.net/1000288298/1001020793/14/categorybanner_1_img.jpg?v=198",
@@ -48,6 +49,9 @@ const Home = () => {
       </div>
       <div className="w-full">
         <CategoriesList />
+      </div>
+      <div>
+        <ProductSuggestion />
       </div>
       <div className="w-full">
         <Blogs />

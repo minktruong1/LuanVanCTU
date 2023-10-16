@@ -163,12 +163,13 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                   ))}
                 </div>
                 <div className=" items-center flex justify-between mt-[18px]">
-                  <span className="whitespace-nowrap">{`${selected.length} selected`}</span>
+                  <span className="whitespace-nowrap">{`${selected.length} đã chọn`}</span>
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
                       handleReset();
                     }}
+                    className="text-canClick"
                   >
                     Reset
                   </span>
@@ -179,7 +180,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
               <div onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center p-2 gap-2">
                   <div className="flex items-center gap-2">
-                    <label htmlFor="from">From</label>
+                    <label htmlFor="from">Từ</label>
                     <input
                       type="number"
                       id="from"
@@ -191,7 +192,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                     ></input>
                   </div>
                   <div className="flex items-center gap-2">
-                    <label htmlFor="to">To</label>
+                    <label htmlFor="to">Đến</label>
                     <input
                       type="number"
                       id="to"
@@ -205,15 +206,16 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                 </div>
                 <div className=" items-center flex justify-between mt-[18px]">
                   <span className="whitespace-nowrap">
-                    Highest{Number(highestPrice).toLocaleString()}
+                    Giá cao nhất{Number(highestPrice).toLocaleString()}
                   </span>
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
                       setPrice({ from: "", to: "" });
                     }}
+                    className="text-canClick"
                   >
-                    Reset
+                    Đặt lại
                   </span>
                 </div>
               </div>

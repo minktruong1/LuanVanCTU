@@ -4,7 +4,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { apiGetProductDetail, apiUpdateCart } from "../../apis";
+import { apiGetProductDetail, apiUpdateCart, apiReview } from "../../apis";
 import {
   Breadcrumb,
   Button,
@@ -16,7 +16,6 @@ import {
 } from "../../components";
 import Slider from "react-slick";
 import { formatVND, pointToStar } from "../../ultils/helpers";
-import { apiReview } from "../../apis";
 import icons from "../../ultils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../store/app/appSlice";
@@ -210,10 +209,10 @@ const ProductDetail = () => {
               alt="productImg"
               className="h-[372px] w-[372px] object-cover "
             />
-            <div className="w-[372px]">
+            <div className="w-[372px] relative z-0">
               <Slider
                 {...reactSlickSetting}
-                className="product-detail-slick flex gap-2 justify-between"
+                className="product-detail-slick flex gap-2 justify-between "
               >
                 {product?.images?.map((element) => (
                   <div key={element} className=" flex-1 border-none">

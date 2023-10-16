@@ -24,11 +24,12 @@ const path = {
   MANAGE_PRODUCTS: "manage-products",
   MANAGE_ORDERS: "manage-orders",
   CREATE_PRODUCT: "create-product",
+  MANAGE_CATE: "manage-cate",
+  MANAGE_BLOG: "manage-blog",
 
   //customer path
   CUSTOMER: "customer",
   PROFILE: "profile",
-  CART: "my-cart",
   ORDER_HISTORY: "order-history",
   FAV_PRODUCTS: "favorite-list",
 };

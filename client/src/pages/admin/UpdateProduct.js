@@ -123,9 +123,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
 
   return (
     <div className="w-full flex flex-col relative">
-      <div className="w-full h-[75px]"></div>
-
-      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b fixed top-0 z-50 bg-[#b4bcc7]">
+      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b   z-40 bg-[#b4bcc7]">
         <h1>Cập nhật sản phẩm</h1>
       </div>
       <div className="p-4">

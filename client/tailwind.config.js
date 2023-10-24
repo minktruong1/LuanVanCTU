@@ -7,7 +7,7 @@ module.exports = {
     },
     extend: {
       width: {
-        main: "1220px",
+        main: "1200px",
       },
       backgroundColor: {
         main: "#e30019",
@@ -32,19 +32,46 @@ module.exports = {
       },
       image: {},
       keyframes: {
-        "slide-top-sm": {
+        "slide-from-left": {
           "0%": {
-            "-webkit-transform": "translateY(4px);",
-            transform: "translateY(4px);",
+            "-webkit-transform": "translateX(-100%);",
+            transform: "translateX(-100%);",
+            opacity: 0,
           },
           "100%": {
-            "-webkit-transform": "translateY(0px);",
-            transform: "translateY(0px);",
+            "-webkit-transform": "translateX(0%);",
+            transform: "translateX(0%);",
+            opacity: 1,
+          },
+        },
+        "slide-from-left-reverse": {
+          "100%": {
+            "-webkit-transform": "translateX(-100%);",
+            transform: "translateX(-100%);",
+            opacity: 0,
+          },
+          "0%": {
+            "-webkit-transform": "translateX(0%);",
+            transform: "translateX(0%);",
+            opacity: 1,
+          },
+        },
+
+        "drop-down": {
+          "0%": {
+            "-webkit-transform": "translateY(-100%);",
+            transform: "translateY(-100%);",
+          },
+          "100%": {
+            "-webkit-transform": "translateY(0%);",
+            transform: "translateY(0%);",
           },
         },
       },
       animation: {
-        "slide-top-sm": "slide-top-sm 5s linear both;",
+        "slide-from-left": "slide-from-left 0.4s ease both;",
+        "slide-from-left-reverse": "slide-from-left-reverse 0.4s ease both;",
+        "drop-down": "drop-down 0.4s ease both;",
       },
       flex: {
         1: "1 1 0%",

@@ -85,7 +85,7 @@ const ManageProducts = () => {
   return (
     <div className="w-full flex flex-col relative">
       {editProductTab && (
-        <div className="absolute inset-0 min-h-screen bg-webBackground z-50">
+        <div className="absolute inset-0 min-h-screen bg-webBackground z-40">
           <UpdateProduct
             editProductTab={editProductTab}
             setEditProductTab={setEditProductTab}
@@ -93,8 +93,7 @@ const ManageProducts = () => {
           />
         </div>
       )}
-      <div className="w-full h-[75px]"></div>
-      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b fixed top-0 bg-webBackground">
+      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b   bg-webBackground">
         <h1>Quản lý sản phẩm</h1>
       </div>
       <div className="w-full p-4">

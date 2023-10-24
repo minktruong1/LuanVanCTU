@@ -1,16 +1,19 @@
 import React, { memo, Fragment, useState } from "react";
 import { customerSidebar } from "../ultils/contants";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
-import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import defaultAvatar from "../assets/userAvatar.jpg";
+import { RiLogoutBoxRFill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/users/userSlice";
 
 const activeStyling = "px-4 py-2 flex items-center gap-2 text-[#e30019] ";
 const unActiveStyling =
   "px-4 py-2 flex items-center gap-2 hover:text-[#e30019]";
 
 const CustomerSidebar = () => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState([]);
   const { currentData } = useSelector((state) => state.user);
 
@@ -23,8 +26,8 @@ const CustomerSidebar = () => {
   };
 
   return (
-    <div className="bg-white h-full rounded-sm min-h-[450px]">
-      <div className="w-full flex items-center p-4 border-b border-[#ECECEC]">
+    <div className="bg-white md:h-full rounded-sm md:max-h-[500px]">
+      <div className="md:w-full flex items-center p-4 border-b border-[#ECECEC]">
         <img
           src={currentData?.avatar || defaultAvatar}
           alt="avatar"
@@ -44,46 +47,21 @@ const CustomerSidebar = () => {
                   clsx(isActive && activeStyling, !isActive && unActiveStyling)
                 }
               >
+                {element.icon}
                 <span>{element.text}</span>
               </NavLink>
             )}
-            {element.type === "PARENT" && (
-              <div
-                onClick={() => handleToggle(+element.id)}
-                className=" flex flex-col "
-              >
-                <div className="flex items-center justify-between gap-2 hover:bg-overlay px-4 py-2 cursor-pointer">
-                  <span>{element.text}</span>
-                  {active.some((id) => id === element.id) ? (
-                    <BiSolidUpArrow />
-                  ) : (
-                    <BiSolidDownArrow />
-                  )}
-                </div>
-                {active.some((id) => +id === +element.id) && (
-                  <div className="flex flex-col ">
-                    {element.submenu?.map((item) => (
-                      <NavLink
-                        key={element.text}
-                        to={item.path}
-                        onClick={(e) => e.stopPropagation()}
-                        className={({ isActive }) =>
-                          clsx(
-                            isActive && activeStyling,
-                            !isActive && unActiveStyling,
-                            "pl-10"
-                          )
-                        }
-                      >
-                        {item.text}
-                      </NavLink>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </Fragment>
         ))}
+        <span className="px-4 py-2 flex items-center border-t">
+          <RiLogoutBoxRFill />
+          <span
+            onClick={() => dispatch(logout())}
+            className="ml-2 cursor-pointer hover:text-main"
+          >
+            Đăng xuất
+          </span>
+        </span>
       </div>
     </div>
   );

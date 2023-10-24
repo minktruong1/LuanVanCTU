@@ -73,7 +73,7 @@ const Profile = () => {
           <input type="file" id="file" hidden {...register("avatar")} />
         </div>
       </div>
-      <div className="p-[16px] flex flex-col max-w-[580px]">
+      <div className="p-[16px] grid grid-rows-1 md:w-[580px]">
         <div className="flex items-center mb-4">
           <label className="flex-3 text-right">Họ</label>
           <div className="flex-7 ml-8">
@@ -162,7 +162,13 @@ const Profile = () => {
           )}
           <div
             onClick={() => handleUpdateAddress()}
-            className=" absolute right-[-80px] text-canClick underline cursor-pointer"
+            className="absolute hidden md:block md:right-[-80px] text-canClick underline cursor-pointer"
+          >
+            <span>{updateUserAddress ? "Hủy" : "Thay đổi"}</span>
+          </div>
+          <div
+            onClick={() => handleUpdateAddress()}
+            className="absolute left-[34px] bottom-[-12px] text-sm text-canClick underline cursor-pointer md:hidden"
           >
             <span>{updateUserAddress ? "Hủy" : "Thay đổi"}</span>
           </div>

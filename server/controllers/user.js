@@ -407,12 +407,15 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     (element) => element.product.toString() === pid
   );
   if (alreadyInCart) {
+    const alreadyPrice = alreadyInCart.price;
+    const alreadyQuantity = alreadyInCart.quantity;
+
     const response = await User.updateOne(
       { cart: { $elemMatch: alreadyInCart } },
       {
         $set: {
-          "cart.$.quantity": quantity,
-          "cart.$.price": price,
+          "cart.$.quantity": quantity + alreadyQuantity,
+          "cart.$.price": alreadyPrice,
         },
       },
       { new: true }

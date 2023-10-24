@@ -1,6 +1,6 @@
 import axios from "../axios";
 
-export const apiGetOrders = () =>
+export const apiGetUserOrders = () =>
   axios({
     url: "/order/",
     method: "GET",

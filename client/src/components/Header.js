@@ -5,11 +5,18 @@ import { Link, useNavigate } from "react-router-dom";
 import path from "../ultils/path";
 import { apiGetCurrentAccount } from "../store/users/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, clearMessage } from "../store/users/userSlice";
+import { clearMessage } from "../store/users/userSlice";
 import sweetAlert from "sweetalert2";
 import CartPopup from "./CartPopup";
-import { showCartPopup } from "../store/app/appSlice";
+import {
+  showCartPopup,
+  showModal,
+  showUserDirection,
+} from "../store/app/appSlice";
 import { Badge } from "antd";
+import UserDirectionPopup from "./UserDirectionPopup";
+import { AiOutlineMenu } from "react-icons/ai";
+import { MobileSidebar } from "../components";
 
 const {
   TfiHeadphoneAlt,
@@ -18,11 +25,6 @@ const {
   BsCart3,
   AiOutlineUser,
   BiSearch,
-  MdWavingHand,
-  RiBillLine,
-  LuUserCog,
-  BiLogOut,
-  AiOutlineControl,
 } = icons;
 
 const Header = () => {
@@ -32,6 +34,7 @@ const Header = () => {
     (state) => state.user
   );
   const { isShowCartPopup } = useSelector((state) => state.appReducer);
+  const { isShowUserDirection } = useSelector((state) => state.appReducer);
 
   useEffect(() => {
     const setTimeoutGetCurrent = setTimeout(() => {
@@ -56,27 +59,42 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-50">
+      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-40">
         <div className="w-main h-[88px] py-[20px] flex justify-between ">
-          <Link className="flex" to={`/${path.HOME}`}>
+          <Link className="hidden  md:flex" to={`/${path.HOME}`}>
             <img
               src={logo}
               alt="Logo"
-              className="w-[150px] object-contain items-center"
+              className="w-[150px] object-contain items-center "
             />
           </Link>
+          <div
+            onClick={() =>
+              dispatch(
+                showModal({
+                  isShowModal: true,
+                  modalContent: <MobileSidebar />,
+                })
+              )
+            }
+            className="flex items-center ml-4 md:hidden"
+          >
+            <span>
+              <AiOutlineMenu color="white" size={24} />
+            </span>
+          </div>
 
-          <form className="flex bg-white w-1/3 rounded">
-            <div className="flex items-center w-full">
+          <div className="flex bg-white items-center w-1/2  md:w-1/3 rounded">
+            <form className="flex relative w-full">
               <input className="w-[85%] m-2 focus:outline-none border:none" />
-              <button className="w-[15%] flex items-center justify-center">
+              <button className="w-[15%] flex  justify-center absolute right-0 top-[12px]">
                 <BiSearch />
               </button>
-            </div>
-          </form>
+            </form>
+          </div>
 
-          <div className="flex text-[13px] text-white">
-            <div className="flex flex-row px-4 items-center">
+          <div className="flex text-[13px] text-white ">
+            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <TfiHeadphoneAlt />
               </span>
@@ -85,20 +103,20 @@ const Header = () => {
                 <span className="flex ">1800.1166</span>
               </span>
             </div>
-            <div className="flex flex-row px-4 items-center">
+            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center  ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <MdOutlineLocationOn />
               </span>
-              <span>
+              <span className="">
                 <span className="flex ">Địa chỉ</span>
                 <span className="flex ">TP.Cần Thơ</span>
               </span>
             </div>
-            <div className="flex flex-row px-4 items-center">
+            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <PiNotepadLight />
               </span>
-              <span>
+              <span className="">
                 <span className="flex ">Tra cứu</span>
                 <span className="flex ">đơn hàng</span>
               </span>
@@ -106,11 +124,11 @@ const Header = () => {
             <div
               onMouseEnter={() => dispatch(showCartPopup())}
               onMouseLeave={() => dispatch(showCartPopup())}
-              className="flex flex-row px-4 items-center"
+              className="flex flex-row  md:px-4 items-center relative"
             >
               <Link
                 to={`/${path.MAIN_CART}`}
-                className="flex flex-row px-4 items-center relative"
+                className="flex flex-row px-4 items-center "
               >
                 <Badge
                   offset={[-12, 2]}
@@ -121,21 +139,25 @@ const Header = () => {
                 >
                   <BsCart3 color="white" />
                 </Badge>
-                <span>
+                <span className="hidden  md:block">
                   <span className="flex ">Giỏ</span>
                   <span className="flex ">hàng</span>
                 </span>
-                <div className="bg-black top-[38px] w-[100px] right-0 absolute model-top-arrowHolding"></div>
+                <div className="bg-black top-[38px] w-[90px] right-[20px] absolute h-[30px] opacity-0"></div>
               </Link>
               {isShowCartPopup && (
-                <div className="absolute top-[88px] right-[282px] cursor-default">
+                <div className="absolute top-[68px] right-[8px] cursor-default hidden  md:block">
                   <CartPopup />
                 </div>
               )}
             </div>
-            {isLogin && currentData ? (
-              <>
-                <div className="account-model_hover bg-darkRed rounded flex flex-row px-4 items-center relative">
+            <div className="hidden  md:flex  md:flex-row  md:px-2  md:items-center">
+              {isLogin && currentData ? (
+                <div
+                  onMouseEnter={() => dispatch(showUserDirection())}
+                  onMouseLeave={() => dispatch(showUserDirection())}
+                  className="account-model_hover bg-darkRed rounded items-center relative p-2"
+                >
                   <div className=" flex flex-row items-center ">
                     <span className="flex gap-4 items-center text-[24px] pr-2">
                       <AiOutlineUser />
@@ -144,65 +166,31 @@ const Header = () => {
                       <span className="flex ">Xin chào,</span>
                       <span className="flex ">{currentData?.lastName}</span>
                     </span>
-                    <div className="bg-black top-[48px] right-0 absolute w-[120px] model-top-arrowHolding"></div>
+                    <div className="bg-black top-[38px] right-0 absolute w-[120px] h-[32px] opacity-0"></div>
                   </div>
-                </div>
-                <div className="account-model">
-                  <div className="top-[70px] right-[140px] absolute ">
-                    <span className="model-top-arrow"></span>
-                  </div>
-                  <div className="bg-white mt-[20px] w-[260px] absolute top-[68px] right-[150px] shadow-[0px_3px_8px_rgba(0,0,0,0.24)] ">
-                    <div className="flex flex-col text-black pr-2 pl-2">
-                      <div className="flex items-center h-[44px] border-b justify-start ">
-                        <MdWavingHand className="mr-2 text-[20px]" />
-                        <span className="text-[14px] font-medium">
-                          Xin chào, {currentData?.lastName}
-                        </span>
-                      </div>
-                      <div className="flex items-center h-[34px] justify-start hover:underline cursor-pointer">
-                        <RiBillLine className="mr-2 text-[16px]" />
-                        <span>Đơn hàng của tôi</span>
-                      </div>
-                      <Link
-                        to={`/${path.CUSTOMER}/${path.PROFILE}`}
-                        className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"
-                      >
-                        <LuUserCog className="mr-2 text-[16px]" />
-                        <span>Thông tin cá nhân</span>
-                      </Link>
-                      {currentData.role === "admin" && (
-                        <Link
-                          to={`/${path.ADMIN}/${path.DASHBOARD}`}
-                          className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"
-                        >
-                          <AiOutlineControl className="mr-2 text-[16px]" />
-                          <span>Admin panel</span>
-                        </Link>
-                      )}
-                      <div
-                        onClick={() => dispatch(logout())}
-                        className="flex items-center h-[34px] border-t justify-start hover:underline cursor-pointer"
-                      >
-                        <BiLogOut className="mr-2 text-[16px]" />
-                        <span>Đăng xuất</span>
-                      </div>
+                  {isShowUserDirection && (
+                    <div className="absolute top-[52px] right-0 ">
+                      <UserDirectionPopup />
                     </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  to={`/${path.LOGIN}`}
+                  className="flex bg-darkRed rounded "
+                >
+                  <div className="flex px-2 py-1 items-center">
+                    <span className="flex gap-4 justify-center text-[24px] pr-2">
+                      <AiOutlineUser />
+                    </span>
+                    <span>
+                      <span className="flex ">Đăng</span>
+                      <span className="flex ">nhập</span>
+                    </span>
                   </div>
-                </div>
-              </>
-            ) : (
-              <Link to={`/${path.LOGIN}`} className="flex bg-darkRed rounded">
-                <div className="flex flex-row px-4 items-center">
-                  <span className="flex gap-4 justify-center text-[24px] pr-2">
-                    <AiOutlineUser />
-                  </span>
-                  <span>
-                    <span className="flex ">Đăng</span>
-                    <span className="flex ">nhập</span>
-                  </span>
-                </div>
-              </Link>
-            )}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

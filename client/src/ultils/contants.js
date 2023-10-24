@@ -1,5 +1,9 @@
 import path from "./path";
 import icons from "./icons.js";
+import { FaChartBar, FaShoppingBag } from "react-icons/fa";
+import { BiSolidUser } from "react-icons/bi";
+import { BsBagHeartFill } from "react-icons/bs";
+import { AiFillEye } from "react-icons/ai";
 
 const {
   TiTags,
@@ -98,6 +102,7 @@ export const adminSidebar = [
     type: "SINGLE",
     text: "Thống kê",
     path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    icon: <FaChartBar />,
   },
   {
     id: 2,
@@ -146,18 +151,28 @@ export const customerSidebar = [
     type: "SINGLE",
     text: "Thông tin tài khoản",
     path: `/${path.CUSTOMER}/${path.PROFILE}`,
+    icon: <BiSolidUser />,
   },
   {
     id: 2,
     type: "SINGLE",
-    text: "Lịch sử mua sắm",
+    text: "Quản lý đơn hàng",
     path: `/${path.CUSTOMER}/${path.ORDER_HISTORY}`,
+    icon: <FaShoppingBag />,
   },
   {
     id: 3,
     type: "SINGLE",
     text: "Danh sách yêu thích",
     path: `/${path.CUSTOMER}/${path.FAV_PRODUCTS}`,
+    icon: <BsBagHeartFill />,
+  },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Sản phẩm đã xem",
+    path: `/${path.CUSTOMER}/${path.HAVE_CHECK_PRODUCTS}`,
+    icon: <AiFillEye />,
   },
 ];
 

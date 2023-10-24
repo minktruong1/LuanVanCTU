@@ -3,33 +3,27 @@ import {
   Banner,
   SpecialOffer,
   MiniPoster,
+  MobileToolbar,
 } from "../../components/index.js";
 import CategoriesList from "../../components/CategoriesList.js";
 import Blogs from "../../components/BlogsMap.js";
 import { useSelector } from "react-redux";
 import ProductSuggestion from "../../components/ProductSuggestion.js";
 
-const imagesLink = [
-  "https://theme.hstatic.net/1000288298/1001020793/14/categorybanner_1_img.jpg?v=198",
-  "https://theme.hstatic.net/1000288298/1001020793/14/slide_1_img.jpg?v=198",
-  "https://theme.hstatic.net/200000637319/1000990988/14/categorybanner_2_img.jpg?v=279",
-];
-
 const Home = () => {
-  const { isLogin, currentData } = useSelector((state) => state.user);
   return (
     <div className="w-main">
       <div className="flex mt-4">
-        <div className="flex flex-row gap-5">
-          <div className="w-[20%] flex-auto">
+        <div className="flex flex-row gap-2 w-full">
+          <div className="hidden md:w-[20%] md:block">
             <Sidebar />
           </div>
-          <div className="w-[80%] flex-auto ">
-            <div className="flex flex-row">
-              <div className="flex flex-col w-[70%]">
-                <Banner images={imagesLink} />
+          <div className="w-full md:w-[80%]">
+            <div className="flex flex-row justify-center">
+              <div className="flex flex-col w-[375px] md:w-[70%]">
+                <Banner />
               </div>
-              <div className="flex flex-col w-[30%] justify-between">
+              <div className="hidden md:flex md:flex-col md:w-[30%] md:justify-between">
                 <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
                 <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
               </div>
@@ -38,23 +32,26 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex flex-row w-full mt-4 ">
+      <div className="hidden md:flex md:flex-row w-full mt-4">
         <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
         <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
         <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
         <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
       </div>
-      <div className="w-full">
+      <div className="w-full hidden md:block">
         <SpecialOffer />
       </div>
-      <div className="w-full">
+      <div className="flex flex-row justify-center md:w-full ">
         <CategoriesList />
       </div>
-      <div>
+      <div className="w-full">
         <ProductSuggestion />
       </div>
       <div className="w-full">
         <Blogs />
+      </div>
+      <div className="w-full md:hidden">
+        <MobileToolbar />
       </div>
     </div>
   );

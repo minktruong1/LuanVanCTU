@@ -13,7 +13,6 @@ const RatingModal = ({ productImage, productName, handleCollectReview }) => {
   const [star, setStar] = useState(null);
   const [comment, setComment] = useState("");
 
-  // const { getRatingProductImage } = useSelector((state) => state.appReducer);
   return (
     <div
       onClick={(e) => e.stopPropagation()}

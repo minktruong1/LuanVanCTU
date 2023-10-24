@@ -198,118 +198,126 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="w-main ">
-        <div className="pt-[18px] pb-[18px]">
+      <div className="w-[calc(100%-20px)] md:w-main">
+        <div className="pb-4">
           <Breadcrumb title={title} category={category} />
         </div>
-        <div className="bg-white w-main flex rounded mb-[14px]">
-          <div className="w-[40%] flex flex-col gap-4 p-[24px]">
-            <img
-              src={chooseImage}
-              alt="productImg"
-              className="h-[372px] w-[372px] object-cover "
-            />
-            <div className="w-[372px] relative z-0">
-              <Slider
-                {...reactSlickSetting}
-                className="product-detail-slick flex gap-2 justify-between "
-              >
-                {product?.images?.map((element) => (
-                  <div key={element} className=" flex-1 border-none">
-                    <img
-                      onClick={(e) => handleChooseImage(e, element)}
-                      src={element}
-                      alt=""
-                      className="h-[108px] w-[108px] object-cover rounded-md cursor-pointer "
-                    />
-                  </div>
-                ))}
-              </Slider>
-            </div>
-          </div>
-          <div className="w-[60%] p-[24px]">
-            <h1 className="font-bold text-[26px]">{product?.title}</h1>
-            <div className="flex items-center mt-[4px] mb-[14px] divide-x divide-black gap-3">
-              <div className="flex items-center text-[#ff8a00]">
-                <span className="flex mr-[4px]">
-                  {product?.reviewPoint.toFixed(1)}
-                </span>
-                <span className="flex ">
-                  {pointToStar(product?.reviewPoint)?.map((element, index) => (
-                    <span key={index}>{element}</span>
+        <div className="grid grid-cols-1 gap-2">
+          <div className="bg-white grid grid-cols-1 md:grid-cols-3 rounded p-2 md:p-6 ">
+            <div className=" ">
+              <img
+                src={chooseImage}
+                alt="productImg"
+                className="h-[372px] w-[372px] object-cover "
+              />
+              <div className="w-[372px] relative z-0 mt-4">
+                <Slider
+                  {...reactSlickSetting}
+                  className="product-detail-slick flex gap-2 justify-between "
+                >
+                  {product?.images?.map((element) => (
+                    <div key={element} className=" flex-1 border-none">
+                      <img
+                        onClick={(e) => handleChooseImage(e, element)}
+                        src={element}
+                        alt=""
+                        className="h-[108px] w-[108px] object-cover rounded-md cursor-pointer "
+                      />
+                    </div>
                   ))}
-                </span>
-              </div>
-              <div className=" pl-2">
-                <span className="mr-[4px]">{product?.reviews.length}</span>
-                <span className="text-[#767676]">Đánh giá</span>
-              </div>
-              <div className="pl-2 ">
-                <span className="mr-[4px]">{product?.sold}</span>
-                <span className="text-[#767676]">Đã bán</span>
+                </Slider>
               </div>
             </div>
-            <div className="w-full p-[12px] bg-webBackground text-[28px] text-[#e30019] font-semibold mb-[12px]">
-              <span className="">{`${formatVND(product?.price)} VNĐ`}</span>
-            </div>
-            <div className="mb-[30px] mt-[16px]">
-              <ul className="leading-5">
-                <p>
-                  <GiCheckMark />
-                  Bảo hành chính hãng 24 tháng.
-                </p>
-                <p>
-                  <GiCheckMark /> Hỗ trợ đổi mới trong 7 ngày.
-                </p>
-                <p>
-                  {" "}
-                  <GiCheckMark />
-                  Miễn phí giao hàng toàn quốc.
-                </p>
-              </ul>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center">
-                <QuantitySelector
-                  quantity={quantity}
-                  handleQuantity={handleQuantity}
-                  onChangeQuantity={handleButtonFunction}
-                  onStock={product?.quantity}
-                />
-                <span className="ml-[8px] text-[#767676]">
-                  {product?.quantity} sản phẩm có sẵn
-                </span>
+            <div className="col-span-2">
+              <h1 className="font-bold text-lg md:text-2xl">
+                {product?.title}
+              </h1>
+              <div className="flex items-center mt-[4px] mb-[14px] divide-x divide-black gap-3">
+                <div className="flex items-center text-[#ff8a00]">
+                  <span className="flex mr-[4px]">
+                    {product?.reviewPoint.toFixed(1)}
+                  </span>
+                  <span className="flex ">
+                    {pointToStar(product?.reviewPoint)?.map(
+                      (element, index) => (
+                        <span key={index}>{element}</span>
+                      )
+                    )}
+                  </span>
+                </div>
+                <div className=" pl-2">
+                  <span className="mr-[4px]">{product?.reviews.length}</span>
+                  <span className="text-[#767676]">Đánh giá</span>
+                </div>
+                <div className="pl-2 ">
+                  <span className="mr-[4px]">{product?.sold}</span>
+                  <span className="text-[#767676]">Đã bán</span>
+                </div>
               </div>
-              <Button handleOnClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
+              <div className="w-full p-[12px] bg-webBackground text-lg md:text-xl  text-[#e30019] font-semibold mb-[12px]">
+                <span className="">{`${formatVND(product?.price)} VNĐ`}</span>
+              </div>
+              <div className="mb-[30px] mt-[16px]">
+                <ul className="leading-5">
+                  <p>
+                    <GiCheckMark />
+                    Bảo hành chính hãng 24 tháng.
+                  </p>
+                  <p>
+                    <GiCheckMark /> Hỗ trợ đổi mới trong 7 ngày.
+                  </p>
+                  <p>
+                    {" "}
+                    <GiCheckMark />
+                    Miễn phí giao hàng toàn quốc.
+                  </p>
+                </ul>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center">
+                  <QuantitySelector
+                    quantity={quantity}
+                    handleQuantity={handleQuantity}
+                    onChangeQuantity={handleButtonFunction}
+                    onStock={product?.quantity}
+                  />
+                  <span className="ml-[8px] text-[#767676]">
+                    {product?.quantity} sản phẩm có sẵn
+                  </span>
+                </div>
+                <Button style="w-full md:w-fit" handleOnClick={handleAddToCart}>
+                  Thêm vào giỏ hàng
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-row w-full mb-[14px] gap-3">
-          <div className="flex flex-col w-[60%] border rounded bg-white">
-            <div className="p-[24px] pt-[16px] pb-[16px] ">
-              <h2 className="text-[22px] font-semibold">Mô tả sản phẩm</h2>
-              <div
-                className="text-sm"
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(product?.description),
-                }}
-              ></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div className="col-span-2 border rounded bg-white">
+              <div className="p-2 md:p-6 pt-[16px] pb-[16px] ">
+                <h2 className="text-base md:text-xl font-semibold">
+                  Mô tả sản phẩm
+                </h2>
+                <div
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(product?.description),
+                  }}
+                ></div>
+              </div>
+            </div>
+            <div className="border rounded bg-white">
+              <h2 className="p-2 md:p-6 pt-[16px] pb-[16px] text-base md:text-xl font-semibold">
+                Tin tức
+              </h2>
             </div>
           </div>
-          <div className="flex flex-col w-[40%] border rounded bg-white">
-            <h2 className="p-[24px] pt-[16px] pb-[16px] text-[22px] font-semibold">
-              Tin tức
-            </h2>
-          </div>
-        </div>
-        <div className="w-full">
           <div className="bg-white rounded">
-            <div className="p-[24px]">
-              <h1 className=" text-[24px] font-semibold">
+            <div className="p-2 md:p-6">
+              <h1 className="text-lg md:text-[24px] font-semibold">
                 Đánh giá & Nhận xét {product?.title}
               </h1>
-              <div className="flex justify-center gap-[32px] mt-[12px]">
-                <div className="flex justify-center items-center">
+              <div className="grid grid-rows-1 md:grid-cols-3 gap-4 md:gap-8 mt-[12px]">
+                <div className="flex justify-center md:justify-end items-center ">
                   <div>
                     <span className="flex justify-center font-semibold text-[32px] text-[#E30019]">
                       {`${product?.reviewPoint}`}/5
@@ -324,7 +332,7 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1">
+                <div className="md:col-span-2">
                   {Array.from(Array(5).keys())
                     .reverse()
                     .map((element) => (

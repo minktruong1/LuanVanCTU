@@ -4,7 +4,6 @@ import { CountDown, CustomSlider } from "./index.js";
 import moment from "moment";
 import { timeExchange } from "../ultils/helpers.js";
 
-import { apiGetNewProduct } from "../store/products/asyncActions.js";
 import { useDispatch, useSelector } from "react-redux";
 
 let idInterval;
@@ -95,8 +94,6 @@ const SpecialOffer = () => {
 
   useEffect(() => {
     fetchProduct();
-    dispatch(apiGetNewProduct());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

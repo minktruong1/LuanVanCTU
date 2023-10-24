@@ -60,7 +60,7 @@ p {
 .custom button.slick-next::before {
   color: black;
   content: "\276F";
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.4);
   width: 50px;
   height: 50px;
   font-size: 26px;
@@ -72,7 +72,7 @@ p {
 .custom button.slick-prev::before {
   color: black;
   content: "\276E";
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.4);
   width: 50px;
   height: 50px;
   font-size: 26px;

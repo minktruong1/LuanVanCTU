@@ -32,7 +32,7 @@ const CartPopup = () => {
             <div className="p-4">
               <span>Sản phẩm mới vừa thêm</span>
             </div>
-            <div className="flex flex-col max-h-[250px] overflow-y-scroll">
+            <div className="flex flex-col  h-[250px] overflow-y-scroll">
               {currentCart?.map((element) => (
                 <div
                   key={element._id}

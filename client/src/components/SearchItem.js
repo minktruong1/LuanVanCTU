@@ -8,7 +8,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import path from "../ultils/path";
-import { apiGetProducts } from "../apis";
+import { apiGetProducts, apiGetBrandFromCate } from "../apis";
 import useDebounce from "../hooks/useDebounce";
 
 const { BiSolidDownArrow } = icons;
@@ -138,9 +138,9 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
       {onChoice === name && (
         <>
           <div className="transparent-bg z-10"></div>
-          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 min-w-[550px] ">
-            {type === "checkbox" && (
-              <div onClick={(e) => e.stopPropagation()} className="p-1">
+          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 w-[240px] md:w-[450px]">
+            {name === "Loại" && (
+              <div onClick={(e) => e.stopPropagation()} className="p-1 w-full">
                 <div className="flex flex-wrap items-center gap-2">
                   {categories?.map((element, index) => (
                     <>
@@ -149,7 +149,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                         id={element._id}
                         key={index}
                         value={element?.title}
-                        className="hidden "
+                        className="hidden"
                         onChange={handleSelect}
                         checked={selected.includes(element?.title)}
                       />
@@ -178,25 +178,29 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
             )}
             {type === "input" && (
               <div onClick={(e) => e.stopPropagation()}>
-                <div className="flex items-center p-2 gap-2">
-                  <div className="flex items-center gap-2">
-                    <label htmlFor="from">Từ</label>
+                <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-2 p-2 ">
+                  <div className="flex items-center">
+                    <label htmlFor="from" className="w-[20%]">
+                      Từ
+                    </label>
                     <input
                       type="number"
                       id="from"
-                      className="form-input"
+                      className="form-input w-[80%] md:w-[140px]"
                       value={price.from}
                       onChange={(e) =>
                         setPrice((prev) => ({ ...prev, from: e.target.value }))
                       }
                     ></input>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <label htmlFor="to">Đến</label>
+                  <div className="flex items-center">
+                    <label htmlFor="to" className="w-[20%]">
+                      Đến
+                    </label>
                     <input
                       type="number"
                       id="to"
-                      className="form-input"
+                      className="form-input w-[80%] md:w-[140px] "
                       value={price.to}
                       onChange={(e) =>
                         setPrice((prev) => ({ ...prev, to: e.target.value }))
@@ -204,16 +208,16 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                     ></input>
                   </div>
                 </div>
-                <div className=" items-center flex justify-between mt-[18px]">
+                <div className="grid grid-rows-1 md:grid-cols-2 justify-between mt-[18px]">
                   <span className="whitespace-nowrap">
-                    Giá cao nhất{Number(highestPrice).toLocaleString()}
+                    Giá cao nhất: {Number(highestPrice).toLocaleString()}
                   </span>
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
                       setPrice({ from: "", to: "" });
                     }}
-                    className="text-canClick"
+                    className="text-canClick text-right"
                   >
                     Đặt lại
                   </span>

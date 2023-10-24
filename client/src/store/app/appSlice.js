@@ -9,28 +9,36 @@ export const appSlice = createSlice({
     isShowModal: false,
     modalContent: null,
     isShowCartPopup: false,
-    //getRatingProductImage: "",
+    isShowUserDirection: false,
+    isShowAdminSidebar: false,
   },
   reducers: {
     showModal: (state, action) => {
       state.isShowModal = action.payload.isShowModal;
       state.modalContent = action.payload.modalContent;
-      //state.getRatingProductImage = action.payload.getRatingProductImage;
     },
     showCartPopup: (state) => {
       state.isShowCartPopup = state.isShowCartPopup === false ? true : false;
+    },
+    showUserDirection: (state) => {
+      state.isShowUserDirection =
+        state.isShowUserDirection === false ? true : false;
+    },
+    showAdminSidebar: (state) => {
+      state.isShowAdminSidebar =
+        state.isShowAdminSidebar === false ? true : false;
     },
   },
 
   extraReducers: (builder) => {
     //Starting action
-    builder.addCase(actions.apiGetCategories.pending, (state) => {
+    builder.addCase(actions.apiGetCateList.pending, (state) => {
       //turn on loading
       state.isLoading = true;
     });
 
     //When action success (Promise fulfilled)
-    builder.addCase(actions.apiGetCategories.fulfilled, (state, action) => {
+    builder.addCase(actions.apiGetCateList.fulfilled, (state, action) => {
       // console.log(action);
       state.isLoading = false;
       //payload."categories"=> collection name
@@ -38,7 +46,7 @@ export const appSlice = createSlice({
     });
 
     //When action fail (Promise rejected)
-    builder.addCase(actions.apiGetCategories.rejected, (state, action) => {
+    builder.addCase(actions.apiGetCateList.rejected, (state, action) => {
       //Turn off loading, save error into store
       state.isLoading = false;
       state.errorMessage = action.payload.message;
@@ -46,6 +54,7 @@ export const appSlice = createSlice({
   },
 });
 
-export const { showModal, showCartPopup } = appSlice.actions;
+export const { showModal, showCartPopup, showAdminSidebar, showUserDirection } =
+  appSlice.actions;
 
 export default appSlice.reducer;

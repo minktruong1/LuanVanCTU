@@ -3,21 +3,23 @@ import { Outlet } from "react-router-dom";
 import {
   Footer,
   Header,
+  MobileToolbar,
   Navigation,
   UpperHeader,
-} from "../../components/index.js";
+} from "../../components";
 
 const Public = () => {
   return (
     <>
-      <div className="w-full max-h-screen overflow-y-auto flex flex-col items-center ">
+      <div className="w-full h-screen flex flex-col items-center ">
         <UpperHeader />
         <Header />
         <Navigation />
-        <div className="w-full flex flex-col items-center bg-webBackground">
+        <div className="w-full flex flex-col items-center bg-webBackground py-4">
           <Outlet />
         </div>
         <Footer />
+        <MobileToolbar />
       </div>
     </>
   );

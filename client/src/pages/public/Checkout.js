@@ -3,11 +3,14 @@ import { useSelector } from "react-redux";
 import { formatVND } from "../../ultils/helpers";
 import Payment from "../../components/Payment";
 import icons from "../../ultils/icons";
+import { Navigate } from "react-router-dom";
 
 const { MdLocationPin } = icons;
 
 const Checkout = () => {
-  const { currentData, currentCart } = useSelector((state) => state.user);
+  const { isLogin, currentData, currentCart } = useSelector(
+    (state) => state.user
+  );
 
   const priceCounting = Math.round(
     +currentCart?.reduce(
@@ -15,7 +18,9 @@ const Checkout = () => {
       0
     ) / 23000
   );
-
+  if (!isLogin || !currentData) {
+    return <Navigate to={`/`} replace={true} />;
+  }
   return (
     <div className="flex flex-col gap-3 my-8">
       <div className="w-main bg-white rounded-b ">
@@ -83,7 +88,7 @@ const Checkout = () => {
         </div>
       </div>
       <div className="w-full flex gap-3">
-        <div className="w-[40%] bg-white rounded p-6 max-h-[200px]">
+        <div className="w-[40%] bg-white rounded p-6  h-[200px]">
           <h1>{`Tổng thanh toán (${currentCart?.length} sản phẩm):`}</h1>
           <span className="text-main text-[24px]">
             {`${formatVND(

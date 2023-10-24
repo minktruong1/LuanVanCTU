@@ -13,9 +13,11 @@ import {
   RsPassword,
   MainCart,
   Checkout,
+  BlogDetail,
 } from "./pages/public/index.js";
 import path from "./ultils/path.js";
-import { apiGetCategories } from "./store/app/asyncActions.js";
+import { apiGetCateList } from "./store/app/asyncActions.js";
+import { apiGetBlogList } from "./store/blogs/asyncActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import Warranty from "./pages/public/Warranty.js";
 import CouponsList from "./pages/public/CouponsList.js";
@@ -37,11 +39,13 @@ import {
   Cart,
   FavoriteProducts,
   OrderHistory,
+  CheckedProductList,
 } from "./pages/customer/index.js";
 
 //About toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { apiGetNewProduct } from "./store/products/asyncActions.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,11 +55,13 @@ function App() {
   );
 
   useEffect(() => {
-    dispatch(apiGetCategories());
+    dispatch(apiGetCateList());
+    dispatch(apiGetNewProduct());
+    dispatch(apiGetBlogList());
   }, []);
 
   return (
-    <div className="min-h-screen font-main relative">
+    <div className="h-screen font-main relative overflow-x-hidden overflow-y-auto ">
       {isShowModal && <Modal>{modalContent}</Modal>}
       <ToastContainer
         position="top-right"
@@ -81,6 +87,7 @@ function App() {
           ></Route>
           <Route path={path.PRODUCTS} element={<Products />}></Route>
           <Route path={path.BLOGS} element={<Blogs />}></Route>
+          <Route path={path.BLOG_DETAIL} element={<BlogDetail />}></Route>
           <Route path={path.FAQS} element={<Faqs />}></Route>
           <Route path={path.COUPONS} element={<CouponsList />}></Route>
           <Route
@@ -109,6 +116,10 @@ function App() {
           <Route path={path.PROFILE} element={<Profile />} />
           <Route path={path.FAV_PRODUCTS} element={<FavoriteProducts />} />
           <Route path={path.ORDER_HISTORY} element={<OrderHistory />} />
+          <Route
+            path={path.HAVE_CHECK_PRODUCTS}
+            element={<CheckedProductList />}
+          />
         </Route>
 
         <Route path={path.LAST_REGISTER} element={<LastRegister />}></Route>

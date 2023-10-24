@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { get, set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   ReactInputForm,
   AdminSelector,
@@ -99,13 +99,63 @@ const CreateProduct = () => {
   }, [watch("images")]);
 
   return (
-    <div className="w-full relative">
-      <div className="h-[75px]"></div>
-      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b fixed top-0 bg-webBackground z-50">
+    <div className="w-full ">
+      <div
+        className="h-[75px] w-full flex justify-between 
+      items-center text-2xl font-bold px-4 border-b   bg-webBackground "
+      >
         <h1>Thêm sản phẩm</h1>
       </div>
       <div className="p-4">
         <form onSubmit={handleSubmit(handleCreateProduct)}>
+          <div className="flex flex-col gap-2 mt-8 mb-8 ">
+            <label className="font-semibold" htmlFor="productImages">
+              Upload ảnh của sản phẩm
+            </label>
+            <div
+              className={clsx(
+                " w-fit p-2 relative",
+                review.images.length > 0 && "border border-red-600"
+              )}
+            >
+              {review.images.length > 0 && (
+                <div className="my-4 flex w-full gap-3 flex-wrap">
+                  {review.images?.map((element, index) => (
+                    <div className="w-fit ">
+                      <img
+                        key={index}
+                        src={element.path}
+                        alt="products"
+                        className="w-[200px] object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {review.images.length > 0 && (
+                <div
+                  onClick={() => handleRemoveImage()}
+                  className="absolute top-[-8px] right-[-8px] cursor-pointer rounded-full p-1 bg-red-600"
+                >
+                  <span className="text-white ">
+                    <FaTimes />
+                  </span>
+                </div>
+              )}
+            </div>
+            <input
+              type="file"
+              id="productImages"
+              multiple
+              {...register("images", { required: "Chọn ít nhất 1 ảnh" })}
+              className="w-fit"
+            />
+            {errors["images"] && (
+              <small className="text-xs text-red-600">
+                {errors["images"]?.message}
+              </small>
+            )}
+          </div>
           <ReactInputForm
             label="Tên sản phẩm"
             register={register}
@@ -178,55 +228,9 @@ const CreateProduct = () => {
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
           />
-          <div className="flex flex-col gap-2 mt-8 mb-8 ">
-            <label className="font-semibold" htmlFor="productImages">
-              Upload ảnh của sản phẩm
-            </label>
-            <div
-              className={clsx(
-                " w-fit p-2 relative",
-                review.images.length > 0 && "border border-red-600"
-              )}
-            >
-              {review.images.length > 0 && (
-                <div className="my-4 flex w-full gap-3 flex-wrap">
-                  {review.images?.map((element, index) => (
-                    <div className="w-fit ">
-                      <img
-                        key={index}
-                        src={element.path}
-                        alt="products"
-                        className="w-[200px] object-contain"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-              {review.images.length > 0 && (
-                <div
-                  onClick={() => handleRemoveImage()}
-                  className="absolute top-[-8px] right-[-8px] cursor-pointer rounded-full p-1 bg-red-600"
-                >
-                  <span className="text-white ">
-                    <FaTimes />
-                  </span>
-                </div>
-              )}
-            </div>
-            <input
-              type="file"
-              id="productImages"
-              multiple
-              {...register("images", { required: "Chọn ít nhất 1 ảnh" })}
-              className="w-fit"
-            />
-            {errors["images"] && (
-              <small className="text-xs text-red-600">
-                {errors["images"]?.message}
-              </small>
-            )}
+          <div className="mt-8">
+            <Button type="submit">Create</Button>
           </div>
-          <Button type="submit">Create</Button>
         </form>
       </div>
     </div>

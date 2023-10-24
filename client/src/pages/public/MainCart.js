@@ -1,34 +1,59 @@
 import React, { useState } from "react";
 import icons from "../../ultils/icons";
-import { Link } from "react-router-dom";
+import { Link, createSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Breadcrumb, Button, CartItem } from "../../components";
 import { useLocation } from "react-router-dom";
 import emptyCart from "../../assets/empty-cart.png";
 import { formatVND } from "../../ultils/helpers";
+import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
+import sweetAlert from "sweetalert2";
 
 const { MdArrowBackIosNew } = icons;
 
 const MainCart = () => {
-  const { currentCart } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const { isLogin, currentCart } = useSelector((state) => state.user);
   const location = useLocation();
-  // const handleChangeQuantity = (pid, quantity) => {
-  //   // console.log({ pid, quantity });
-  // };
 
-  // console.log(currentCart);
+  const handleCheckout = () => {
+    if (isLogin) {
+      navigate(`/${path.CHECKOUT}`);
+    } else {
+      return sweetAlert
+        .fire({
+          title: "Lỗi",
+          text: "Hãy đăng nhập",
+          icon: "info",
+          cancelButtonAriaLabel: "Hủy",
+          showCancelButton: true,
+          confirmButtonText: "Tới trang đăng nhập",
+        })
+        .then((rs) => {
+          if (rs.isConfirmed) {
+            navigate({
+              pathname: `/${path.LOGIN}`,
+              search: createSearchParams({
+                redirect: location.pathname,
+              }).toString(),
+            });
+          }
+        });
+    }
+  };
+
   return (
-    <>
-      <div className="pt-[18px] pb-[18px] w-main">
+    <div className="w-[calc(100%-20px)] md:w-main">
+      <div className=" pb-[18px]">
         <Breadcrumb
           category={location?.pathname?.slice(1)?.split("-")?.join(" ")}
         />
       </div>
 
-      <div className="w-main flex justify-center items-center mb-6">
+      <div className=" flex justify-center items-center mb-6">
         <div className="flex flex-col">
-          <div className="bg-white w-[600px] rounded">
+          <div className="bg-white md:w-[600px] rounded">
             <div className="p-4">
               <Link
                 to={`/all-products`}
@@ -63,7 +88,7 @@ const MainCart = () => {
                     </div>
                     <div className="flex justify-between items-center mb-4 text-[18px]">
                       <span>Tổng tiền</span>
-                      <span className="text-main text-[24px]">
+                      <span className="text-main text-xl md:text-2xl">
                         {`${formatVND(
                           currentCart?.reduce(
                             (sum, element) =>
@@ -74,12 +99,9 @@ const MainCart = () => {
                         đ
                       </span>
                     </div>
-                    <Link
-                      className="flex justify-center w-full bg-main p-2 text-white text-[18px]"
-                      to={`/${path.CHECKOUT}`}
-                    >
+                    <Button handleOnClick={() => handleCheckout()} widthFull>
                       Đặt hàng ngay
-                    </Link>
+                    </Button>
                   </div>
                 </div>
               )}
@@ -87,7 +109,7 @@ const MainCart = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

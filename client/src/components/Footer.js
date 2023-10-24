@@ -28,14 +28,12 @@ const { BsFacebook, BsYoutube, AiFillInstagram, AiFillTwitterCircle } = icons;
 
 const Footer = () => {
   return (
-    <div className="w-full">
-      <div className="w-full bg-white flex border-t-2 justify-center">
-        <div className="w-main">
-          <div className="flex flex-row mt-[22px] mb-[22px]">
-            <div className="flex flex-col w-1/3">
-              <div className="flex flex-row font-semibold mb-[8px]">
-                VỀ GGEAR
-              </div>
+    <div className="w-full bg-white flex border-t-2 border-main justify-center ">
+      <div className="w-[calc(100%-20px)] md:w-main mb-[50px] md:m-0">
+        <div className="grid grid-cols-2 md:grid-cols-5 mt-[22px] mb-[22px]">
+          <div>
+            <div className="font-semibold mb-[8px]">VỀ GGEAR</div>
+            <div className="grid grid-rows-1">
               {about.map((Element, index) => (
                 <Link
                   key={index}
@@ -45,8 +43,10 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col w-1/3">
-              <div className="flex flex-row font-semibold">CHÍNH SÁCH</div>
+          </div>
+          <div>
+            <div className="font-semibold mb-[8px]">CHÍNH SÁCH</div>
+            <div className="grid grid-rows-1">
               {policy.map((Element, index) => (
                 <Link
                   key={index}
@@ -56,8 +56,12 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col w-1/3">
-              <div className="flex flex-row font-semibold">THÔNG TIN</div>
+          </div>
+          <div>
+            <div className="flex flex-row font-semibold mb-[8px]">
+              THÔNG TIN
+            </div>
+            <div className="grid grid-rows-1">
               {detail.map((Element, index) => (
                 <Link
                   key={index}
@@ -67,47 +71,47 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col w-1/2">
-              <div className="flex flex-row font-semibold">TỔNG ĐÀI HỖ TRỢ</div>
+          </div>
+          <div>
+            <div className="grid grid-rows-1">
+              <div className="font-semibold mb-[8px]">TỔNG ĐÀI HỖ TRỢ</div>
               <p>Gọi mua: 1800.6975 (8:00 - 21:00)</p>
               <p>CSKH: 1800.6173 (8:00 - 21:00)</p>
-              <p>Email: cskh@gearvn.com</p>
+              <p>Email: cskh@ggear.com</p>
             </div>
-            <div className="flex flex-col w-1/2">
-              <div className="flex flex-row font-semibold">
-                <span>ĐƠN VỊ VẬN CHUYỂN</span>
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <div className="grid grid-rows-1">
+              <div className="font-semibold mb-[8px]">ĐƠN VỊ VẬN CHUYỂN</div>
+              <div className="grid grid-cols-2">
+                <img alt="" src={footerShip1} className="border" />
+                <img alt="" src={footerShip2} className="border" />
               </div>
-              <div className="flex flex-row">
-                <img alt="" src={footerShip1} />
-                <img alt="" src={footerShip2} />
-              </div>
-              <div className="flex flex-row font-semibold">
-                <span>CÁCH THỨC THANH TOÁN</span>
-              </div>
-              <div className="flex flex-row">
-                <img alt="" src={footerPayment} />
-                <img alt="" src={footerPayment1} />
+              <div className="font-semibold mb-[8px]">CÁCH THỨC THANH TOÁN</div>
+              <div className="grid grid-cols-2">
+                <img alt="" src={footerPayment} className="border" />
+                <img alt="" src={footerPayment1} className="border" />
               </div>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-between pt-[18px] pb-[18px] border-t">
-            <div className="flex items-center ">
-              <span className="mr-[8px]">Kết nối:</span>
-              <div className="flex items-center text-[30px]">
-                <span className="pr-[6px] text-[#31629f]">
-                  <BsFacebook />
-                </span>
-                <span className="pr-[6px] text-[#b93523]">
-                  <BsYoutube />
-                </span>
-                <span className="pr-[6px] text-[#1d9bf0]">
-                  <AiFillTwitterCircle />
-                </span>
-              </div>
+        </div>
+        <div className="grid grid-cols-2 pt-[18px] pb-[18px] border-t">
+          <div className="flex items-center ">
+            <span className="mr-[8px]">Kết nối:</span>
+            <div className="flex items-center text-[30px]">
+              <span className="pr-[6px] text-[#31629f]">
+                <BsFacebook />
+              </span>
+              <span className="pr-[6px] text-[#b93523]">
+                <BsYoutube />
+              </span>
+              <span className="pr-[6px] text-[#1d9bf0]">
+                <AiFillTwitterCircle />
+              </span>
             </div>
-            <div>
-              <img alt="" src={legit} width={`130px`} />
-            </div>
+          </div>
+          <div className="flex justify-end">
+            <img alt="" src={legit} width={`130px`} />
           </div>
         </div>
       </div>

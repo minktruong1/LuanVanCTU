@@ -8,6 +8,7 @@ import {
   Header,
   Navigation,
   UpperHeader,
+  MobileToolbar,
 } from "../../components";
 
 const CustomerLayout = () => {
@@ -23,17 +24,18 @@ const CustomerLayout = () => {
         <UpperHeader />
         <Header />
         <Navigation />
-        <div className="w-full flex flex-col items-center bg-webBackground">
-          <div className="w-main flex mt-6 mb-6 gap-2">
-            <div className="flex flex-col w-[25%]">
+        <div className="w-full flex flex-col items-center bg-webBackground py-4">
+          <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 md:grid-cols-4 mt-6 mb-6 gap-2">
+            <div className="w-full">
               <CustomerSidebar />
             </div>
-            <div className="flex flex-col w-[75%]">
+            <div className="md:col-span-3">
               <Outlet />
             </div>
           </div>
         </div>
         <Footer />
+        <MobileToolbar />
       </div>
     </>
   );

@@ -3,11 +3,16 @@ const asyncHandler = require("express-async-handler");
 
 const createBlog = asyncHandler(async (req, res) => {
   const { title, description, category } = req.body;
-  if (!title || !description || !category) throw new Error("Missing input");
+  if (!title || !description || !category) {
+    throw new Error("Missing input");
+  }
+
+  req.body.createdAt = Date.now();
+
   const response = await Blog.create(req.body);
   return res.json({
     success: response ? true : false,
-    createdBlog: response ? response : "error when create Blog ",
+    createdBlog: response ? response : "error when create Blog",
   });
 });
 
@@ -25,7 +30,7 @@ const getAllBlog = asyncHandler(async (req, res) => {
   const response = await Blog.find();
   return res.json({
     success: response ? true : false,
-    Blogs: response ? response : "error when get all Blogs ",
+    blogs: response ? response : "error when get all Blogs ",
   });
 });
 
@@ -124,7 +129,7 @@ const getBlog = asyncHandler(async (req, res) => {
     .populate("listOfDislikes", "firstName lastName");
   return res.json({
     success: blog ? true : false,
-    results: blog,
+    getBlog: blog,
   });
 });
 

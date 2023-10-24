@@ -4,7 +4,7 @@ const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
 router.get("/", controllers.getAllBlog);
-router.get("/detail/:bid", controllers.getBlog);
+router.get("/:bid", controllers.getBlog);
 router.post("/", controllers.createBlog);
 router.put("/:bid", controllers.updateBlog);
 router.put("/like/:bid", verifyLoginToken, controllers.likeBlog);

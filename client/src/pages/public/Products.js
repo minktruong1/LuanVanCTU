@@ -19,9 +19,9 @@ import { sorts } from "../../ultils/contants";
 
 const breakpointColumnsObj = {
   default: 5,
-  1100: 3,
+  1100: 4,
   700: 2,
-  500: 1,
+  300: 2,
 };
 
 const Products = () => {
@@ -98,11 +98,11 @@ const Products = () => {
   }, [sort]);
 
   return (
-    <div className="w-main">
+    <div className="w-[calc(100%-20px)] xl:w-main">
       <div className="pt-[18px] pb-[18px]">
         <Breadcrumb category={category} />
       </div>
-      <div className="bg-white w-main rounded mb-[14px]">
+      <div className="bg-white w-full rounded mb-[14px]">
         <div className="p-[24px] flex-auto flex items-center gap-4">
           <SearchItem
             name="Giá"

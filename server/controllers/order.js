@@ -46,7 +46,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 
 const getUserOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const response = await Order.find({ Buyer: _id });
+  const response = await Order.find({ buyer: _id });
   return res.json({
     success: response ? true : false,
     userOrder: response ? response : "error when get user order",

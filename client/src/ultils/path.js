@@ -6,6 +6,7 @@ const path = {
   LOGIN: "login",
   MAIN_CART: "main-cart",
   BLOGS: "blogs",
+  BLOG_DETAIL: "blogs/:bid/:title",
   OUR_SERVICES: "services",
   WARRANTY: "warranty",
   COUPONS: "coupons",
@@ -32,6 +33,7 @@ const path = {
   PROFILE: "profile",
   ORDER_HISTORY: "order-history",
   FAV_PRODUCTS: "favorite-list",
+  HAVE_CHECK_PRODUCTS: "checked-products",
 };
 
 export default path;

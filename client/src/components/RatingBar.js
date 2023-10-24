@@ -11,7 +11,7 @@ const RatingBar = ({ number, numberOfRatingCount, totalOfRating }) => {
   }, [numberOfRatingCount, numberOfRatingCount]);
 
   return (
-    <div className="flex items-center gap-2 min-w-[600px] ">
+    <div className="flex items-center gap-2 md:min-w-[600px] ">
       <div className="flex w-[10%] items-center gap-1 justify-center text-sm text-[#ff8a00]">
         <span className="text-black">{number}</span>
         <AiFillStar />
@@ -24,7 +24,7 @@ const RatingBar = ({ number, numberOfRatingCount, totalOfRating }) => {
           ></div>
         </div>
       </div>
-      <div className="w-[20%] line-clamp-1 text-[14px]">{`${
+      <div className="w-[20%] line-clamp-1 text-[14px] hidden md:block">{`${
         numberOfRatingCount || 0
       } đánh giá`}</div>
     </div>

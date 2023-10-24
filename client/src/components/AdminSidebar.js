@@ -3,12 +3,15 @@ import { adminSidebar } from "../ultils/contants";
 import { Link, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 const activeStyling = "px-4 py-2 flex items-center gap-2 bg-overlay ";
 const unActiveStyling = "px-4 py-2 flex items-center gap-2 hover:bg-overlay";
 
 const AdminSidebar = () => {
   const [active, setActive] = useState([]);
+
+  const { isShowAdminSidebar } = useSelector((state) => state.appReducer);
 
   const handleToggle = (tabID) => {
     if (active.some((element) => element === tabID)) {
@@ -19,14 +22,19 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className=" bg-[#10163a] h-full py-4">
+    <div
+      className={clsx(
+        "bg-[#10163a] fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-50  ",
+        isShowAdminSidebar ? "w-fit" : "translate-x-[-100%]"
+      )}
+    >
       <Link
         to={"/admin/dashboard"}
         className="flex flex-col justify-center items-center py-2 "
       >
-        <span className="text-4xl font-extrabold">WORK STATION</span>
+        <span className={clsx("text-4xl font-extrabold ")}>WORK STATION</span>
       </Link>
-      <div className="text-lg">
+      <div className={clsx("text-lg")}>
         {adminSidebar.map((element) => (
           <Fragment key={element.id}>
             {element.type === "SINGLE" && (

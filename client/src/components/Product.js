@@ -44,12 +44,12 @@ const Product = ({ productData, isNew, isHot }) => {
             </div>
           )}
         </Link>
-        <div className="flex flex-col gap-2 mt-[12px] items-start w-full">
+        <div className="flex flex-col gap-2 mt-[12px] items-start w-full ">
           <Link
             to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
               productData?.title
             }`}
-            className="line-clamp-1"
+            className=" w-full truncate"
           >
             {productData?.title}
           </Link>

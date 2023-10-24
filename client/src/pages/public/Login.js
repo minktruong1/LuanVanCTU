@@ -135,9 +135,9 @@ const Login = () => {
     setRegisterToken("");
   };
   return (
-    <div className="flex justify-center  ">
-      <div className="flex bg-white justify-center p-8 min-w-[544px] w-1/2 mt-[30px] mb-[30px]">
-        <div className="w-[80%]">
+    <div className="flex justify-center w-[calc(100%-20px)] ">
+      <div className="flex bg-white w-full md:w-[550px] justify-center p-4 md:p-8 mt-[30px] mb-[30px]">
+        <div className="w-full">
           <h1 className="uppercase mb-[12px] text-xl font-medium flex justify-center">
             {isResetPassword
               ? "đặt lại mật khẩu"

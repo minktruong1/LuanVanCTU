@@ -40,6 +40,7 @@ var blogSchema = new mongoose.Schema(
       type: String,
       default: "Admin",
     },
+    updatedAt: { type: Date },
   },
   {
     timestamps: true,

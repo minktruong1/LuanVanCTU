@@ -53,8 +53,8 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
 
   console.log(element);
   return (
-    <div className="flex mb-6">
-      <div className="w-[20%] flex flex-col items-center">
+    <div className="grid grid-cols-5 md:grid-cols-5 mb-6">
+      <div className="grid grid-rows-1 gap-3 place-content-center">
         <Link
           to={`/${element?.product?.category?.toLowerCase()}/${
             element?.product?._id
@@ -64,38 +64,44 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
           <img
             src={element?.product?.images[0]}
             alt="productImage"
-            className="w-[88px] h-[88px] object-cover border"
+            className="w-[68px] h-[68px] md:w-[88px] md:h-[88px] object-cover border"
           />
         </Link>
         <span
           onClick={() => handleRemoveItem(element?.product?._id)}
-          className="flex text-[14px] items-center cursor-pointer text-[#6d6e72] hover:text-main mt-2"
+          className="flex place-content-center text-[14px] items-center cursor-pointer text-[#6d6e72] hover:text-main"
         >
           <BiTrash />
-          <span className="ml-2">Xóa</span>
+          <span className="ml-1">Xóa</span>
         </span>
       </div>
-      <div className="w-[55%]">
-        <Link
-          to={`/${element?.product?.category?.toLowerCase()}/${
-            element?.product?._id
-          }/${element?.product?.title}`}
-          className="line-clamp-1"
-        >
-          <span className="line-clamp-1">{element?.product?.title}</span>
-        </Link>
-      </div>
-      <div className="w-[25%] text-right flex flex-col">
-        <span className=" text-main mb-4 font-medium text-[18px]">
-          {`${formatVND(element?.product?.price * quantitySelect)}đ`}
-        </span>
-        <div className="flex justify-end">
-          <QuantitySelector
-            quantity={quantitySelect}
-            handleQuantity={handleQuantity}
-            onChangeQuantity={handleButtonFunction}
-            onStock={element?.product?.quantity}
-          />
+      <div className="col-span-4">
+        <div className="grid grid-rows-1 md:grid-cols-3">
+          <div className="md:col-span-2">
+            <Link
+              to={`/${element?.product?.category?.toLowerCase()}/${
+                element?.product?._id
+              }/${element?.product?.title}`}
+              className="md:line-clamp-1 "
+            >
+              <span className="text-sm md:text-base">
+                {element?.product?.title}
+              </span>
+            </Link>
+          </div>
+          <div className="text-right">
+            <span className=" text-main mb-4 font-medium text-[18px]">
+              {`${formatVND(element?.product?.price * quantitySelect)}đ`}
+            </span>
+            <div className="flex justify-end">
+              <QuantitySelector
+                quantity={quantitySelect}
+                handleQuantity={handleQuantity}
+                onChangeQuantity={handleButtonFunction}
+                onStock={element?.product?.quantity}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

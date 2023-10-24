@@ -1,6 +1,8 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import appSlice from "./app/appSlice";
 import productSlice from "./products/productSlice";
+import blogSlice from "./blogs/blogSlice";
+import userSlice from "./users/userSlice";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import {
   persistStore,
@@ -12,7 +14,6 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import userSlice from "./users/userSlice";
 
 const config = {
   key: "shop/user",
@@ -28,6 +29,7 @@ export const store = configureStore({
   reducer: {
     appReducer: appSlice,
     products: productSlice,
+    blogReducer: blogSlice,
     user: persistReducer(userConfig, userSlice),
   },
   middleware: (getDefaultMiddleware) =>

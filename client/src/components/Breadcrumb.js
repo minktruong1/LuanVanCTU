@@ -14,13 +14,13 @@ const Breadcrumb = ({ title, category }) => {
 
   const breadcrumb = useBreadcrumbs(routes);
   return (
-    <div className="text-sm flex items-center">
+    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto">
       {breadcrumb
         ?.filter((element) => !element.match.route === false)
         .map(({ match, breadcrumb }, index, count) => (
           <React.Fragment key={index}>
             <Link
-              className="flex items-center text-canClick"
+              className="flex items-center text-canClick "
               to={match.pathname}
             >
               {index === 0 ? (
@@ -44,7 +44,7 @@ const Breadcrumb = ({ title, category }) => {
               <span className="ml-[10px] mr-[10px] text-[11px]">{"/"}</span>
             )}
             {index === count.length - 1 && (
-              <span className="text-[16px] text-[#6d6e72] capitalize">
+              <span className="text-[16px] text-[#6d6e72] capitalize ">
                 {breadcrumb}
               </span>
             )}

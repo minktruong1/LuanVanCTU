@@ -24,10 +24,13 @@ const UserDirectionPopup = () => {
             Xin chào, {currentData?.lastName}
           </span>
         </div>
-        <div className="flex items-center h-[34px] justify-start hover:underline cursor-pointer">
+        <Link
+          to={`/${path.CUSTOMER}/${path.ORDER_HISTORY}`}
+          className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"
+        >
           <RiBillLine className="mr-2 text-[16px]" />
           <span>Đơn hàng của tôi</span>
-        </div>
+        </Link>
         <Link
           to={`/${path.CUSTOMER}/${path.PROFILE}`}
           className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"

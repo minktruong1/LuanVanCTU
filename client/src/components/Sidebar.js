@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 const { MdArrowForwardIos } = icons;
 
 const Sidebar = () => {
-  // console.log(categories);
   const { categories } = useSelector((state) => state.appReducer);
 
   return (

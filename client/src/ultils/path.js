@@ -17,6 +17,7 @@ const path = {
   LAST_REGISTER: "last-register/:status",
   RESET_PASSWORD: "reset-password/:token",
   CHECKOUT: "checkout",
+  SEARCH: "search",
 
   //admin path
   ADMIN: "admin",

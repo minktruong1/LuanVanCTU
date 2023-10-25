@@ -10,27 +10,6 @@ const sendMail = require("../utils/sendMail.js");
 const crypto = require("crypto");
 const createToken = require("uniqid");
 
-// const registerUser = asyncHandler(async (req, res) => {
-//   const { email, password, firstName, lastName } = req.body;
-//   if (!email || !password || !firstName || !lastName) {
-//     return res.status(400).json({
-//       success: false,
-//       message: "Missing value",
-//     });
-//   }
-
-//   const user = await User.findOne({ email });
-//   if (user) {
-//     throw new Error("User already exist");
-//   } else {
-//     const newUser = await User.create(req.body);
-//     return res.status(200).json({
-//       success: newUser ? true : false,
-//       message: newUser ? "Register successful" : "Something go wrong",
-//     });
-//   }
-// });
-
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password, firstName, lastName, mobile } = req.body;
   if (!email || !password || !firstName || !lastName || !mobile) {
@@ -91,7 +70,6 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const registerCheck = asyncHandler(async (req, res) => {
-  // const cookie = req.cookies;
   const { token } = req.params;
   const notActiveEmail = await User.findOne({ email: new RegExp(`${token}$`) });
 
@@ -106,26 +84,6 @@ const registerCheck = asyncHandler(async (req, res) => {
       ? "Complete create account, go to login"
       : "Register check fail",
   });
-  // if (!cookie || cookie?.registerData?.token !== token) {
-  //   res.clearCookie("registerData");
-  //   return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
-  // }
-
-  // const newUser = await User.create({
-  //   email: cookie?.registerData?.email,
-  //   password: cookie?.registerData?.password,
-  //   mobile: cookie?.registerData?.mobile,
-  //   firstName: cookie?.registerData?.firstName,
-  //   lastName: cookie?.registerData?.lastName,
-  // });
-
-  // res.clearCookie("registerData");
-
-  // if (newUser) {
-  //   return res.redirect(`${process.env.CLIENT_URL}/last-register/success`);
-  // } else {
-  //   return res.redirect(`${process.env.CLIENT_URL}/last-register/fail`);
-  // }
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -163,7 +121,7 @@ const loginUser = asyncHandler(async (req, res) => {
       userData,
     });
   } else {
-    throw new Error("Wrong email or password");
+    throw new Error("Sai tên đăng nhập hoặc mật khẩu");
   }
 });
 

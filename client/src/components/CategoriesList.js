@@ -7,7 +7,7 @@ const CategoriesList = () => {
   const { categories } = useSelector((state) => state.appReducer);
   return (
     <>
-      <div className="bg-white w-[380px] md:w-full ">
+      <div className="bg-white w-[calc(100%-20px)] md:w-full ">
         <div className="p-[12px] text-xl hidden md:block">Danh mục</div>
         <div className="grid grid-cols-5 md:grid-cols-10 ">
           {categories?.map((element) => (

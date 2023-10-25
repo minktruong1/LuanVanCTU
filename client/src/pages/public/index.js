@@ -11,3 +11,4 @@ export { default as RsPassword } from "./RsPassword.js";
 export { default as MainCart } from "./MainCart.js";
 export { default as Checkout } from "./Checkout.js";
 export { default as BlogDetail } from "./BlogDetail.js";
+export { default as SearchProduct } from "./SearchProduct.js";

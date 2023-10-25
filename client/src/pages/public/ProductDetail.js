@@ -171,8 +171,8 @@ const ProductDetail = () => {
     if (!currentData) {
       return sweetAlert
         .fire({
-          title: "Lỗi",
-          text: "Hãy đăng nhập",
+          title: "Thông báo",
+          text: "Vui lòng đăng nhập",
           icon: "info",
           cancelButtonAriaLabel: "Hủy",
           showCancelButton: true,

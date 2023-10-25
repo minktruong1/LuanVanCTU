@@ -30,6 +30,10 @@ const OrderHistory = () => {
     const response = await apiGetUserOrders();
     if (response.success) {
       setOrders(response.userOrder);
+      setProcess("SADASD");
+      setShipping("DSADAS");
+      setCancel("ASD");
+      setDone("ASDASD");
     }
   };
 
@@ -94,7 +98,19 @@ const OrderHistory = () => {
           </div>
         </div>
       ) : (
-        <div>order</div>
+        <>
+          {orders?.map((order) => (
+            <div key={order._id} className="grid grid-rows-1 mb-6">
+              {order?.productList?.map((productItem) => (
+                <div key={productItem?.product?._id} className="">
+                  <img alt="" />
+                  <span>{productItem?.product?.title}</span>
+                  <span>{productItem?.product?.price}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </>
       )}
     </div>
   );

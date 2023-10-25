@@ -33,7 +33,10 @@ const Banner = () => {
     <div className="">
       <Slider {...reactSlickSetting} className="custom">
         {imagesLink?.map((element) => (
-          <div className="h-[188px] md:w-full md:h-[320px] rounded overflow-hidden">
+          <div
+            key={element.id}
+            className="h-[188px] md:w-full md:h-[320px] rounded overflow-hidden"
+          >
             <img
               alt=""
               src={element.link}

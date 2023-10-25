@@ -6,13 +6,13 @@ import {
   MobileToolbar,
 } from "../../components/index.js";
 import CategoriesList from "../../components/CategoriesList.js";
-import Blogs from "../../components/BlogsMap.js";
+import BlogsMap from "../../components/BlogsMap.js";
 import { useSelector } from "react-redux";
 import ProductSuggestion from "../../components/ProductSuggestion.js";
 
 const Home = () => {
   return (
-    <div className="w-main">
+    <div className="w-full md:w-main">
       <div className="flex mt-4">
         <div className="flex flex-row gap-2 w-full">
           <div className="hidden md:w-[20%] md:block">
@@ -20,7 +20,7 @@ const Home = () => {
           </div>
           <div className="w-full md:w-[80%]">
             <div className="flex flex-row justify-center">
-              <div className="flex flex-col w-[375px] md:w-[70%]">
+              <div className="flex flex-col w-[calc(100%-20px)] md:w-[70%]">
                 <Banner />
               </div>
               <div className="hidden md:flex md:flex-col md:w-[30%] md:justify-between">
@@ -41,14 +41,14 @@ const Home = () => {
       <div className="w-full hidden md:block">
         <SpecialOffer />
       </div>
-      <div className="flex flex-row justify-center md:w-full ">
+      <div className="flex flex-row justify-center md:w-full">
         <CategoriesList />
       </div>
-      <div className="w-full">
+      <div className="flex flex-row justify-center md:w-full">
         <ProductSuggestion />
       </div>
-      <div className="w-full">
-        <Blogs />
+      <div className="flex flex-row justify-center md:w-full">
+        <BlogsMap />
       </div>
       <div className="w-full md:hidden">
         <MobileToolbar />

@@ -70,7 +70,6 @@ const Login = () => {
     const invalidCount = isRegister
       ? formValidate(payload, setInvalidFields)
       : formValidate(formData, setInvalidFields);
-    console.log(invalidCount);
 
     if (invalidCount === 0) {
       if (isRegister) {
@@ -104,9 +103,8 @@ const Login = () => {
             ? navigate(searchParams.get("redirect"))
             : navigate(`/${path.HOME}`);
         } else {
-          sweetAlert.fire("Lỗi đăng nhập", responseLogin.mes, "error");
+          sweetAlert.fire("Lỗi đăng nhập", responseLogin.message, "error");
         }
-        console.log(responseLogin);
       }
     }
   }, [payload, isRegister]);

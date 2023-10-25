@@ -14,6 +14,7 @@ import {
   MainCart,
   Checkout,
   BlogDetail,
+  SearchProduct,
 } from "./pages/public/index.js";
 import path from "./ultils/path.js";
 import { apiGetCateList } from "./store/app/asyncActions.js";
@@ -100,6 +101,7 @@ function App() {
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>
           <Route path={path.CHECKOUT} element={<Checkout />}></Route>
           <Route path={path.ALL} element={<Home />}></Route>
+          <Route path={path.SEARCH} element={<SearchProduct />}></Route>
         </Route>
 
         <Route path={path.ADMIN} element={<AdminLayout />}>

@@ -27,7 +27,21 @@ const updateBlog = asyncHandler(async (req, res) => {
 });
 
 const getAllBlog = asyncHandler(async (req, res) => {
-  const response = await Blog.find();
+  let query = Blog.find();
+
+  // Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    query = query.sort(sortBy);
+  }
+
+  // Limit
+  const limit = req.query.limit ? +req.query.limit : -1;
+  if (limit !== -1) {
+    query = query.limit(limit);
+  }
+
+  const response = await query.exec();
   return res.json({
     success: response ? true : false,
     blogs: response ? response : "error when get all Blogs ",

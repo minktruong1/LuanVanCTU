@@ -6,13 +6,14 @@ const asyncHandler = require("express-async-handler");
 
 const createOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { productList, totalPrice, address, status } = req.body;
+  const { productList, totalPrice, address, status, method } = req.body;
 
   const data = {
     productList,
     totalPrice,
     buyer: _id,
     address,
+    method,
   };
   if (status) {
     data.status = status;

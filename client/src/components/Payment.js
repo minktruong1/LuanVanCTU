@@ -27,7 +27,10 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload }) => {
   }, [currency, showSpinner]);
 
   const handleSaveInformation = async () => {
-    const response = await apiCreateOrder({ ...payload, status: "Done" });
+    const response = await apiCreateOrder({
+      ...payload,
+      status: "Process",
+    });
     if (response.success) {
       setTimeout(() => {
         sweetAlert

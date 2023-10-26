@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { apiRemoveProductFromCart, apiUpdateCart } from "../apis";
+import { apiRemoveProductFromCart } from "../apis";
 import { useDispatch } from "react-redux";
 import { apiGetCurrentAccount } from "../store/users/asyncActions";
 import { toast } from "react-toastify";

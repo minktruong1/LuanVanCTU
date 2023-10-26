@@ -189,7 +189,11 @@ const ProductDetail = () => {
           }
         });
     }
-    const response = await apiUpdateCart({ pid: product?._id, quantity });
+    const response = await apiUpdateCart({
+      pid: product?._id,
+      quantity,
+      price: product?.price,
+    });
     if (response.success) {
       toast.success(response.message);
       dispatch(apiGetCurrentAccount());

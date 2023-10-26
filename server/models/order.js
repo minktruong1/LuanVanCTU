@@ -5,7 +5,7 @@ var orderSchema = new mongoose.Schema({
   productList: [
     {
       product: { type: mongoose.Types.ObjectId, ref: "Product" },
-      count: Number,
+      quantity: Number,
       price: Number,
       title: String,
     },
@@ -14,6 +14,11 @@ var orderSchema = new mongoose.Schema({
     type: String,
     default: "Cancelled",
     enum: ["Cancelled", "Process", "Shipping", "Done"],
+  },
+  method: {
+    type: String,
+    default: "cod",
+    enum: ["cod", "paypal"],
   },
   totalPrice: Number,
   address: String,

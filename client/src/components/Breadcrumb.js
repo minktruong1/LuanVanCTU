@@ -14,7 +14,7 @@ const Breadcrumb = ({ title, category }) => {
 
   const breadcrumb = useBreadcrumbs(routes);
   return (
-    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto">
+    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
       {breadcrumb
         ?.filter((element) => !element.match.route === false)
         .map(({ match, breadcrumb }, index, count) => (

@@ -15,6 +15,7 @@ router.post("/forgotpassword", controllers.forgotPassword);
 router.put("/resetpassword", controllers.resetPassword);
 router.put("/address", [verifyLoginToken], controllers.updateUserAddress);
 router.put("/cart", [verifyLoginToken], controllers.addProductIntoUserCart);
+router.put("/wishlist", [verifyLoginToken], controllers.addProductToWishList);
 router.delete(
   "/remove-product/:pid",
   [verifyLoginToken],

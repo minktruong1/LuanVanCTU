@@ -134,7 +134,14 @@ const getUser = asyncHandler(async (req, res) => {
       path: "cart",
       populate: {
         path: "product",
-        select: "title images price quantity category",
+        select: "title images price category",
+      },
+    })
+    .populate({
+      path: "wishList",
+      populate: {
+        path: "product",
+        select: "title images price quantity category reviewPoint",
       },
     });
   return res.status(200).json({
@@ -356,8 +363,8 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, quantity, price } = req.body;
-  if (!pid || !quantity || !price) {
+  const { pid, quantity, price, title } = req.body;
+  if (!pid) {
     throw new Error("Missing inputs");
   }
   const user = await User.findById(_id).select("cart");
@@ -366,14 +373,14 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
   );
   if (alreadyInCart) {
     const alreadyPrice = alreadyInCart.price;
-    const alreadyQuantity = alreadyInCart.quantity;
 
     const response = await User.updateOne(
       { cart: { $elemMatch: alreadyInCart } },
       {
         $set: {
-          "cart.$.quantity": quantity + alreadyQuantity,
+          "cart.$.quantity": quantity,
           "cart.$.price": alreadyPrice,
+          "cart.$.title": title,
         },
       },
       { new: true }
@@ -386,7 +393,7 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(
       _id,
       {
-        $push: { cart: { product: pid, quantity, price } },
+        $push: { cart: { product: pid, quantity, price, title } },
       },
       { new: true }
     );
@@ -432,6 +439,44 @@ const adminCreateUser = asyncHandler(async (req, res) => {
   });
 });
 
+const addProductToWishList = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { pid } = req.body;
+  if (!pid) {
+    throw new Error("Missing inputs");
+  }
+  const user = await User.findById(_id).select("wishList");
+
+  const alreadyAdd = user?.wishList?.find(
+    (element) => element.product.toString() === pid
+  );
+  if (alreadyAdd) {
+    const response = await User.findByIdAndUpdate(
+      _id,
+      {
+        $pull: { wishList: { product: pid } },
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: response ? true : false,
+      message: response ? "Gỡ ra khỏi danh sách yêu thích" : "Lỗi gỡ sản phẩm",
+    });
+  } else {
+    const response = await User.findByIdAndUpdate(
+      _id,
+      {
+        $push: { wishList: { product: pid } },
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: response ? true : false,
+      message: response ? "Yêu thích sản phẩm" : "Lỗi thêm sản phẩm",
+    });
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -449,4 +494,5 @@ module.exports = {
   registerCheck,
   adminCreateUser,
   removeProductFromCart,
+  addProductToWishList,
 };

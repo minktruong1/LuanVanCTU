@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { apiRemoveProductFromCart } from "../apis";
+import { apiRemoveProductFromCart, apiUpdateCart } from "../apis";
 import { useDispatch } from "react-redux";
 import { apiGetCurrentAccount } from "../store/users/asyncActions";
 import { toast } from "react-toastify";
@@ -21,6 +21,7 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
       setQuantitySelect(number);
     }
   };
+
   const handleButtonFunction = (math, onStock) => {
     if (math === "decrease" && quantitySelect === 1) {
       return;
@@ -39,19 +40,29 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
   const handleRemoveItem = async (pid) => {
     const response = await apiRemoveProductFromCart(pid);
     if (response.success) {
+      //quick rerender
       dispatch(apiGetCurrentAccount());
     } else {
       toast.error(response.message);
     }
   };
 
+  const updateCartItemQuantity = async (productId, newQuantity) => {
+    const response = await apiUpdateCart({
+      pid: productId,
+      quantity: newQuantity,
+    });
+    if (response.success) {
+      dispatch(updateCart({ pid: productId, quantity: newQuantity }));
+    } else {
+      toast.error(response.message);
+    }
+  };
+
   useEffect(() => {
-    dispatch(
-      updateCart({ pid: element?.product?._id, quantity: quantitySelect })
-    );
+    updateCartItemQuantity(element?.product?._id, quantitySelect);
   }, [quantitySelect]);
 
-  console.log(element);
   return (
     <div className="grid grid-cols-5 md:grid-cols-5 mb-6">
       <div className="grid grid-rows-1 gap-3 place-content-center">

@@ -8,3 +8,4 @@ export { default as UpdateProduct } from "./UpdateProduct";
 export { default as ManageBlog } from "./ManageBlog";
 export { default as ManageCate } from "./ManageCate";
 export { default as AdminHeader } from "../../components/AdminHeader";
+export { default as UpdateOrder } from "./UpdateOrder";

@@ -20,8 +20,10 @@ export const userSlice = createSlice({
       state.isLogin = false;
       state.token = null;
       state.currentData = null;
+      state.currentCart = null;
       state.isLoading = false;
       state.message = "";
+      window.location.reload();
     },
     clearMessage: (state) => {
       state.message = "";

@@ -68,8 +68,6 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
     setReview((prev) => ({ ...prev, images: imagesReview }));
   };
 
-  console.log(review);
-  // console.log(review);
   const [invalidFields, setInvalidFields] = useState([]);
 
   const changeValue = useCallback(
@@ -122,8 +120,8 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
   }, [watch("images")]);
 
   return (
-    <div className="w-full flex flex-col relative">
-      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b   z-40 bg-[#b4bcc7]">
+    <div className="w-full flex flex-col ">
+      <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b z-40 ">
         <h1>Cập nhật sản phẩm</h1>
       </div>
       <div className="p-4">

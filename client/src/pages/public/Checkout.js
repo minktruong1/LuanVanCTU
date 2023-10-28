@@ -29,6 +29,13 @@ const Checkout = () => {
     +currentCart?.reduce(
       (sum, element) => +element.product?.price * element?.quantity + sum,
       0
+    )
+  );
+
+  const priceCountingToUSD = Math.round(
+    +currentCart?.reduce(
+      (sum, element) => +element.product?.price * element?.quantity + sum,
+      0
     ) / 23000
   );
 
@@ -67,7 +74,7 @@ const Checkout = () => {
       }, 1500);
     }
   };
-
+  console.log(currentCart);
   return (
     <div className="grid grid-rows-1 gap-3 my-8">
       <div className="w-main grid grid-rows-1 bg-white rounded-b ">
@@ -84,7 +91,6 @@ const Checkout = () => {
           <div className="grid grid-cols-8">
             <span className="col-span-1 text-[#6d6e72]">Địa chỉ:</span>
             <span className="col-span-7 font-semibold">
-              {" "}
               <span>{currentData?.address}</span>
             </span>
           </div>
@@ -149,9 +155,9 @@ const Checkout = () => {
                   <button
                     onClick={() => handleSelectMethod(element)}
                     className={clsx(
-                      "border p-2 mr-2",
+                      "border p-2 mr-2 text-[#6d6e72] border-[#6d6e72]",
                       selectedButton === element.id
-                        ? "border-main text-main"
+                        ? "!border-main text-main"
                         : ""
                     )}
                   >
@@ -172,7 +178,7 @@ const Checkout = () => {
                     address: currentData?.address,
                     method: paymentMethod,
                   }}
-                  amount={priceCounting}
+                  amount={priceCountingToUSD}
                 />
               )}
             </div>

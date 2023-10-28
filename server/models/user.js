@@ -40,18 +40,13 @@ var userSchema = new mongoose.Schema(
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
         quantity: Number,
         price: Number,
-        description: String,
+        title: String,
       },
     ],
     address: {
       type: String,
     },
-    wishlist: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "Product",
-      },
-    ],
+    wishList: [{ product: { type: mongoose.Types.ObjectId, ref: "Product" } }],
     isBlocked: {
       type: Boolean,
       default: false,

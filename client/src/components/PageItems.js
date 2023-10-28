@@ -23,6 +23,7 @@ const PageItems = ({ children }) => {
       search: createSearchParams(queries).toString(),
     });
   };
+
   return (
     <button
       className={clsx(

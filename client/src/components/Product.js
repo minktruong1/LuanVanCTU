@@ -1,17 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatVND } from "../ultils/helpers";
 import { pointToStar } from "../ultils/helpers";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  createSearchParams,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import icons from "../ultils/icons";
+import { apiFavProduct } from "../apis";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import sweetAlert from "sweetalert2";
+import path from "../ultils/path";
 
 const { AiOutlineHeart, AiFillHeart } = icons;
 
 const Product = ({ productData, isNew, isHot }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [favorite, setFavorite] = useState(false);
-  const handleFavorite = () => {
-    setFavorite(!favorite);
-    console.log("love!!");
+  const { isLogin, currentData } = useSelector((state) => state.user);
+
+  const handleFavorite = async () => {
+    if (!currentData) {
+      return sweetAlert
+        .fire({
+          title: "Thông báo",
+          text: "Vui lòng đăng nhập",
+          icon: "info",
+          cancelButtonAriaLabel: "Hủy",
+          showCancelButton: true,
+          confirmButtonText: "Tới trang đăng nhập",
+        })
+        .then((rs) => {
+          if (rs.isConfirmed) {
+            navigate({
+              pathname: `/${path.LOGIN}`,
+              search: createSearchParams({
+                redirect: location.pathname,
+              }).toString(),
+            });
+          }
+        });
+    }
+    const response = await apiFavProduct({ pid: productData?._id });
+    if (response.success) {
+      setFavorite(!favorite);
+      toast.success(response.message);
+    }
   };
+
+  useEffect(() => {
+    const isFavorite = currentData?.wishList.some(
+      (item) => item.product._id === productData._id
+    );
+
+    if (isFavorite) {
+      setFavorite(true);
+    }
+  }, [currentData, productData._id]);
 
   return (
     <div>
@@ -58,7 +107,7 @@ const Product = ({ productData, isNew, isHot }) => {
               <span key={index}>{element}</span>
             ))}
             <span className="ml-[6px]">
-              {productData?.reviewPoint.toFixed(1)}
+              {productData?.reviewPoint?.toFixed(1)}
             </span>
           </span>
           <div className="flex w-full justify-between items-center">

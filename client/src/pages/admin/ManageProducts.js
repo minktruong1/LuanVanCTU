@@ -124,7 +124,7 @@ const ManageProducts = () => {
               <th className="rounded-tr-md">Thao tác</th>
             </tr>
           </thead>
-          <tbody className="text-center border-[#362f4b] border ">
+          <tbody className="text-center border-[#362f4b] border">
             {products?.map((element, index) => (
               <tr
                 key={element._id}

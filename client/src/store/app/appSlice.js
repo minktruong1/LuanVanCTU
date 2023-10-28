@@ -10,7 +10,7 @@ export const appSlice = createSlice({
     modalContent: null,
     isShowCartPopup: false,
     isShowUserDirection: false,
-    isShowAdminSidebar: false,
+    isShowAdminSidebar: true,
   },
   reducers: {
     showModal: (state, action) => {

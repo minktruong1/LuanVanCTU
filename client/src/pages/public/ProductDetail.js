@@ -11,7 +11,6 @@ import {
   Comment,
   QuantitySelector,
   RatingBar,
-  RatingCalculate,
   RatingModal,
 } from "../../components";
 import Slider from "react-slick";
@@ -90,15 +89,10 @@ const ProductDetail = () => {
               handleCollectReview={handleCollectReview}
             />
           ),
-          //getRatingProductImage: `${}`,
         })
       );
     }
   };
-
-  // const rerender = useCallback(() => {
-  //   setUpdateRatingBar(!updateRatingBar);
-  // }, [updateRatingBar]);
 
   const fetchProductData = async () => {
     const response = await apiGetProductDetail(pid);
@@ -191,6 +185,7 @@ const ProductDetail = () => {
     }
     const response = await apiUpdateCart({
       pid: product?._id,
+      title: product?.title,
       quantity,
       price: product?.price,
     });

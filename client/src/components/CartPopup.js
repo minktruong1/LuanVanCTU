@@ -22,7 +22,7 @@ const CartPopup = () => {
     <div className="bg-white text-black w-[350px]  drop-shadow-xl z-50">
       <div className="absolute w-[20px] h-[20px] bg-white content-none rotate-45 top-[-10px] right-[40px]"></div>
       <div>
-        {currentCart.length === 0 ? (
+        {currentCart === null || currentCart.length === 0 ? (
           <div className="flex flex-col justify-center items-center p-4">
             <img src={emptyCart} alt="emptyCart" />
             <span className="text-[16px] font-medium">Giỏ hàng trống</span>

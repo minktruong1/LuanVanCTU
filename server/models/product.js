@@ -21,6 +21,10 @@ var productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    buyInPrice: {
+      type: Number,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,

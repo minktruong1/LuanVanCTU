@@ -182,6 +182,19 @@ const CreateProduct = () => {
               fullWidth
             />
             <ReactInputForm
+              label="Giá mua vào"
+              register={register}
+              errors={errors}
+              id="buyInPrice"
+              validate={{
+                required: "Vui lòng nhập",
+              }}
+              placeholder="Giá nhập sản phẩm mới"
+              type="number"
+              style="flex-1"
+              fullWidth
+            />
+            <ReactInputForm
               label="Số lượng sản phẩm"
               register={register}
               errors={errors}

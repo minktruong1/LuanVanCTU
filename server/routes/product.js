@@ -11,7 +11,7 @@ router.post(
 );
 router.get("/", controllers.getAllProducts);
 router.put("/reviews", verifyLoginToken, controllers.reviews);
-
+router.post("/searchproduct", controllers.searchProduct);
 router.put(
   "/uploadimg/:pid",
   [verifyLoginToken, isAdmin],

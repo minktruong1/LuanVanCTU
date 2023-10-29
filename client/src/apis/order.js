@@ -1,9 +1,10 @@
 import axios from "../axios";
 
-export const apiGetUserOrders = () =>
+export const apiGetUserOrders = (params) =>
   axios({
     url: "/order/",
     method: "GET",
+    params,
   });
 
 export const apiAdminGetUserOrders = (params) =>
@@ -13,7 +14,7 @@ export const apiAdminGetUserOrders = (params) =>
     params,
   });
 
-export const apiAdminUpdateOrderStatus = (oid, data) =>
+export const apiUpdateOrderStatus = (oid, data) =>
   axios({
     url: "/order/status/" + oid,
     method: "PUT",

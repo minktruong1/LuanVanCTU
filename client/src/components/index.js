@@ -37,3 +37,5 @@ export { default as MobileToolbar } from "./MobileToolbar.js";
 export { default as MobileSidebar } from "./MobileSidebar.js";
 export { default as FaqQuestion } from "./FaqQuestion.js";
 export { default as BlogItem } from "./BlogItem.js";
+export { default as ChartVertical } from "./ChartVertical.js";
+export { default as ChartPie } from "./ChartPie.js";

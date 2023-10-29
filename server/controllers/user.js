@@ -363,7 +363,7 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, quantity, price, title } = req.body;
+  const { pid, quantity, price, title, images } = req.body;
   if (!pid) {
     throw new Error("Missing inputs");
   }
@@ -380,7 +380,6 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
         $set: {
           "cart.$.quantity": quantity,
           "cart.$.price": alreadyPrice,
-          "cart.$.title": title,
         },
       },
       { new: true }
@@ -393,7 +392,7 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(
       _id,
       {
-        $push: { cart: { product: pid, quantity, price, title } },
+        $push: { cart: { product: pid, quantity, price, title, images } },
       },
       { new: true }
     );

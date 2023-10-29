@@ -9,12 +9,13 @@ var orderSchema = new mongoose.Schema(
         quantity: Number,
         price: Number,
         title: String,
+        images: Array,
       },
     ],
     status: {
       type: String,
-      default: "Cancelled",
-      enum: ["Cancelled", "Process", "Shipping", "Done"],
+      default: "Đang xử lý",
+      enum: ["Đang xử lý", "Đang vận chuyển", "Hoàn thành", "Hủy"],
     },
     method: {
       type: String,

@@ -17,6 +17,7 @@ import { Badge } from "antd";
 import UserDirectionPopup from "./UserDirectionPopup";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MobileSidebar } from "../components";
+import { apiSearchProduct } from "../apis";
 
 const {
   TfiHeadphoneAlt,
@@ -35,6 +36,21 @@ const Header = () => {
   );
   const { isShowCartPopup } = useSelector((state) => state.appReducer);
   const { isShowUserDirection } = useSelector((state) => state.appReducer);
+
+  const [search, setSearch] = useState(null);
+  const [productSearch, setProductSearch] = useState(null);
+
+  const handleSearch = async () => {
+    if (search) {
+      const data = {
+        searchProduct: search,
+      };
+      const response = await apiSearchProduct(data);
+      if (response.success) {
+        setProductSearch(response);
+      }
+    }
+  };
 
   useEffect(() => {
     const setTimeoutGetCurrent = setTimeout(() => {
@@ -85,12 +101,18 @@ const Header = () => {
           </div>
 
           <div className="flex bg-white items-center w-1/2  md:w-1/3 rounded">
-            <form className="flex relative w-full">
-              <input className="w-[85%] m-2 focus:outline-none border:none" />
-              <button className="w-[15%] flex  justify-center absolute right-0 top-[12px]">
+            <div className="flex relative w-full">
+              <input
+                onChange={(event) => setSearch(event.target.value)}
+                className="w-[85%] m-2 focus:outline-none border-none"
+              />
+              <button
+                onClick={handleSearch}
+                className="w-[15%] flex justify-center absolute right-0 top-[12px]"
+              >
                 <BiSearch />
               </button>
-            </form>
+            </div>
           </div>
 
           <div className="flex text-[13px] text-white ">

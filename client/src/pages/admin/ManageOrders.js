@@ -41,11 +41,6 @@ const ManageOrders = () => {
 
   const [calculated, setCalculated] = useState(false);
   const [editOrderTab, setEditOrderTab] = useState(null);
-  const [update, setUpdate] = useState(false);
-
-  const render = useCallback(() => {
-    setUpdate(!update);
-  });
 
   const queryDebounce = useDebounce(watch("query"), 800);
 
@@ -57,19 +52,20 @@ const ManageOrders = () => {
       if (!calculated) {
         setCollect(response?.counts);
         setCancel(
-          response?.orders?.filter((order) => order?.status === "Cancelled")
-            .length
+          response?.orders?.filter((order) => order?.status === "Hủy").length
         );
         setDone(
-          response?.orders?.filter((order) => order?.status === "Done")?.length
+          response?.orders?.filter((order) => order?.status === "Hoàn thành")
+            ?.length
         );
         setProcess(
-          response?.orders?.filter((order) => order?.status === "Process")
+          response?.orders?.filter((order) => order?.status === "Đang xử lý")
             ?.length
         );
         setShip(
-          response?.orders.filter((order) => order?.status === "Shipping")
-            ?.length
+          response?.orders.filter(
+            (order) => order?.status === "Đang vận chuyển"
+          )?.length
         );
         // Đánh dấu đã tính toán
         setCalculated(true);
@@ -95,7 +91,6 @@ const ManageOrders = () => {
     fetchOrders({ ...searchParams });
   }, [params]);
 
-  console.log(orders);
   return (
     <div className="w-full p-4 relative">
       {editOrderTab && (
@@ -103,7 +98,6 @@ const ManageOrders = () => {
           <UpdateOrder
             editOrderTab={editOrderTab}
             setEditOrderTab={setEditOrderTab}
-            render={render}
           />
         </div>
       )}
@@ -126,7 +120,7 @@ const ManageOrders = () => {
           <span className="text-xl font-medium">{collect}</span>
         </div>
         <div
-          onClick={() => navigate(`?status=process`)}
+          onClick={() => navigate(`?status=Đang+xử+lý`)}
           className="grid grid-rows-1 border p-4 rounded bg-white cursor-pointer hover:shadow-2xl"
         >
           <div className="flex justify-between">
@@ -140,7 +134,7 @@ const ManageOrders = () => {
           <span className="text-xl font-medium">{process}</span>
         </div>
         <div
-          onClick={() => navigate(`?status=done`)}
+          onClick={() => navigate(`?status=Hoàn+thành`)}
           className="grid grid-rows-1 border p-4 rounded bg-white cursor-pointer hover:shadow-2xl"
         >
           <div className="flex justify-between">
@@ -155,7 +149,7 @@ const ManageOrders = () => {
         </div>
 
         <div
-          onClick={() => navigate(`?status=shipping`)}
+          onClick={() => navigate(`?status=Đang+vận+chuyển`)}
           className="grid grid-rows-1 border p-4 rounded bg-white cursor-pointer hover:shadow-2xl"
         >
           <div className="flex justify-between">
@@ -169,7 +163,7 @@ const ManageOrders = () => {
           <span className="text-xl font-medium">{ship}</span>
         </div>
         <div
-          onClick={() => navigate(`?status=cancel`)}
+          onClick={() => navigate(`?status=Hủy`)}
           className="grid grid-rows-1 border p-4 rounded bg-white cursor-pointer hover:shadow-2xl"
         >
           <div className="flex justify-between">

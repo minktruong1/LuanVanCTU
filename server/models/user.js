@@ -41,6 +41,7 @@ var userSchema = new mongoose.Schema(
         quantity: Number,
         price: Number,
         title: String,
+        images: Array,
       },
     ],
     address: {

@@ -7,14 +7,17 @@ const { BsFillHouseFill } = icons;
 
 const Breadcrumb = ({ title, category }) => {
   const routes = [
+    { path: "/", breadcrumb: "Trang chủ" },
     { path: "/:category", breadcrumb: category },
-    { path: "/", breadcrumb: "Home" },
     { path: "/:category/:pid/:title", breadcrumb: title },
+    { path: "/blogs", breadcrumb: "Tin tức" },
+    { path: "/blogs/:bid/:title", breadcrumb: title },
+    { path: "/all-products", breadcrumb: "Tất cả sản phẩm" },
   ];
 
   const breadcrumb = useBreadcrumbs(routes);
   return (
-    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden mb-2">
       {breadcrumb
         ?.filter((element) => !element.match.route === false)
         .map(({ match, breadcrumb }, index, count) => (

@@ -10,23 +10,21 @@ const breakpointColumnsObj = {
   300: 2,
 };
 
-const SearchProduct = () => {
+const SearchProduct = ({ productSearch }) => {
   const [products, setProducts] = useState(null);
 
-  const fetchProduct = async () => {
-    const response = await apiGetProducts();
-    if (response.success) {
-      setProducts(response);
-    }
-  };
-
   useEffect(() => {
-    fetchProduct();
-  }, []);
+    // Tại đây, bạn có thể sử dụng giá trị productSearch để thực hiện tác vụ tìm kiếm sản phẩm hoặc hiển thị dữ liệu.
+    console.log(productSearch);
+    // if (productSearch) {
+    //   const foundProducts = productSearch.products; // Giả sử productSearch chứa danh sách sản phẩm tìm kiếm.
+    //   setProducts(foundProducts);
+    // }
+  }, [productSearch]);
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main bg-white rounded">
-      <Masonry
+      {/* <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid flex mb-[20px]"
         columnClassName="my-masonry-grid_column "
@@ -34,7 +32,7 @@ const SearchProduct = () => {
         {products?.products?.map((element) => (
           <Product key={element._id} pid={element.id} productData={element} />
         ))}
-      </Masonry>
+      </Masonry> */}
     </div>
   );
 };

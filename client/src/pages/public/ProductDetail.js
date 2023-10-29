@@ -188,6 +188,7 @@ const ProductDetail = () => {
       title: product?.title,
       quantity,
       price: product?.price,
+      images: product?.images,
     });
     if (response.success) {
       toast.success(response.message);
@@ -198,7 +199,7 @@ const ProductDetail = () => {
   return (
     <>
       <div className="w-[calc(100%-20px)] md:w-main">
-        <div className="pb-4">
+        <div className="">
           <Breadcrumb title={title} category={category} />
         </div>
         <div className="grid grid-cols-1 gap-2">
@@ -266,7 +267,6 @@ const ProductDetail = () => {
                     <GiCheckMark /> Hỗ trợ đổi mới trong 7 ngày.
                   </p>
                   <p>
-                    {" "}
                     <GiCheckMark />
                     Miễn phí giao hàng toàn quốc.
                   </p>

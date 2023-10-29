@@ -4,10 +4,10 @@ const slugify = require("slugify");
 // const { query } = require("express");
 
 const createProduct = asyncHandler(async (req, res) => {
-  const { title, price, description, brand, category } = req.body;
+  const { title, price, description, brand, category, buyInPrice } = req.body;
   let images = req.files; // Thay đổi này để lấy danh sách các tệp
 
-  if (!(title && price && description && brand && category)) {
+  if (!(title && price && description && brand && category && buyInPrice)) {
     throw new Error("Missing inputs");
   }
 
@@ -214,7 +214,9 @@ const reviews = asyncHandler(async (req, res) => {
 //Handle upload img to cloudinary
 const uploadProductImg = asyncHandler(async (req, res) => {
   const { pid } = req.params;
-  if (!req.files) throw new Error("Missing inputs");
+  if (!req.files) {
+    throw new Error("Missing inputs");
+  }
   const response = await Product.findByIdAndUpdate(
     pid,
     {
@@ -228,6 +230,22 @@ const uploadProductImg = asyncHandler(async (req, res) => {
   });
 });
 
+const searchProduct = async (req, res) => {
+  const searchQuery = req.body.searchProduct;
+
+  const response = await Product.find({
+    title: { $regex: searchQuery, $options: "i" },
+  });
+
+  const counts = response.length;
+
+  return res.status(200).json({
+    success: response ? true : false,
+    counts,
+    searchProduct: response ? response : "Lỗi tìm kiếm",
+  });
+};
+
 module.exports = {
   createProduct,
   getProduct,
@@ -236,4 +254,5 @@ module.exports = {
   deleteProduct,
   reviews,
   uploadProductImg,
+  searchProduct,
 };

@@ -15,7 +15,7 @@ const ReactInputForm = ({
   fullWidth,
 }) => {
   return (
-    <div className={clsx(" h-[42px]", style)}>
+    <div className={clsx("h-[42px]", style, fullWidth && "w-full")}>
       {label && <label htmlFor={id}>{label}</label>}
       <input
         type={type}
@@ -24,7 +24,10 @@ const ReactInputForm = ({
         disabled={disable}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        className={clsx("form-input", fullWidth && "w-full")}
+        className={clsx(
+          "form-input focus:outline-none border-none",
+          fullWidth && "w-full"
+        )}
       />
       {errors[id] && (
         <small className="text-xs text-red-600">{errors[id]?.message}</small>

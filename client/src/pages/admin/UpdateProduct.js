@@ -40,6 +40,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
     reset({
       title: editProductTab?.title || "",
       price: editProductTab?.price || "",
+      buyInPrice: editProductTab?.buyInPrice || "",
       quantity: editProductTab?.quantity || "",
       category: editProductTab?.category?.toLowerCase() || "",
       brand: editProductTab?.brand?.toLowerCase() || "",
@@ -181,6 +182,19 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
           />
           <div className="w-full my-6 flex gap-4">
             <ReactInputForm
+              label="Giá mua vào sản phẩm"
+              register={register}
+              errors={errors}
+              id="buyInPrice"
+              validate={{
+                required: "Vui lòng nhập",
+              }}
+              placeholder="Giá mua vào phẩm mới"
+              type="number"
+              style="flex-1"
+              fullWidth
+            />
+            <ReactInputForm
               label="Giá sản phẩm"
               register={register}
               errors={errors}
@@ -248,7 +262,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
             value={payload.description}
           />
           <div className="mt-8">
-            <Button type="submit">Create</Button>
+            <Button type="submit">Cập nhật</Button>
           </div>
         </form>
       </div>

@@ -62,19 +62,77 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 });
 
 const getUserOrder = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
-  const response = await Order.find({ buyer: _id }).populate({
-    path: "productList",
-    populate: {
-      path: "product",
-      select: "title images price",
-    },
+  const queries = { ...req.query };
+
+  //list type of filter
+  const excludeFields = ["sort", "fields"];
+  excludeFields.forEach((element) => {
+    delete queries[element];
   });
-  return res.status(200).json({
-    success: response ? true : false,
-    userOrder: response ? response : "error when get user order",
-  });
+
+  //syntax normalization
+  let queryString = JSON.stringify(queries);
+  queryString = queryString.replace(
+    /\b(gte|gt|lt|lte)\b/g,
+    (matchedEl) => `$${matchedEl}`
+  );
+
+  const formatQueries = JSON.parse(queryString);
+
+  // Filtering(status, method)
+  if (queries?.status) {
+    formatQueries.status = { $regex: queries.status, $options: "i" };
+  }
+
+  let queryBlock = {};
+  if (queries?.query) {
+    delete formatQueries.query;
+    queryBlock = {
+      $or: [
+        { "productList.title": { $regex: queries.query, $options: "i" } },
+        { status: { $regex: queries.query, $options: "i" } },
+      ],
+    };
+  }
+
+  const groupQuery = { ...formatQueries, ...queryBlock };
+  let queryCommand = Order.find(groupQuery);
+
+  queryCommand = queryCommand.populate("buyer", "firstName lastName mobile");
+
+  //Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    queryCommand = queryCommand.sort(sortBy);
+  }
+
+  try {
+    const response = await queryCommand;
+    const counts = await Order.find(groupQuery).countDocuments();
+    return res.status(200).json({
+      success: response ? true : false,
+      counts,
+      orders: response ? response : "Lỗi lấy danh sách đơn",
+    });
+  } catch (err) {
+    throw new Error(err.message);
+  }
 });
+
+// const getUserOrder = asyncHandler(async (req, res) => {
+//   const { _id } = req.user;
+//   const response = await Order.find({ buyer: _id }).populate({
+//     path: "productList",
+//     populate: {
+//       path: "product",
+//       select: "title images price",
+//     },
+//   });
+//   return res.status(200).json({
+//     success: response ? true : false,
+//     userOrder: response ? response : "error when get user order",
+//   });
+// });
 
 const getOrderList = asyncHandler(async (req, res) => {
   const queries = { ...req.query };

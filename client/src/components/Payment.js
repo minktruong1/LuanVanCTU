@@ -29,7 +29,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload }) => {
   const handleSaveInformation = async () => {
     const response = await apiCreateOrder({
       ...payload,
-      status: "Process",
+      status: "Đang xử lý",
     });
     if (response.success) {
       setTimeout(() => {
@@ -38,16 +38,15 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload }) => {
             icon: "success",
             title: "Thành công",
             text: "Đơn hàng của bạn đang được xử lý!",
-            confirmButtonText: "Tiếp tục mua sắm",
+            showConfirmButton: false,
+            timer: 3000,
           })
           .then((rs) => {
-            if (rs.isConfirmed) {
-              navigate(`/`);
-              window.location.reload();
-              setTimeout(() => {
-                window.scrollTo(0, 0);
-              }, 100);
-            }
+            navigate(`/`);
+            window.location.reload();
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+            }, 100);
           });
       }, 1500);
     }

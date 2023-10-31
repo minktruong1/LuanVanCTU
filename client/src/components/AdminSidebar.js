@@ -24,12 +24,12 @@ const AdminSidebar = () => {
   return (
     <div
       className={clsx(
-        "bg-[#10163a] fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-50  ",
+        "bg-[#10163a] fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30  ",
         isShowAdminSidebar ? "w-fit" : "translate-x-[-100%]"
       )}
     >
       <Link
-        to={"/admin/dashboard"}
+        to={"/admin/product-dashboard"}
         className="flex flex-col justify-center items-center py-2 "
       >
         <span className={clsx("text-4xl font-extrabold ")}>WORK STATION</span>

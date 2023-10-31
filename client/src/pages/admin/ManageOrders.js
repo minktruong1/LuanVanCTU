@@ -94,7 +94,7 @@ const ManageOrders = () => {
   return (
     <div className="w-full p-4 relative">
       {editOrderTab && (
-        <div className="absolute inset-0 min-h-screen bg-webBackground z-40">
+        <div className="absolute inset-0 min-h-screen bg-webBackground z-20">
           <UpdateOrder
             editOrderTab={editOrderTab}
             setEditOrderTab={setEditOrderTab}

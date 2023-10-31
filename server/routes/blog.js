@@ -3,10 +3,31 @@ const controllers = require("../controllers/blog.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
-router.get("/", controllers.getAllBlog);
+router.post(
+  "/",
+  [verifyLoginToken, isAdmin],
+  upload.fields([
+    {
+      name: "image",
+      maxCount: 1,
+    },
+  ]),
+  controllers.createBlog
+);
+router.get("/", controllers.userGetAllBlog);
+router.get("/all", controllers.adminGetBlogList);
 router.get("/:bid", controllers.getBlog);
-router.post("/", controllers.createBlog);
-router.put("/:bid", controllers.updateBlog);
+router.put(
+  "/:bid",
+  [verifyLoginToken, isAdmin],
+  upload.fields([
+    {
+      name: "image",
+      maxCount: 1,
+    },
+  ]),
+  controllers.updateBlog
+);
 router.put("/like/:bid", verifyLoginToken, controllers.likeBlog);
 router.put("/dislike/:bid", verifyLoginToken, controllers.dislikeBlog);
 router.put(

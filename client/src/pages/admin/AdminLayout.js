@@ -25,7 +25,6 @@ const AdminLayout = () => {
         )}
       >
         <AdminHeader />
-
         <Outlet />
       </div>
     </div>

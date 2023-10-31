@@ -22,12 +22,15 @@ const path = {
   //admin path
   ADMIN: "admin",
   DASHBOARD: "dashboard",
+  PRODUCT_DASHBOARD: "product-dashboard",
+  ORDER_DASHBOARD: "order-dashboard",
   MANAGE_USER: "manage-user",
   MANAGE_PRODUCTS: "manage-products",
-  MANAGE_ORDERS: "manage-orders",
   CREATE_PRODUCT: "create-product",
+  MANAGE_ORDERS: "manage-orders",
   MANAGE_CATE: "manage-cate",
   MANAGE_BLOG: "manage-blog",
+  CREATE_BLOG: "create-blog",
 
   //customer path
   CUSTOMER: "customer",

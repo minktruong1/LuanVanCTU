@@ -25,6 +25,7 @@ import CouponsList from "./pages/public/CouponsList.js";
 import Modal from "./components/Modal.js";
 import {
   AdminLayout,
+  CreateBlog,
   CreateProduct,
   Dashboard,
   ManageBlog,
@@ -32,6 +33,8 @@ import {
   ManageOrders,
   ManageProducts,
   ManageUsers,
+  OrderDashboard,
+  ProductDashboard,
 } from "./pages/admin/";
 
 import {
@@ -106,11 +109,14 @@ function App() {
 
         <Route path={path.ADMIN} element={<AdminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.PRODUCT_DASHBOARD} element={<ProductDashboard />} />
+          <Route path={path.ORDER_DASHBOARD} element={<OrderDashboard />} />
           <Route path={path.MANAGE_ORDERS} element={<ManageOrders />} />
           <Route path={path.MANAGE_PRODUCTS} element={<ManageProducts />} />
           <Route path={path.MANAGE_USER} element={<ManageUsers />} />
           <Route path={path.CREATE_PRODUCT} element={<CreateProduct />} />
           <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
+          <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
           <Route path={path.MANAGE_CATE} element={<ManageCate />} />
         </Route>
 

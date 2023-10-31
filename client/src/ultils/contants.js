@@ -99,10 +99,18 @@ export const starOptions = [
 export const adminSidebar = [
   {
     id: 1,
-    type: "SINGLE",
+    type: "PARENT",
     text: "Thống kê",
-    path: `/${path.ADMIN}/${path.DASHBOARD}`,
-    icon: <FaChartBar />,
+    submenu: [
+      {
+        text: "Theo sản phẩm",
+        path: `/${path.ADMIN}/${path.PRODUCT_DASHBOARD}`,
+      },
+      {
+        text: "Theo đơn hàng",
+        path: `/${path.ADMIN}/${path.ORDER_DASHBOARD}`,
+      },
+    ],
   },
   {
     id: 2,
@@ -133,9 +141,18 @@ export const adminSidebar = [
   },
   {
     id: 5,
-    type: "SINGLE",
+    type: "PARENT",
     text: "Quản lý bài viết",
-    path: `/${path.ADMIN}/${path.MANAGE_BLOG}`,
+    submenu: [
+      {
+        text: "Thêm bài viết",
+        path: `/${path.ADMIN}/${path.CREATE_BLOG}`,
+      },
+      {
+        text: "Danh sách bài viết",
+        path: `/${path.ADMIN}/${path.MANAGE_BLOG}`,
+      },
+    ],
   },
   {
     id: 6,

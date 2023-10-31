@@ -17,8 +17,6 @@ const ChartPie = ({ OderDatasets }) => {
         position: "bottom",
         font: {
           size: 14,
-          weight: "bold",
-          lineHeight: 1.2,
         },
       },
     },

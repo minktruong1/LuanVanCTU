@@ -8,7 +8,7 @@ router.put(
   [verifyLoginToken, isAdmin],
   controllers.updateOrderStatus
 );
-router.get("/", verifyLoginToken, controllers.getUserOrder);
-router.get("/all", controllers.getOrderList);
+router.get("/", verifyLoginToken, controllers.userGetOrder);
+router.get("/all", [verifyLoginToken, isAdmin], controllers.getOrderList);
 
 module.exports = router;

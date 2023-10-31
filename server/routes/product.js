@@ -18,13 +18,18 @@ router.put(
   upload.array("images", 6),
   controllers.uploadProductImg
 );
-upload.array("images", 10),
-  router.put(
-    "/:pid",
-    [verifyLoginToken, isAdmin],
-    upload.array("images", 10),
-    controllers.updateProduct
-  );
+
+router.put(
+  "/:pid",
+  [verifyLoginToken, isAdmin],
+  upload.fields([
+    {
+      name: "images",
+      maxCount: 10,
+    },
+  ]),
+  controllers.updateProduct
+);
 router.delete("/:pid", [verifyLoginToken, isAdmin], controllers.deleteProduct);
 router.get("/:pid", controllers.getProduct);
 

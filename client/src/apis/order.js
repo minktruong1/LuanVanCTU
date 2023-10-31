@@ -9,7 +9,7 @@ export const apiGetUserOrders = (params) =>
 
 export const apiAdminGetUserOrders = (params) =>
   axios({
-    url: "/order/all",
+    url: "/order/all/",
     method: "GET",
     params,
   });

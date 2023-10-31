@@ -130,19 +130,20 @@ const getProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
-  let updatedImages = req?.files; // Sử dụng let thay vì const
+  const files = req?.files;
 
-  if (updatedImages) {
-    updatedImages = updatedImages.map((file) => file.path);
-    req.body.images = updatedImages; // Sử dụng updatedImages thay vì images
+  if (files.images) {
+    req.body.images = files.images.map((element) => element.path);
   }
 
   if (req.body && req.body.title) {
     req.body.slug = slugify(req.body.title);
   }
+
   const updateProduct = await Product.findByIdAndUpdate(pid, req.body, {
     new: true,
   });
+
   return res.status(200).json({
     success: updateProduct ? true : false,
     message: updateProduct ? "Cập nhật thành công" : "Lỗi cập nhật",

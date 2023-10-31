@@ -14,7 +14,7 @@ const AdminHeader = () => {
   return (
     <div
       className={clsx(
-        "h-[60px] w-full fixed top-0 flex items-center p-4 border-b bg-white z-50 drop-shadow-2xl"
+        "h-[60px] w-full fixed top-0 flex items-center p-4 border-b bg-white z-30 drop-shadow-2xl"
       )}
     >
       <span className="cursor-pointer" onClick={() => toggleAdminSidebar()}>

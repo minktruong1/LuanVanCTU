@@ -9,3 +9,7 @@ export { default as ManageBlog } from "./ManageBlog";
 export { default as ManageCate } from "./ManageCate";
 export { default as AdminHeader } from "../../components/AdminHeader";
 export { default as UpdateOrder } from "./UpdateOrder";
+export { default as ProductDashboard } from "./ProductDashboard";
+export { default as OrderDashboard } from "./OrderDashboard";
+export { default as CreateBlog } from "./CreateBlog";
+export { default as UpdateBlog } from "./UpdateBlog";

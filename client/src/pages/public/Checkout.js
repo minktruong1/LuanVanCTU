@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { formatVND } from "../../ultils/helpers";
 import Payment from "../../components/Payment";
 import icons from "../../ultils/icons";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { Button } from "../../components";
 import clsx from "clsx";
 import { apiCreateOrder } from "../../apis";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { apiCreateVNpayPayment, apiDataBack } from "../../apis/VNpay";
 
 const { MdLocationPin } = icons;
 
 const method = [
-  { id: 1, text: "Thanh toán khi nhận hàng", value: "cod" },
-  { id: 2, text: "Paypal", value: "paypal" },
+  { id: 0, text: "Thanh toán khi nhận hàng", value: "cod" },
+  { id: 1, text: "Paypal", value: "paypal" },
+  { id: 2, text: "VNPAY", value: "VNpay" },
 ];
 
 const Checkout = () => {
@@ -24,6 +26,7 @@ const Checkout = () => {
   );
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
+  const [params] = useSearchParams();
 
   const priceCounting = Math.round(
     +currentCart?.reduce(
@@ -39,13 +42,53 @@ const Checkout = () => {
     ) / 23000
   );
 
-  if (!isLogin || !currentData) {
-    return <Navigate to={`/`} replace={true} />;
-  }
-
-  const handleSelectMethod = (selectedMethod) => {
+  const handleSelectMethod = async (selectedMethod) => {
     setSelectedButton(selectedMethod.id);
     setPaymentMethod(selectedMethod.value);
+
+    //execute vnpay checck
+    if (selectedMethod.value === "VNpay") {
+      const response = await apiCreateVNpayPayment({ amount: priceCounting });
+      if (response.success) {
+        window.location.href = response.VNpayUrl;
+      }
+    }
+  };
+
+  const decodeVNpayDataBack = async () => {
+    const queryString = window.location.search;
+    const queryParams = new URLSearchParams(queryString).toString();
+    const response = await apiDataBack(queryParams);
+
+    const data = {
+      productList: currentCart,
+      totalPrice: priceCounting,
+      address: currentData?.address,
+      method: "VNpay",
+    };
+
+    if (response.Message === "Success") {
+      const saveOrder = await apiCreateOrder(data);
+      if (saveOrder.success) {
+        setTimeout(() => {
+          sweetAlert
+            .fire({
+              icon: "success",
+              title: "Thành công",
+              text: "Đơn hàng của bạn đang được xử lý!",
+              showConfirmButton: false,
+              timer: 3000,
+            })
+            .then((rs) => {
+              navigate(`/`);
+              window.location.reload();
+              setTimeout(() => {
+                window.scrollTo(0, 0);
+              }, 100);
+            });
+        }, 1500);
+      }
+    }
   };
 
   const handleCheckout = async (payload) => {
@@ -73,7 +116,16 @@ const Checkout = () => {
       }, 1500);
     }
   };
-  console.log(currentCart);
+
+  useEffect(() => {
+    if (params.get("vnp_Amount")) {
+      decodeVNpayDataBack();
+    }
+  }, [params]);
+
+  if (!isLogin || !currentData) {
+    return <Navigate to={`/`} replace={true} />;
+  }
   return (
     <div className="grid grid-rows-1 gap-3 my-8">
       <div className="w-main grid grid-rows-1 bg-white rounded-b ">

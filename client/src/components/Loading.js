@@ -4,7 +4,7 @@ import { SyncLoader } from "react-spinners";
 const Loading = () => {
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <SyncLoader color="#ccc" className="" />;
+      <SyncLoader color="#ccc" className="" />
     </div>
   );
 };

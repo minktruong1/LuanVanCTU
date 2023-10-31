@@ -39,3 +39,4 @@ export { default as FaqQuestion } from "./FaqQuestion.js";
 export { default as BlogItem } from "./BlogItem.js";
 export { default as ChartVertical } from "./ChartVertical.js";
 export { default as ChartPie } from "./ChartPie.js";
+export { default as ChartLine } from "./ChartLine.js";

@@ -88,18 +88,14 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
           (element) => element.title === data.category
         )?.title;
         const groupData = { ...data, ...payload };
-        // console.log(groupData);
         const formData = new FormData();
-        for (let i of Object.entries(groupData)) {
-          formData.append(i[0], i[1]);
-        }
-        if (groupData.images) {
-          const images =
-            groupData?.image?.length === 0 ? review.images : groupData.images;
-          for (let image of images) {
-            formData.append("images", image);
-          }
-        }
+
+        for (let i of Object.entries(groupData)) formData.append(i[0], i[1]);
+
+        groupData.images =
+          data?.images?.length === 0 ? review.images : data.images;
+        for (let image of groupData.images) formData.append("images", image);
+
         dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
         const response = await apiUpdateProduct(formData, editProductTab?._id);
         dispatch(showModal({ isShowModal: false, modalContent: null }));

@@ -61,7 +61,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   });
 });
 
-const getUserOrder = asyncHandler(async (req, res) => {
+const userGetOrder = asyncHandler(async (req, res) => {
   const queries = { ...req.query };
 
   //list type of filter
@@ -118,21 +118,6 @@ const getUserOrder = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 });
-
-// const getUserOrder = asyncHandler(async (req, res) => {
-//   const { _id } = req.user;
-//   const response = await Order.find({ buyer: _id }).populate({
-//     path: "productList",
-//     populate: {
-//       path: "product",
-//       select: "title images price",
-//     },
-//   });
-//   return res.status(200).json({
-//     success: response ? true : false,
-//     userOrder: response ? response : "error when get user order",
-//   });
-// });
 
 const getOrderList = asyncHandler(async (req, res) => {
   const queries = { ...req.query };
@@ -212,6 +197,6 @@ const getOrderList = asyncHandler(async (req, res) => {
 module.exports = {
   createOrder,
   updateOrderStatus,
-  getUserOrder,
+  userGetOrder,
   getOrderList,
 };

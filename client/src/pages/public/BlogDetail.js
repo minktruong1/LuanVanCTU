@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { apiGetBlogDetail } from "../../apis";
 import moment from "moment";
 import { Breadcrumb } from "../../components";
+import DOMPurify from "dompurify";
 
 const BlogDetail = () => {
   const [blog, setBlog] = useState(null);
@@ -37,7 +38,12 @@ const BlogDetail = () => {
               <div className="text-sm my-4">
                 {moment(blog?.updatedAt)?.format("DD/MM/YYYY")}
               </div>
-              <div>{blog?.description}</div>
+              <div
+                className="text-sm"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(blog?.description),
+                }}
+              ></div>
             </div>
           </div>
         </div>

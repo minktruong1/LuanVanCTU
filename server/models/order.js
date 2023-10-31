@@ -20,7 +20,7 @@ var orderSchema = new mongoose.Schema(
     method: {
       type: String,
       default: "cod",
-      enum: ["cod", "paypal"],
+      enum: ["cod", "paypal", "VNpay"],
     },
     totalPrice: Number,
     address: String,

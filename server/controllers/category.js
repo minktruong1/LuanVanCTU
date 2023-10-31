@@ -3,13 +3,22 @@ const asyncHandler = require("express-async-handler");
 
 // Tạo một danh mục mới
 const createCategory = asyncHandler(async (req, res) => {
-  const { title, brand } = req.body;
+  const { title } = req.body;
+  const image = req?.files?.image[0]?.path;
 
-  const response = await Category.create({ title, brand });
+  if (!title) {
+    throw new Error("Thiếu dữ liệu");
+  }
 
-  return res.json({
-    success: true,
-    createdCategory: response,
+  if (req.body.image) {
+    req.body.image = image;
+  }
+
+  const response = await Category.create(req.body);
+
+  return res.status(200).json({
+    success: response ? true : false,
+    message: response ? response : "Lỗi tạo nhóm",
   });
 });
 
@@ -45,11 +54,11 @@ const getAllCategories = asyncHandler(async (req, res) => {
 // Cập nhật danh mục dựa trên ID
 const updateCategory = asyncHandler(async (req, res) => {
   const { cid } = req.params;
-  const { title, brand } = req.body;
+  const { title } = req.body;
 
   const response = await Category.findByIdAndUpdate(
     cid,
-    { title, brand },
+    { title },
     { new: true }
   );
 
@@ -71,10 +80,39 @@ const deleteCategory = asyncHandler(async (req, res) => {
   });
 });
 
+const addBrandToCategory = asyncHandler(async (req, res) => {
+  const { cid } = req.params;
+  const { brand } = req.body;
+
+  const response = await Category.findById(cid);
+
+  if (response) {
+    if (response.brand.includes(brand)) {
+      return res.status(200).json({
+        success: false,
+        message: "Thương hiệu đã tồn tại trong danh mục",
+      });
+    } else {
+      response.brand.push(brand);
+      await response.save();
+      return res.status(200).json({
+        success: true,
+        message: "Thương hiệu đã được thêm vào danh mục",
+      });
+    }
+  } else {
+    return res.status(404).json({
+      success: false,
+      message: "Không tìm thấy danh mục",
+    });
+  }
+});
+
 module.exports = {
   createCategory,
   getAllCategories,
   updateCategory,
   deleteCategory,
   uploadCategoryImage,
+  addBrandToCategory,
 };

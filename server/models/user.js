@@ -42,6 +42,7 @@ var userSchema = new mongoose.Schema(
         price: Number,
         title: String,
         images: Array,
+        buyInPrice: Number,
       },
     ],
     address: {

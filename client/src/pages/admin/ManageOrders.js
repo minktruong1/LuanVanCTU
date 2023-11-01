@@ -89,7 +89,7 @@ const ManageOrders = () => {
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);
     fetchOrders({ ...searchParams });
-  }, [params]);
+  }, [params, editOrderTab]);
 
   return (
     <div className="w-full p-4 relative">
@@ -197,6 +197,7 @@ const ManageOrders = () => {
               <th>SĐT</th>
               <th>Địa chỉ</th>
               <th>Thanh toán</th>
+              <th>Lợi nhuận</th>
               <th>Phương thức thanh toán</th>
               <th>Trạng thái</th>
               <th className="rounded-tr-md">Thao tác</th>
@@ -221,6 +222,7 @@ const ManageOrders = () => {
                 <td>{element?.buyer.mobile}</td>
                 <td>{element?.address}</td>
                 <td>{`${formatVND(element?.totalPrice)}đ`}</td>
+                <td>{`${formatVND(element?.profit)}đ`}</td>
                 <td>{element?.method}</td>
                 <td>{element?.status}</td>
                 <td>

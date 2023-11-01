@@ -15,8 +15,6 @@ router.post(
   controllers.createCategory
 );
 router.post("/:cid/brands", controllers.addBrandToCategory);
-// router.put("/:cid/brands/:bid", controllers.updateBrandInCategory);
-// router.delete("/:cid/brands/:bid", controllers.deleteBrandFromCategory);
 
 router.get("/", controllers.getAllCategories);
 router.put("/:cid", controllers.updateCategory);

@@ -7,11 +7,23 @@ var couponSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    code: {
+      type: String,
+      required: true,
+      unique: true,
       uppercase: true,
     },
-    discount: {
+    quantity: {
       type: Number,
-      require: true,
+    },
+    percentDiscount: {
+      type: Number,
+      default: 0,
+    },
+    directDiscount: {
+      type: Number,
+      default: 0,
     },
     expire: {
       type: Date,

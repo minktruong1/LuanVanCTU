@@ -14,7 +14,9 @@ const { MdArrowBackIosNew } = icons;
 
 const MainCart = () => {
   const navigate = useNavigate();
-  const { isLogin, currentCart } = useSelector((state) => state.user);
+  const { isLogin, currentCart, currentData } = useSelector(
+    (state) => state.user
+  );
   const location = useLocation();
 
   const handleCheckout = () => {

@@ -189,13 +189,14 @@ const ProductDetail = () => {
       quantity,
       price: product?.price,
       images: product?.images,
+      buyInPrice: product?.buyInPrice,
     });
     if (response.success) {
       toast.success(response.message);
       dispatch(apiGetCurrentAccount());
     }
   };
-
+  console.log(product);
   return (
     <>
       <div className="w-[calc(100%-20px)] md:w-main">

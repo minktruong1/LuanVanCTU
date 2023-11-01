@@ -25,6 +25,10 @@ const OrderDashboard = () => {
     December: 0,
   };
 
+  const [profit, setProfit] = useState({
+    ...initialOrderMonthData,
+  });
+
   const [failOrder, setFailOrder] = useState({
     ...initialOrderMonthData,
   });
@@ -45,8 +49,10 @@ const OrderDashboard = () => {
   const fetchOrders = async () => {
     const response = await apiAdminGetUserOrders();
     if (response.success) {
+      console.log(response);
       const orders = response.orders;
 
+      const updatedProfit = { ...profit };
       const counts = {
         "Hoàn thành": 0,
         "Đang xử lý": 0,
@@ -56,10 +62,18 @@ const OrderDashboard = () => {
 
       orders.forEach((order) => {
         const month = new Date(order.createdAt).getMonth();
+        const orderProfit = order.profit || 0;
+        const monthName = Object.keys(profit)[month];
+
+        if (order.status === "Hoàn thành") {
+          updatedProfit[monthName] += orderProfit;
+        }
+
         counts[order.status]++;
         updateMonthlyCounts(order, Object.keys(initialOrderMonthData)[month]);
       });
 
+      setProfit(updatedProfit);
       setOrderCounts(counts);
       setFailOrder({ ...failOrder });
       setSuccessOrder({ ...successOrder });
@@ -79,6 +93,9 @@ const OrderDashboard = () => {
           OderDatasets2={Object.values(successOrder)}
           OderDatasets3={Object.values(totalOrder)}
         />
+      </div>
+      <div>
+        <ChartLine OderDatasets1={Object.values(profit)} DataFor={`profit`} />
       </div>
       <div>
         <ChartPie OderDatasets={Object.values(orderCounts)} />

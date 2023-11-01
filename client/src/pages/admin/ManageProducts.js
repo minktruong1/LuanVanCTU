@@ -116,7 +116,8 @@ const ManageProducts = () => {
               <th className="w-[400px]">Tên sản phẩm</th>
               <th>Hãng</th>
               <th>Loại</th>
-              <th>Giá</th>
+              <th>Giá nhập</th>
+              <th>Giá bán</th>
               <th>Số lượng</th>
               <th>Đã bán</th>
               <th>Đánh giá</th>
@@ -145,6 +146,7 @@ const ManageProducts = () => {
                 </td>
                 <td>{element.brand}</td>
                 <td>{element.category}</td>
+                <td>{element.buyInPrice}</td>
                 <td>{element.price}</td>
                 <td>{element.quantity}</td>
                 <td>{element.sold}</td>

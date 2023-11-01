@@ -129,12 +129,12 @@ const getUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
   const user = await User.findById(_id)
-    .select("-refreshToken -password ")
+    .select("-refreshToken -password")
     .populate({
       path: "cart",
       populate: {
         path: "product",
-        select: "title images price category",
+        select: "title images price category buyInPrice",
       },
     })
     .populate({
@@ -363,7 +363,7 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, quantity, price, title, images } = req.body;
+  const { pid, quantity, price, title, images, buyInPrice } = req.body;
   if (!pid) {
     throw new Error("Missing inputs");
   }
@@ -372,14 +372,11 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     (element) => element.product.toString() === pid
   );
   if (alreadyInCart) {
-    const alreadyPrice = alreadyInCart.price;
-
     const response = await User.updateOne(
       { cart: { $elemMatch: alreadyInCart } },
       {
         $set: {
           "cart.$.quantity": quantity,
-          "cart.$.price": alreadyPrice,
         },
       },
       { new: true }
@@ -392,7 +389,9 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(
       _id,
       {
-        $push: { cart: { product: pid, quantity, price, title, images } },
+        $push: {
+          cart: { product: pid, quantity, price, title, images, buyInPrice },
+        },
       },
       { new: true }
     );

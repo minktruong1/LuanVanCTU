@@ -53,7 +53,7 @@ const ManageBlog = () => {
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);
     fetchBlogs({ ...searchParams });
-  }, [params]);
+  }, [params, editBlogTab]);
 
   return (
     <div className="w-full p-4 relative">

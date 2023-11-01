@@ -35,6 +35,16 @@ const Checkout = () => {
     )
   );
 
+  const profitCounting =
+    priceCounting -
+    Math.round(
+      currentCart.reduce(
+        (totalProfit, cartItem) =>
+          cartItem.product.buyInPrice * cartItem.quantity + totalProfit,
+        0
+      )
+    );
+
   const priceCountingToUSD = Math.round(
     +currentCart?.reduce(
       (sum, element) => +element.product?.price * element?.quantity + sum,
@@ -64,6 +74,7 @@ const Checkout = () => {
       productList: currentCart,
       totalPrice: priceCounting,
       address: currentData?.address,
+      profit: profitCounting,
       method: "VNpay",
     };
 
@@ -126,6 +137,8 @@ const Checkout = () => {
   if (!isLogin || !currentData) {
     return <Navigate to={`/`} replace={true} />;
   }
+
+  console.log(profitCounting);
   return (
     <div className="grid grid-rows-1 gap-3 my-8">
       <div className="w-main grid grid-rows-1 bg-white rounded-b ">
@@ -228,6 +241,7 @@ const Checkout = () => {
                     totalPrice: priceCounting,
                     address: currentData?.address,
                     method: paymentMethod,
+                    profit: profitCounting,
                   }}
                   amount={priceCountingToUSD}
                 />
@@ -262,6 +276,7 @@ const Checkout = () => {
                     totalPrice: priceCounting,
                     address: currentData?.address,
                     method: paymentMethod,
+                    profit: profitCounting,
                   })
                 }
                 className={clsx(

@@ -7,6 +7,7 @@ var orderSchema = new mongoose.Schema(
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
         quantity: Number,
+        buyInPrice: Number,
         price: Number,
         title: String,
         images: Array,
@@ -23,6 +24,7 @@ var orderSchema = new mongoose.Schema(
       enum: ["cod", "paypal", "VNpay"],
     },
     totalPrice: Number,
+    profit: Number,
     address: String,
     buyer: {
       user: { type: mongoose.Types.ObjectId, ref: "User" },

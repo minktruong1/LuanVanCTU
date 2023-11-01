@@ -21,7 +21,12 @@ ChartJS.register(
   Legend
 );
 
-const ChartLine = ({ OderDatasets1, OderDatasets2, OderDatasets3 }) => {
+const ChartLine = ({
+  OderDatasets1,
+  OderDatasets2,
+  OderDatasets3,
+  DataFor,
+}) => {
   const options = {
     responsive: true,
     plugins: {
@@ -54,28 +59,40 @@ const ChartLine = ({ OderDatasets1, OderDatasets2, OderDatasets3 }) => {
     "Tháng 12",
   ];
 
+  const datasets =
+    DataFor === "profit"
+      ? [
+          {
+            label: "VNĐ",
+            data: OderDatasets1,
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.5)",
+          },
+        ]
+      : [
+          {
+            label: "Hủy",
+            data: OderDatasets1,
+            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+          },
+          {
+            label: "Hoàn thành",
+            data: OderDatasets2,
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.5)",
+          },
+          {
+            label: "Tổng cộng",
+            data: OderDatasets3,
+            borderColor: "rgb(54, 162, 235)",
+            backgroundColor: "rgba(54, 162, 235, 0.5)",
+          },
+        ];
+
   const data = {
     labels,
-    datasets: [
-      {
-        label: "Hủy",
-        data: OderDatasets1,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "Hoàn thành",
-        data: OderDatasets2,
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
-      },
-      {
-        label: "Tổng cộng",
-        data: OderDatasets3,
-        borderColor: "rgb(54, 162, 235)",
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
-      },
-    ],
+    datasets,
   };
   return <Line options={options} data={data} />;
 };

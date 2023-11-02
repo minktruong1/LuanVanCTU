@@ -65,7 +65,7 @@ const ManageBlog = () => {
           />
         </div>
       )}
-      <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b bg-webBackground">
+      <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b">
         <h1>Quản lý bài viết</h1>
       </div>
 

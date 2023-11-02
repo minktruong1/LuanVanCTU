@@ -68,7 +68,9 @@ const CreateProduct = () => {
         data.category = categories?.find(
           (element) => element._id === data.category
         )?.title;
+
         const groupData = { ...data, ...payload };
+
         const formData = new FormData();
         for (let i of Object.entries(groupData)) {
           formData.append(i[0], i[1]);
@@ -78,6 +80,7 @@ const CreateProduct = () => {
             formData.append("images", image);
           }
         }
+
         dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
         const response = await apiCreateProduct(formData);
         dispatch(showModal({ isShowModal: false, modalContent: null }));

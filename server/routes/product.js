@@ -6,7 +6,12 @@ const upload = require("../config/cloudinary.config.js");
 router.post(
   "/",
   [verifyLoginToken, isAdmin],
-  upload.array("images", 10),
+  upload.fields([
+    {
+      name: "images",
+      maxCount: 10,
+    },
+  ]),
   controllers.createProduct
 );
 router.get("/", controllers.getAllProducts);
@@ -30,6 +35,7 @@ router.put(
   ]),
   controllers.updateProduct
 );
+
 router.delete("/:pid", [verifyLoginToken, isAdmin], controllers.deleteProduct);
 router.get("/:pid", controllers.getProduct);
 

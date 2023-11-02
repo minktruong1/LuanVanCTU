@@ -26,10 +26,13 @@ import Modal from "./components/Modal.js";
 import {
   AdminLayout,
   CreateBlog,
+  CreateCategory,
+  CreateCoupon,
   CreateProduct,
   Dashboard,
   ManageBlog,
   ManageCate,
+  ManageCoupon,
   ManageOrders,
   ManageProducts,
   ManageUsers,
@@ -111,13 +114,16 @@ function App() {
           <Route path={path.DASHBOARD} element={<Dashboard />} />
           <Route path={path.PRODUCT_DASHBOARD} element={<ProductDashboard />} />
           <Route path={path.ORDER_DASHBOARD} element={<OrderDashboard />} />
-          <Route path={path.MANAGE_ORDERS} element={<ManageOrders />} />
-          <Route path={path.MANAGE_PRODUCTS} element={<ManageProducts />} />
+          <Route path={path.MANAGE_ORDER} element={<ManageOrders />} />
+          <Route path={path.MANAGE_PRODUCT} element={<ManageProducts />} />
           <Route path={path.MANAGE_USER} element={<ManageUsers />} />
           <Route path={path.CREATE_PRODUCT} element={<CreateProduct />} />
           <Route path={path.MANAGE_BLOG} element={<ManageBlog />} />
           <Route path={path.CREATE_BLOG} element={<CreateBlog />} />
           <Route path={path.MANAGE_CATE} element={<ManageCate />} />
+          <Route path={path.MANAGE_COUPON} element={<ManageCoupon />} />
+          <Route path={path.CREATE_COUPON} element={<CreateCoupon />} />
+          <Route path={path.CREATE_CATEGORY} element={<CreateCategory />} />
         </Route>
 
         <Route path={path.CUSTOMER} element={<CustomerLayout />}>

@@ -129,7 +129,7 @@ export const adminSidebar = [
       },
       {
         text: "Danh sách sản phẩm",
-        path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`,
+        path: `/${path.ADMIN}/${path.MANAGE_PRODUCT}`,
       },
     ],
   },
@@ -137,7 +137,7 @@ export const adminSidebar = [
     id: 4,
     type: "SINGLE",
     text: "Quản lý đơn hàng",
-    path: `/${path.ADMIN}/${path.MANAGE_ORDERS}`,
+    path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
   },
   {
     id: 5,
@@ -156,9 +156,33 @@ export const adminSidebar = [
   },
   {
     id: 6,
-    type: "SINGLE",
-    text: "Quản lý danh mục sản phẩm",
-    path: `/${path.ADMIN}/${path.MANAGE_CATE}`,
+    type: "PARENT",
+    text: "Quản lý nhóm sản phẩm",
+    submenu: [
+      {
+        text: "Thêm nhóm",
+        path: `/${path.ADMIN}/${path.CREATE_CATEGORY}`,
+      },
+      {
+        text: "Danh sách nhóm",
+        path: `/${path.ADMIN}/${path.MANAGE_CATE}`,
+      },
+    ],
+  },
+  {
+    id: 7,
+    type: "PARENT",
+    text: "Quản lý mã giảm giá",
+    submenu: [
+      {
+        text: "Thêm mã giảm giá",
+        path: `/${path.ADMIN}/${path.CREATE_COUPON}`,
+      },
+      {
+        text: "Danh sách mã giảm giá",
+        path: `/${path.ADMIN}/${path.MANAGE_COUPON}`,
+      },
+    ],
   },
 ];
 

@@ -85,7 +85,7 @@ const ManageProducts = () => {
   return (
     <div className="w-full flex flex-col relative">
       {editProductTab && (
-        <div className="absolute inset-0 min-h-screen bg-webBackground z-40">
+        <div className="absolute inset-0 min-h-screen bg-webBackground">
           <UpdateProduct
             editProductTab={editProductTab}
             setEditProductTab={setEditProductTab}

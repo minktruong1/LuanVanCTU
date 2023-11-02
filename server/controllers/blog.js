@@ -1,5 +1,6 @@
 const Blog = require("../models/blog.js");
 const asyncHandler = require("express-async-handler");
+const slugify = require("slugify");
 
 const createBlog = asyncHandler(async (req, res) => {
   const { title, description } = req.body;
@@ -13,6 +14,8 @@ const createBlog = asyncHandler(async (req, res) => {
     req.body.image = image;
   }
 
+  req.body.slug = slugify(title);
+
   const response = await Blog.create(req.body);
   return res.status(200).json({
     success: response ? true : false,
@@ -23,6 +26,10 @@ const createBlog = asyncHandler(async (req, res) => {
 const updateBlog = asyncHandler(async (req, res) => {
   const { bid } = req.params;
   const files = req?.files;
+
+  if (req.body && req.body.title) {
+    req.body.slug = slugify(req.body.title);
+  }
 
   if (files?.image) {
     req.body.image = files?.image[0]?.path;
@@ -172,12 +179,13 @@ const uploadBlogImg = asyncHandler(async (req, res) => {
   if (!req.file) {
     throw new Error("Missing inputs");
   }
+
   const response = await Blog.findByIdAndUpdate(
     bid,
     { image: req.file.path },
     { new: true }
   );
-  console.log(response);
+
   return res.status(200).json({
     status: response ? true : false,
     updatedBlogImg: response ? response : "Lỗi đăng ảnh bài viết",

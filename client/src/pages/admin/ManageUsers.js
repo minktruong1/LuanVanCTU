@@ -124,20 +124,23 @@ const ManageUsers = () => {
             <thead className="font-semibold bg-gray-300 ">
               <tr className="border">
                 <th className="px-4 py-2">#</th>
-                <th className="px-4 py-2">Email address</th>
-                <th className="px-4 py-2">First name</th>
-                <th className="px-4 py-2">Last name</th>
-                <th className="px-4 py-2">Role</th>
-                <th className="px-4 py-2">Phone number</th>
-                <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Create at</th>
-                <th className="px-4 py-2">Actions</th>
+                <th className="px-4 py-2">Địa chỉ email</th>
+                <th className="px-4 py-2">Họ</th>
+                <th className="px-4 py-2">Tên</th>
+                <th className="px-4 py-2">Vai trò</th>
+                <th className="px-4 py-2">SĐT</th>
+                <th className="px-4 py-2">Trạng thái</th>
+                <th className="px-4 py-2">Ngày đăng ký</th>
+                <th className="px-4 py-2">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {users?.userList?.map((element, index) => (
                 <>
-                  <tr key={element._id} className={clsx("border")}>
+                  <tr
+                    key={element._id}
+                    className={clsx("", index % 2 === 1 && "bg-[#fff]")}
+                  >
                     <td className="py-2 px-4">{index + 1}</td>
                     <td className="py-2 px-4">
                       <span>{element.email}</span>
@@ -165,13 +168,13 @@ const ManageUsers = () => {
                         onClick={() => setEditUser(element)}
                         className="underline cursor-pointer mr-2 text-canClick"
                       >
-                        Edit
+                        Sửa
                       </span>
                       <span
                         onClick={() => handleDelete(element._id)}
                         className="underline cursor-pointer text-canClick"
                       >
-                        Delete
+                        Xóa
                       </span>
                     </td>
                   </tr>

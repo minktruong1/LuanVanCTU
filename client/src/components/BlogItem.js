@@ -7,7 +7,7 @@ const BlogItem = ({ data }) => {
   return (
     <div className="grid grid-cols-10 gap-5 py-4 border-b">
       <Link
-        to={`/blogs/${data?._id}/${data?.title}`}
+        to={`/blogs/${data?._id}/${data?.slug}`}
         className="col-span-3 md:col-span-2 cursor-pointer"
       >
         <img alt="" src={data.image} className="rounded" />

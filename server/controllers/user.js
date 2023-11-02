@@ -406,26 +406,15 @@ const removeProductFromCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { pid } = req.params;
 
-  const user = await User.findById(_id).select("cart");
-  const alreadyInCart = user?.cart?.find(
-    (element) => element.product.toString() === pid
-  );
-  if (!alreadyInCart) {
-    return res.status(200).json({
-      success: true,
-      message: "Cập nhật giỏ hàng thành công",
-    });
-  }
   const response = await User.findByIdAndUpdate(
     _id,
     { $pull: { cart: { product: pid } } },
     { new: true }
   );
+
   return res.status(200).json({
     success: response ? true : false,
-    message: response
-      ? "Cập nhật giỏ hàng thành công"
-      : "Lỗi cập nhật giỏ hàng",
+    message: response ? "Xóa sản phẩm thành công" : "Lỗi xóa sản phẩm",
   });
 });
 

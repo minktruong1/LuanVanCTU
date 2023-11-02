@@ -13,3 +13,6 @@ export { default as ProductDashboard } from "./ProductDashboard";
 export { default as OrderDashboard } from "./OrderDashboard";
 export { default as CreateBlog } from "./CreateBlog";
 export { default as UpdateBlog } from "./UpdateBlog";
+export { default as ManageCoupon } from "./ManageCoupon";
+export { default as CreateCoupon } from "./CreateCoupon";
+export { default as CreateCategory } from "./CreateCategory";

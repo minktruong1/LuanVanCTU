@@ -78,34 +78,41 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
     [payload]
   );
 
-  console.log(editProductTab);
-
   const handleUpdateProduct = async (data) => {
     const invalids = formValidate(payload, setInvalidFields);
     if (invalids === 0) {
       if (data.category) {
-        data.category = categories?.find(
-          (element) => element.title === data.category
-        )?.title;
         const groupData = { ...data, ...payload };
-        const formData = new FormData();
-
-        for (let i of Object.entries(groupData)) formData.append(i[0], i[1]);
 
         groupData.images =
           data?.images?.length === 0 ? review.images : data.images;
-        for (let image of groupData.images) formData.append("images", image);
 
-        dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
-        const response = await apiUpdateProduct(formData, editProductTab?._id);
-        dispatch(showModal({ isShowModal: false, modalContent: null }));
-        if (response.success) {
-          toast.success(response.message);
-          render();
-          setEditProductTab(null);
-        } else {
-          toast.error(response.message);
+        data.category = categories?.find(
+          (element) => element.title === data.category
+        )?.title;
+
+        const formData = new FormData();
+
+        for (let i of Object.entries(groupData)) {
+          formData.append(i[0], i[1]);
         }
+
+        for (let image of groupData.images) {
+          formData.append("images", image);
+        }
+        console.log(review.images);
+        console.log(groupData.images);
+
+        // dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
+        // const response = await apiUpdateProduct(formData, editProductTab?._id);
+        // dispatch(showModal({ isShowModal: false, modalContent: null }));
+        // if (response.success) {
+        //   toast.success(response.message);
+        //   render();
+        //   setEditProductTab(null);
+        // } else {
+        //   toast.error(response.message);
+        // }
       }
     }
   };
@@ -118,10 +125,10 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
 
   return (
     <div className="w-full flex flex-col ">
-      <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b z-40 ">
-        <h1>Cập nhật sản phẩm</h1>
-      </div>
       <div className="p-4">
+        <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b">
+          <h1>Cập nhật sản phẩm</h1>
+        </div>
         <div className="mb-4 w-fit">
           <span
             onClick={() => setEditProductTab(null)}

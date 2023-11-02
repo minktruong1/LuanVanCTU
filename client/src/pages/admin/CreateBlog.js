@@ -2,17 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   ReactInputForm,
-  AdminSelector,
   Button,
   MarkdownEditor,
   Loading,
 } from "../../components/index";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { formValidate, getBase64 } from "../../ultils/helpers";
 import icons from "../../ultils/icons";
 import clsx from "clsx";
-import { apiCreateBlog, apiCreateProduct } from "../../apis";
+import { apiCreateBlog } from "../../apis";
 import { showModal } from "../../store/app/appSlice";
 
 const { FaTimes } = icons;
@@ -84,7 +83,6 @@ const CreateBlog = () => {
   useEffect(() => {
     if (watch("image") instanceof FileList && watch("image").length > 0)
       handleReviewImages(watch("image")[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("image")]);
 
   return (

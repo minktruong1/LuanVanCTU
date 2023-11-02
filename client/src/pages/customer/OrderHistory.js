@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { apiGetUserOrders, apiUpdateOrderStatus } from "../../apis";
 import clsx from "clsx";
@@ -45,6 +45,11 @@ const OrderHistory = () => {
   const [ship, setShip] = useState(null);
   const [cancel, setCancel] = useState(null);
   const [calculated, setCalculated] = useState(false);
+  const [update, setUpdate] = useState(false);
+
+  const reRender = useCallback(() => {
+    setUpdate(!update);
+  }, [update]);
 
   const fetchOrderList = async (params) => {
     const response = await apiGetUserOrders(params);
@@ -99,7 +104,7 @@ const OrderHistory = () => {
           });
           if (response.success) {
             toast.success(response.message);
-            // render();
+            reRender();
           } else {
             toast.error(response.message);
           }
@@ -107,6 +112,30 @@ const OrderHistory = () => {
       });
   };
 
+  const handleConfirm = async (order) => {
+    return sweetAlert
+      .fire({
+        title: "Xác nhận",
+        text: "Bạn đã nhận được sản phẩm?",
+        icon: "info",
+        cancelButtonText: "Trở lại",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+      })
+      .then(async (rs) => {
+        if (rs.isConfirmed) {
+          const response = await apiUpdateOrderStatus(order._id, {
+            status: "Hoàn thành",
+          });
+          if (response.success) {
+            toast.success(response.message);
+            reRender();
+          } else {
+            toast.error(response.message);
+          }
+        }
+      });
+  };
   const queryDebounce = useDebounce(watch("query"), 800);
 
   useEffect(() => {
@@ -133,7 +162,7 @@ const OrderHistory = () => {
     }
     const searchParams = Object.fromEntries([...params]);
     fetchOrderList({ ...searchParams });
-  }, [params]);
+  }, [params, update]);
 
   return (
     <>
@@ -230,6 +259,14 @@ const OrderHistory = () => {
                         className="text-canClick underline cursor-pointer px-3"
                       >
                         Hủy
+                      </div>
+                    )}
+                    {order?.status === "Đang vận chuyển" && (
+                      <div
+                        onClick={() => handleConfirm(order)}
+                        className="bg-main text-white cursor-pointer px-2 py-2"
+                      >
+                        Đã nhận được hàng
                       </div>
                     )}
                   </div>

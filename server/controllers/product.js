@@ -5,25 +5,23 @@ const slugify = require("slugify");
 
 const createProduct = asyncHandler(async (req, res) => {
   const { title, price, description, brand, category, buyInPrice } = req.body;
-  let images = req.files; // Thay đổi này để lấy danh sách các tệp
+  const images = req.files?.images?.map((element) => element.path);
 
-  if (!(title && price && description && brand && category && buyInPrice)) {
-    throw new Error("Missing inputs");
+  if (!title && !price && !description && !brand && !category && !buyInPrice) {
+    throw new Error("Thiếu dữ liệu");
+  }
+
+  if (req.body.images) {
+    req.body.images = images;
   }
 
   req.body.slug = slugify(title);
 
-  // Chuyển đổi danh sách tệp thành mảng các đường dẫn hình ảnh
-  if (images) {
-    images = images.map((file) => file.path);
-    req.body.images = images;
-  }
-
-  const newProduct = await Product.create(req.body);
+  const response = await Product.create(req.body);
 
   return res.status(200).json({
-    success: newProduct ? true : false,
-    message: newProduct ? "Tạo sản phẩm mới thành công" : "Lỗi tạo sản phẩm",
+    success: response ? true : false,
+    message: response ? "Tạo sản phẩm mới thành công" : "Lỗi tạo sản phẩm",
   });
 });
 
@@ -132,8 +130,8 @@ const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
   const files = req?.files;
 
-  if (files.images) {
-    req.body.images = files.images.map((element) => element.path);
+  if (files?.images) {
+    req.body.images = files?.images?.map((element) => element.path);
   }
 
   if (req.body && req.body.title) {

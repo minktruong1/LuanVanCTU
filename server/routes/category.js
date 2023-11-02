@@ -11,18 +11,20 @@ router.post(
       maxCount: 1,
     },
   ]),
-
   controllers.createCategory
 );
-router.post("/:cid/brands", controllers.addBrandToCategory);
 
 router.get("/", controllers.getAllCategories);
-router.put("/:cid", controllers.updateCategory);
-router.delete("/:cid", controllers.deleteCategory);
 router.put(
-  "/uploadimg/:cid",
-  upload.single("image"),
-  controllers.uploadCategoryImage
+  "/:cateid",
+  upload.fields([
+    {
+      name: "image",
+      maxCount: 1,
+    },
+  ]),
+  controllers.updateCategory
 );
+router.delete("/:cateid", controllers.deleteCategory);
 
 module.exports = router;

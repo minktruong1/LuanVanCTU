@@ -90,7 +90,7 @@ const ManageOrders = () => {
     const searchParams = Object.fromEntries([...params]);
     fetchOrders({ ...searchParams });
   }, [params, editOrderTab]);
-
+  console.log(orders);
   return (
     <div className="w-full p-4 relative">
       {editOrderTab && (

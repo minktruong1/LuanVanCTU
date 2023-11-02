@@ -9,16 +9,10 @@ var categorySchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
-    // brand: {
-    //   type: Array,
-    //   unique: true,
-    // },
-    brand: [
-      {
-        _id: mongoose.Types.ObjectId,
-        title: String,
-      },
-    ],
+    brand: {
+      type: Array,
+      unique: true,
+    },
     image: {
       type: String,
     },

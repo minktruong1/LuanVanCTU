@@ -20,7 +20,6 @@ import path from "./ultils/path.js";
 import { apiGetCateList } from "./store/app/asyncActions.js";
 import { apiGetBlogList } from "./store/blogs/asyncActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import Warranty from "./pages/public/Warranty.js";
 import CouponsList from "./pages/public/CouponsList.js";
 import Modal from "./components/Modal.js";
 import {
@@ -68,7 +67,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen font-main relative overflow-x-hidden overflow-y-auto ">
+    <div className="h-screen font-main relative overflow-x-hidden overflow-y-auto text-sm md:text-base">
       {isShowModal && <Modal>{modalContent}</Modal>}
       <ToastContainer
         position="top-right"
@@ -101,7 +100,6 @@ function App() {
             path={path.PAYMENT_INSTRUCTION}
             element={<PaymentInstruction />}
           ></Route>
-          <Route path={path.WARRANTY} element={<Warranty />}></Route>
           <Route path={path.LOGIN} element={<Login />}></Route>
           <Route path={path.MAIN_CART} element={<MainCart />}></Route>
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>

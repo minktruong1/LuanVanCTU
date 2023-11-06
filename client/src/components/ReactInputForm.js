@@ -25,7 +25,7 @@ const ReactInputForm = ({
         placeholder={placeholder}
         defaultValue={defaultValue}
         className={clsx(
-          "form-input focus:outline-none border-none",
+          "form-input focus:outline-none ",
           fullWidth && "w-full"
         )}
       />

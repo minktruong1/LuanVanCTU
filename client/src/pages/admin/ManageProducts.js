@@ -14,6 +14,7 @@ import useDebounce from "../../hooks/useDebounce";
 import UpdateProduct from "./UpdateProduct";
 import sweetAlert from "sweetalert2";
 import { toast } from "react-toastify";
+import { formatVND } from "../../ultils/helpers";
 
 const ManageProducts = () => {
   const {
@@ -146,8 +147,8 @@ const ManageProducts = () => {
                 </td>
                 <td>{element.brand}</td>
                 <td>{element.category}</td>
-                <td>{element.buyInPrice}</td>
-                <td>{element.price}</td>
+                <td>{`${formatVND(element.buyInPrice)}đ`}</td>
+                <td>{`${formatVND(element.price)}đ`}</td>
                 <td>{element.quantity}</td>
                 <td>{element.sold}</td>
                 <td>{element.reviewPoint}</td>

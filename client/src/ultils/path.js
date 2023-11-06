@@ -8,7 +8,6 @@ const path = {
   BLOGS: "blogs",
   BLOG_DETAIL: "blogs/:bid/:slug",
   OUR_SERVICES: "services",
-  WARRANTY: "warranty",
   COUPONS: "coupons",
   PAYMENT_INSTRUCTION: "payment_instruction",
   FAQS: "faqs",

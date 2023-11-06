@@ -20,3 +20,9 @@ export const apiUpdateOrderStatus = (oid, data) =>
     method: "PUT",
     data,
   });
+
+export const apiAllOrderForCount = () =>
+  axios({
+    url: "/order/all-count/",
+    method: "GET",
+  });

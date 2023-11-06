@@ -24,7 +24,7 @@ const BlogDetail = () => {
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main ">
-      <Breadcrumb title={title} />
+      <Breadcrumb title={blog?.title} />
       <div className="w-full bg-white">
         <div className="flex justify-center p-6">
           <div className="grid grid-rows-1 w-[800px]">

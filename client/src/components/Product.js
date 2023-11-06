@@ -45,7 +45,13 @@ const Product = ({ productData, isNew, isHot }) => {
           }
         });
     }
-    const response = await apiFavProduct({ pid: productData?._id });
+    const response = await apiFavProduct({
+      pid: productData?._id,
+      category: productData?.category,
+      price: productData?.price,
+      title: productData?.title,
+      images: productData?.images,
+    });
     if (response.success) {
       setFavorite(!favorite);
       toast.success(response.message);
@@ -98,7 +104,7 @@ const Product = ({ productData, isNew, isHot }) => {
             to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
               productData?.title
             }`}
-            className=" w-full truncate"
+            className="w-full truncate"
           >
             {productData?.title}
           </Link>

@@ -6,41 +6,44 @@ const asyncHandler = require("express-async-handler");
 
 const createOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { productList, totalPrice, address, status, method, profit } = req.body;
+  const { productList, totalPrice, address, status, buyer, method, profit } =
+    req.body;
 
-  const buyerInfo = await User.findById(_id).select(
-    "firstName lastName mobile address"
-  );
+  if (address) {
+    const buyerInfo = await User.findById(_id).select(
+      "firstName lastName mobile address"
+    );
 
-  const data = {
-    productList,
-    totalPrice,
-    buyer: _id,
-    address,
-    method,
-    profit,
-  };
-  if (status) {
-    data.status = status;
+    const data = {
+      productList,
+      totalPrice,
+      buyer,
+      address,
+      method,
+      profit,
+    };
+    if (status) {
+      data.status = status;
+    }
+
+    data.buyer = {
+      user: _id,
+      firstName: buyerInfo.firstName,
+      lastName: buyerInfo.lastName,
+      mobile: buyerInfo.mobile,
+      address: buyerInfo.address,
+    };
+
+    const result = await Order.create(data);
+    if (result) {
+      await User.findByIdAndUpdate(_id, { address, cart: [] });
+    }
+
+    return res.status(200).json({
+      success: result ? true : false,
+      result: result ? result : "error when create Order ",
+    });
   }
-
-  data.buyer = {
-    _id: _id,
-    firstName: buyerInfo.firstName,
-    lastName: buyerInfo.lastName,
-    mobile: buyerInfo.mobile,
-    address: buyerInfo.address,
-  };
-
-  const result = await Order.create(data);
-  if (result) {
-    await User.findByIdAndUpdate(_id, { address, cart: [] });
-  }
-
-  return res.status(200).json({
-    success: result ? true : false,
-    result: result ? result : "error when create Order ",
-  });
 });
 
 const updateOrderStatus = asyncHandler(async (req, res) => {
@@ -63,24 +66,15 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 });
 
 const userGetOrder = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
   const queries = { ...req.query };
-
-  //list type of filter
-  const excludeFields = ["sort", "fields"];
-  excludeFields.forEach((element) => {
-    delete queries[element];
-  });
 
   //syntax normalization
   let queryString = JSON.stringify(queries);
-  queryString = queryString.replace(
-    /\b(gte|gt|lt|lte)\b/g,
-    (matchedEl) => `$${matchedEl}`
-  );
 
   const formatQueries = JSON.parse(queryString);
 
-  // Filtering(status, method)
+  // Filtering(status)
   if (queries?.status) {
     formatQueries.status = { $regex: queries.status, $options: "i" };
   }
@@ -96,16 +90,10 @@ const userGetOrder = asyncHandler(async (req, res) => {
     };
   }
 
-  const groupQuery = { ...formatQueries, ...queryBlock };
+  const groupQuery = { "buyer.user": _id, ...formatQueries, ...queryBlock };
   let queryCommand = Order.find(groupQuery);
 
   queryCommand = queryCommand.populate("buyer", "firstName lastName mobile");
-
-  //Sort
-  if (req.query.sort) {
-    const sortBy = req.query.sort.split(",").join(" ");
-    queryCommand = queryCommand.sort(sortBy);
-  }
 
   try {
     const response = await queryCommand;
@@ -195,9 +183,21 @@ const getOrderList = asyncHandler(async (req, res) => {
   }
 });
 
+const getOrderForCount = asyncHandler(async (req, res) => {
+  const response = await Order.find();
+  const counts = await Order.countDocuments();
+
+  return res.json({
+    success: response ? true : false,
+    counts,
+    orders: response ? response : "Lỗi lấy danh sách nhóm sản phẩm",
+  });
+});
+
 module.exports = {
   createOrder,
   updateOrderStatus,
   userGetOrder,
   getOrderList,
+  getOrderForCount,
 };

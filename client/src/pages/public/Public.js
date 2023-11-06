@@ -15,7 +15,7 @@ const Public = () => {
         <UpperHeader />
         <Header />
         <Navigation />
-        <div className="w-full flex flex-col items-center bg-webBackground py-4">
+        <div className="w-full flex flex-col items-center bg-webBackground pb-6">
           <Outlet />
         </div>
         <Footer />

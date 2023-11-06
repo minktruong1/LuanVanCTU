@@ -100,19 +100,17 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
         for (let image of groupData.images) {
           formData.append("images", image);
         }
-        console.log(review.images);
-        console.log(groupData.images);
 
-        // dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
-        // const response = await apiUpdateProduct(formData, editProductTab?._id);
-        // dispatch(showModal({ isShowModal: false, modalContent: null }));
-        // if (response.success) {
-        //   toast.success(response.message);
-        //   render();
-        //   setEditProductTab(null);
-        // } else {
-        //   toast.error(response.message);
-        // }
+        dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
+        const response = await apiUpdateProduct(formData, editProductTab?._id);
+        dispatch(showModal({ isShowModal: false, modalContent: null }));
+        if (response.success) {
+          toast.success(response.message);
+          render();
+          setEditProductTab(null);
+        } else {
+          toast.error(response.message);
+        }
       }
     }
   };

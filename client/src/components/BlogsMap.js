@@ -22,12 +22,12 @@ const BlogsMap = () => {
         <div className="grid md:grid-cols-4 grid-cols-2 gap-2 mt-2">
           {blogList?.slice(0, 4).map((element) => (
             <Link
-              to={`/blogs/${element?._id}/${element?.title}`}
+              to={`/blogs/${element?._id}/${element?.slug}`}
               key={element._id}
               className=""
             >
               <div>
-                <img alt="" src={element.image} className="" />
+                <img alt="" src={element.image} className="md:h-[160px]" />
               </div>
               <span className="line-clamp-2 text-sm md:text-normal">
                 {element.title}

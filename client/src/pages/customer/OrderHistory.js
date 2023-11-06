@@ -168,14 +168,30 @@ const OrderHistory = () => {
     <>
       <div className="w-full bg-white rounded">
         <h1 className="text-[24px] p-4">Quản lý đơn hàng</h1>
-        <div className="grid grid-cols-5">
+        <div className="md:grid grid-cols-5 hidden">
           {tabs?.map((element) => (
             <div
               onClick={() => handleChangeTab(element)}
               key={element.id}
-              className={`pb-2 flex  justify-center cursor-pointer font-medium ${
+              className={clsx(
+                "pb-2 flex  justify-center cursor-pointer font-medium",
                 targetTab === element.id ? "border-b-2 border-main" : ""
-              }`}
+              )}
+            >
+              {element.name}
+            </div>
+          ))}
+        </div>
+
+        <div className="md:hidden flex border-b whitespace-nowrap overflow-x-scroll overflow-y-hidden">
+          {tabs?.map((element) => (
+            <div
+              onClick={() => handleChangeTab(element)}
+              key={element.id}
+              className={clsx(
+                "pb-2 flex justify-center cursor-pointer font-medium px-4",
+                targetTab === element.id ? "border-b-2 border-main" : ""
+              )}
             >
               {element.name}
             </div>
@@ -216,12 +232,12 @@ const OrderHistory = () => {
           <>
             {orders?.map((order) => (
               <div key={order._id} className="mb-[24px] bg-white p-4">
-                <div className="flex justify-between border-b mb-4">
-                  <div>
-                    <span>{`Đơn hàng mã số: ${order?._id}`}</span>
+                <div className="grid grid-cols-2">
+                  <div className="">
+                    <span>{`Mã số: ${order?._id}`}</span>
                   </div>
-                  <div>
-                    <span>{`Tình trạng: ${order?.status}`}</span>
+                  <div className="text-right">
+                    <span>{order?.status}</span>
                   </div>
                 </div>
                 <div key={order._id} className="grid grid-rows-1 ">
@@ -230,20 +246,20 @@ const OrderHistory = () => {
                       key={productItem?._id}
                       className="grid grid-cols-10 py-2"
                     >
-                      <div className="col-span-1">
+                      <div className="col-span-2 md:col-span-1">
                         <img
                           alt=""
                           src={productItem?.images[0]}
                           className="w-[84px] border"
                         />
                       </div>
-                      <div className="col-span-8">
+                      <div className="col-span-6 md:col-span-8">
                         <div className="grid grid-rows-1">
-                          <span>{productItem?.title}</span>
+                          <span className="truncate">{productItem?.title}</span>
                           <span>x{productItem?.quantity}</span>
                         </div>
                       </div>
-                      <div className="col-span-1">
+                      <div className="col-span-2 md:col-span-1">
                         <span className="text-main">{`${formatVND(
                           productItem?.price
                         )}đ`}</span>
@@ -272,7 +288,7 @@ const OrderHistory = () => {
                   </div>
                   <div className="flex items-center">
                     <span className="mr-1">Tổng cộng: </span>
-                    <span className="text-2xl text-main">
+                    <span className="text-base md:text-2xl text-main">
                       {`${formatVND(order?.totalPrice)}đ`}
                     </span>
                   </div>

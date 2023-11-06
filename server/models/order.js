@@ -6,11 +6,13 @@ var orderSchema = new mongoose.Schema(
     productList: [
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
-        quantity: Number,
-        buyInPrice: Number,
-        price: Number,
+        category: { type: mongoose.Types.ObjectId, ref: "Category" },
+        categoryTitle: String,
         title: String,
+        quantity: Number,
         images: Array,
+        price: Number,
+        buyInPrice: Number,
       },
     ],
     status: {

@@ -38,6 +38,8 @@ var userSchema = new mongoose.Schema(
     cart: [
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
+        category: { type: mongoose.Types.ObjectId, ref: "Category" },
+        categoryTitle: String,
         quantity: Number,
         price: Number,
         title: String,
@@ -48,7 +50,16 @@ var userSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-    wishList: [{ product: { type: mongoose.Types.ObjectId, ref: "Product" } }],
+    wishList: [
+      {
+        product: { type: mongoose.Types.ObjectId, ref: "Product" },
+        category: { type: mongoose.Types.ObjectId, ref: "Category" },
+        categoryTitle: String,
+        price: Number,
+        title: String,
+        images: Array,
+      },
+    ],
     isBlocked: {
       type: Boolean,
       default: false,

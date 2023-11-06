@@ -20,16 +20,16 @@ const CustomerLayout = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col items-center ">
+      <div className="w-full flex flex-col items-center">
         <UpperHeader />
         <Header />
         <Navigation />
         <div className="w-full flex flex-col items-center bg-webBackground py-4">
-          <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 md:grid-cols-4 mt-6 mb-6 gap-2">
-            <div className="w-full">
+          <div className="w-[calc(100%-20px)] md:w-main md:grid md:grid-rows-1 md:grid-cols-4 mt-6 mb-6 gap-2">
+            <div className="md:col-span-1 ">
               <CustomerSidebar />
             </div>
-            <div className="md:col-span-3">
+            <div className="md:col-span-3 ">
               <Outlet />
             </div>
           </div>

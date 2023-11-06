@@ -165,9 +165,19 @@ const deleteCoupon = asyncHandler(async (req, res) => {
   });
 });
 
+const userGetCoupon = asyncHandler(async (req, res) => {
+  const response = await Coupon.find();
+
+  return res.status(200).json({
+    success: response ? true : false,
+    coupons: response ? response : "Lỗi lấy tất cả mã giảm giá",
+  });
+});
+
 module.exports = {
   createCoupon,
   getAllCoupons,
   updateCoupon,
   deleteCoupon,
+  userGetCoupon,
 };

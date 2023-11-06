@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { apiAdminGetUserOrders } from "../../apis";
+import { apiAdminGetUserOrders, apiAllOrderForCount } from "../../apis";
 import {
   createSearchParams,
   useLocation,
@@ -49,27 +49,29 @@ const ManageOrders = () => {
     if (response.success) {
       setOrders(response?.orders);
       setOrderCount(response?.counts);
-      if (!calculated) {
-        setCollect(response?.counts);
-        setCancel(
-          response?.orders?.filter((order) => order?.status === "Hủy").length
-        );
-        setDone(
-          response?.orders?.filter((order) => order?.status === "Hoàn thành")
-            ?.length
-        );
-        setProcess(
-          response?.orders?.filter((order) => order?.status === "Đang xử lý")
-            ?.length
-        );
-        setShip(
-          response?.orders.filter(
-            (order) => order?.status === "Đang vận chuyển"
-          )?.length
-        );
-        // Đánh dấu đã tính toán
-        setCalculated(true);
-      }
+    }
+  };
+
+  const fetchForOrdersCount = async () => {
+    const response = await apiAllOrderForCount();
+    if (response.success) {
+      setCollect(response?.counts);
+      setCancel(
+        response?.orders?.filter((order) => order?.status === "Hủy").length
+      );
+      setDone(
+        response?.orders?.filter((order) => order?.status === "Hoàn thành")
+          ?.length
+      );
+      setProcess(
+        response?.orders?.filter((order) => order?.status === "Đang xử lý")
+          ?.length
+      );
+      setShip(
+        response?.orders.filter((order) => order?.status === "Đang vận chuyển")
+          ?.length
+      );
+      // Đánh dấu đã tính toán
     }
   };
 
@@ -89,8 +91,9 @@ const ManageOrders = () => {
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);
     fetchOrders({ ...searchParams });
+    fetchForOrdersCount();
   }, [params, editOrderTab]);
-  console.log(orders);
+
   return (
     <div className="w-full p-4 relative">
       {editOrderTab && (

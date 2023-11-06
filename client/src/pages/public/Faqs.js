@@ -1,5 +1,6 @@
 import React from "react";
 import FaqQuestion from "../../components/FaqQuestion";
+import { Breadcrumb } from "../../components";
 
 const content = [
   {
@@ -36,8 +37,9 @@ const content = [
 
 const Faqs = () => {
   return (
-    <div className="w-[calc(100%-20px)] md:w-main bg-white rounded">
-      <div className="p-6">
+    <div className="w-[calc(100%-20px)] md:w-main ">
+      <Breadcrumb />
+      <div className="p-6 bg-white rounded">
         <div className="flex justify-center text-2xl mb-4">
           Các câu hỏi thường gặp
         </div>

@@ -4,3 +4,4 @@ export * from "./user";
 export * from "./order";
 export * from "./brand";
 export * from "./blog";
+export * from "./coupon";

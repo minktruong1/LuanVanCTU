@@ -14,9 +14,7 @@ const { MdArrowBackIosNew } = icons;
 
 const MainCart = () => {
   const navigate = useNavigate();
-  const { isLogin, currentCart, currentData } = useSelector(
-    (state) => state.user
-  );
+  const { isLogin, currentCart } = useSelector((state) => state.user);
   const location = useLocation();
 
   const handleCheckout = () => {
@@ -48,9 +46,7 @@ const MainCart = () => {
   return (
     <div className="w-[calc(100%-20px)] md:w-main">
       <div className=" pb-[18px]">
-        <Breadcrumb
-          category={location?.pathname?.slice(1)?.split("-")?.join(" ")}
-        />
+        <Breadcrumb />
       </div>
 
       <div className=" flex justify-center items-center mb-6">
@@ -77,7 +73,6 @@ const MainCart = () => {
                 <div className="w-full">
                   {currentCart?.map((element) => (
                     <CartItem
-                      // handleChangeQuantity={handleChangeQuantity}
                       element={element}
                       key={element._id}
                       firstQuantity={element.quantity}
@@ -90,11 +85,11 @@ const MainCart = () => {
                     </div>
                     <div className="flex justify-between items-center mb-4 text-[18px]">
                       <span>Tổng tiền</span>
-                      <span className="text-main text-xl md:text-2xl">
+                      <span className="text-main text-lg md:text-2xl">
                         {`${formatVND(
                           currentCart?.reduce(
                             (sum, element) =>
-                              +element.product?.price * element?.quantity + sum,
+                              +element?.price * element?.quantity + sum,
                             0
                           )
                         )}`}

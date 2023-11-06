@@ -8,7 +8,7 @@ const verifyLoginToken = asyncHandler(async (req, res, next) => {
       if (err)
         return res.status(401).json({
           success: false,
-          message: "Invalid access token",
+          message: "Mã đăng nhập hết hạn",
         });
       req.user = decode;
       next();
@@ -16,18 +16,20 @@ const verifyLoginToken = asyncHandler(async (req, res, next) => {
   } else {
     return res.status(401).json({
       success: false,
-      message: "Require authentication !!!",
+      message: "Yêu cầu xác thực",
     });
   }
 });
 
 const isAdmin = asyncHandler((req, res, next) => {
   const { role } = req.user;
-  if (role !== "admin")
+  console.log(role);
+  if (role !== "admin") {
     return res.status(401).json({
       success: false,
-      message: "Don't have permission",
+      message: "Yêu cầu quyền quản trị",
     });
+  }
   next();
 });
 

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { apiUpdateOrderStatus } from "../../apis";
 import { PiExportBold } from "react-icons/pi";
 import jsPDF from "jspdf";
-import "../../assets/OpenSans-Regular.ttf";
+import html2canvas from "html2canvas";
 
 const status = [
   { id: 1, text: "Đang xử lý", value: "Đang xử lý" },
@@ -36,45 +36,19 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
   };
 
   const handleExportPDF = () => {
-    const doc = new jsPDF();
-
-    // Nhúng font vào tài liệu PDF
-    doc.addFileToVFS("OpenSans-Regular.ttf", "[base64 encoding of font]");
-    doc.addFont("OpenSans-Regular.ttf", "custom", "normal");
-    doc.setFont("custom");
-    doc.setFontSize(12);
-    doc.text(`Chi tiết đơn hàng ${editOrderTab._id}`, 10, 10);
-
-    // Add order details
-    doc.setFontSize(12);
-    doc.text(
-      `Tên người nhận: ${editOrderTab.buyer.firstName} ${editOrderTab.buyer?.lastName}`,
-      10,
-      20
-    );
-    doc.text(`Địa chỉ: ${editOrderTab?.address}`, 10, 30);
-    doc.text(`Số điện thoại: ${editOrderTab.buyer?.mobile}`, 10, 40);
-
-    // Add product list
-    let y = 50;
-    doc.text("Sản phẩm     Đơn giá     Số lượng     Thành tiền", 10, y);
-    y += 10;
-    editOrderTab?.productList?.forEach((element) => {
-      doc.text(
-        `${element.title}     ${formatVND(element.price)}đ     ${
-          element.quantity
-        }     ${formatVND(element.price * element.quantity)}đ`,
-        10,
-        y
-      );
-      y += 10;
+    const input = document.getElementById("canvas");
+    html2canvas(input, {
+      loggin: true,
+      letterRendering: 1,
+      useCORS: true,
+    }).then(function (canvas) {
+      const imgWidth = 220;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(imgData, "PNG", 2, 20, imgWidth, imgHeight);
+      pdf.save(`Hóa đơn ${editOrderTab._id}`);
     });
-
-    // Add total price
-    y += 10;
-    doc.text(`Tổng tiền: ${formatVND(editOrderTab?.totalPrice)}đ`, 10, y);
-
-    doc.save(`order_${editOrderTab._id}.pdf`);
   };
 
   useEffect(() => {
@@ -94,7 +68,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
           Trở về
         </span>
       </div>
-      <div className="w-full bg-white rounded p-4">
+      <div id="canvas" className="w-full bg-white rounded p-4">
         <div className="grid grid-rows-1">
           <h1 className="text-xl font-medium">
             Chi tiết đơn hàng {editOrderTab._id}
@@ -150,20 +124,10 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
                 </div>
               </div>
             ))}
-            <div className="grid grid-cols-10 my-6 font-semibold">
-              <div className="col-span-4">
-                <span></span>
-              </div>
-              <div className="col-span-2 flex justify-center">
-                <span></span>
-              </div>
-              <div className="col-span-2 flex justify-center">
-                <span></span>
-              </div>
-              <div className="col-span-2 flex justify-end">
+            <div className="grid grid-rows-1 my-6 font-semibold">
+              <div className="text-right text-lg">
                 <span>
-                  Tổng tiền:
-                  {`${formatVND(editOrderTab?.totalPrice)}đ`}
+                  {`Tổng tiền: ${formatVND(editOrderTab?.totalPrice)}đ`}
                 </span>
               </div>
             </div>
@@ -190,7 +154,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
           <Button type="submit">Lưu</Button>
           <div
             onClick={handleExportPDF}
-            className="p-2 bg-green-500 flex justify-center items-center cursor-pointer"
+            className="p-2 bg-green-500 flex justify-center items-center cursor-pointer text-white"
           >
             <PiExportBold />
             <span>Xuất file</span>

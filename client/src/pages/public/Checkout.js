@@ -30,7 +30,7 @@ const Checkout = () => {
 
   const priceCounting = Math.round(
     +currentCart?.reduce(
-      (sum, element) => +element.product?.price * element?.quantity + sum,
+      (sum, element) => +element?.price * element?.quantity + sum,
       0
     )
   );
@@ -40,14 +40,14 @@ const Checkout = () => {
     Math.round(
       currentCart.reduce(
         (totalProfit, cartItem) =>
-          cartItem.product.buyInPrice * cartItem.quantity + totalProfit,
+          cartItem.buyInPrice * cartItem.quantity + totalProfit,
         0
       )
     );
 
   const priceCountingToUSD = Math.round(
     +currentCart?.reduce(
-      (sum, element) => +element.product?.price * element?.quantity + sum,
+      (sum, element) => +element?.price * element?.quantity + sum,
       0
     ) / 23000
   );
@@ -138,36 +138,41 @@ const Checkout = () => {
     return <Navigate to={`/`} replace={true} />;
   }
 
-  console.log(profitCounting);
+  console.log(currentCart);
+
   return (
-    <div className="grid grid-rows-1 gap-3 my-8">
-      <div className="w-main grid grid-rows-1 bg-white rounded-b ">
+    <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 gap-3 my-8 text-sm md:text-base">
+      <div className="grid grid-rows-1 bg-white rounded-b">
         <div class="checkout-header"></div>
-        <div className="p-6">
-          <div className="flex items-center text-[20px] text-main">
+        <div className="p-6 ">
+          <div className="flex items-center text-[20px] text-main text-base md:text-base">
             <MdLocationPin />
             Địa chỉ nhận hàng
           </div>
-          <div className="grid grid-cols-8">
+          <div className="md:grid grid-cols-8 hidden">
             <span className="col-span-1 text-[#6d6e72]">Tên người nhận:</span>
             <span className="col-span-7 font-semibold">{`${currentData?.firstName} ${currentData?.lastName}`}</span>
           </div>
-          <div className="grid grid-cols-8">
+          <div className="md:grid grid-cols-8 hidden">
             <span className="col-span-1 text-[#6d6e72]">Địa chỉ:</span>
             <span className="col-span-7 font-semibold">
               <span>{currentData?.address}</span>
             </span>
           </div>
-          <div className="grid grid-cols-8">
+          <div className="md:grid grid-cols-8 hidden">
             <span className="col-span-1 text-[#6d6e72]">Số điện thoại:</span>
             <span className="col-span-7 font-semibold">
               {currentData?.mobile}
             </span>
           </div>
+          <div className="md:hidden grid grid-rows-1 text-sm ">
+            <span>{`${currentData?.firstName} ${currentData?.lastName} | ${currentData?.mobile}`}</span>
+            <span>{currentData?.address}</span>
+          </div>
         </div>
       </div>
-      <div className="w-main bg-white rounded p-6">
-        <div className="grid grid-cols-10 mb-8">
+      <div className="md:w-main bg-white rounded p-6">
+        <div className="hidden md:grid grid-cols-10 mb-8">
           <div className="col-span-4">
             <span>Sản phẩm</span>
           </div>
@@ -184,32 +189,41 @@ const Checkout = () => {
         <div className="grid grid-rows-1 gap-6">
           {currentCart?.map((element) => (
             <div className="grid grid-cols-10 ">
-              <div className="col-span-4 flex">
+              <div className="md:col-span-1 col-span-2">
                 <img
-                  src={element.product.images[0]}
+                  src={element.images[0]}
                   alt=""
-                  className="w-20 h-20 border"
+                  className="w-[68px] h-[68px] md:w-20 md:h-20 border"
                 />
-                <span className="ml-4">{element.product.title}</span>
               </div>
-              <div className="col-span-2 flex justify-center">
-                <span>{`${formatVND(element.product.price)}`}đ</span>
+              <div className="col-span-8 md:hidden text-sm ml-2">
+                <div className="grid grid-rows-1">
+                  <span className="truncate">{element.title}</span>
+                  <span className="text-right">{`x ${element.quantity}`}</span>
+                  <span className="text-right">{`${formatVND(
+                    element.product.price
+                  )}đ`}</span>
+                </div>
               </div>
-              <div className="col-span-2 flex justify-center">
+              <div className="hidden md:block md:col-span-3">
+                <span className="text-left">{element.title}</span>
+              </div>
+              <div className="hidden md:block md:flex col-span-2 justify-center">
+                <span>{`${formatVND(element.price)}đ`}</span>
+              </div>
+              <div className="hidden md:block md:flex col-span-2 justify-center">
                 <span>{element.quantity}</span>
               </div>
-              <div className="col-span-2 flex justify-end">
-                <span>
-                  {`${formatVND(element.product.price * element.quantity)}`}đ
-                </span>
+              <div className="hidden md:block md:flex col-span-2 justify-end">
+                <span>{`${formatVND(element.price * element.quantity)}đ`}</span>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="w-main bg-white rounded p-6">
+      <div className="md:w-main bg-white rounded p-6">
         <div className="grid grid-rows-1 gap-6">
-          <div className="grid grid-cols-10 pb-4 border-b">
+          <div className="hidden md:grid grid-cols-10 pb-4 border-b">
             <div className="col-span-2 pt-2">
               <span>Phương thức thanh toán:</span>
             </div>
@@ -232,61 +246,73 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-10">
-            <div className="col-span-5">
-              {paymentMethod === "paypal" && (
-                <Payment
-                  payload={{
-                    productList: currentCart,
-                    totalPrice: priceCounting,
-                    address: currentData?.address,
-                    method: paymentMethod,
-                    profit: profitCounting,
-                  }}
-                  amount={priceCountingToUSD}
-                />
-              )}
-            </div>
-            <div className="col-span-5 text-right">
-              <h1>{`Tổng thanh toán (${currentCart?.length} sản phẩm):`}</h1>
-              <span className="text-main text-[24px]">
-                {`${formatVND(
-                  currentCart?.reduce(
-                    (sum, element) =>
-                      +element.product?.price * element?.quantity + sum,
-                    0
-                  )
-                )}`}
-                đ
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 pt-4 border-t">
-            <div className="col-span-5 ">
-              <span>
-                Nhấn "Đặt hàng" đồng nghĩa với việc bạn xác nhận mua hàng
-              </span>
-            </div>
-            <div className="col-span-5 text-right">
+          <div className="md:hidden border-b whitespace-nowrap overflow-x-scroll overflow-y-hidden">
+            {method?.map((element) => (
               <button
-                onClick={() =>
-                  handleCheckout({
-                    productList: currentCart,
-                    totalPrice: priceCounting,
-                    address: currentData?.address,
-                    method: paymentMethod,
-                    profit: profitCounting,
-                  })
-                }
+                onClick={() => handleSelectMethod(element)}
                 className={clsx(
-                  "px-[40px] py-2 border bg-main text-white",
-                  paymentMethod !== "cod" ? "cursor-not-allowed opacity-50" : ""
+                  "border p-2 mr-2 text-[#6d6e72] border-[#6d6e72]",
+                  selectedButton === element.id ? "!border-main text-main" : ""
                 )}
               >
-                Đặt hàng
+                {element.text}{" "}
               </button>
-            </div>
+            ))}
+          </div>
+
+          <div className=" text-right">
+            <h1>{`Tổng thanh toán (${currentCart?.length} sản phẩm):`}</h1>
+            <span className="text-main text-[24px]">
+              {`${formatVND(
+                currentCart?.reduce(
+                  (sum, element) => +element?.price * element?.quantity + sum,
+                  0
+                )
+              )}`}
+              đ
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          {paymentMethod === "paypal" && (
+            <Payment
+              payload={{
+                productList: currentCart,
+                totalPrice: priceCounting,
+                address: currentData?.address,
+                method: paymentMethod,
+                profit: profitCounting,
+              }}
+              amount={priceCountingToUSD}
+            />
+          )}
+        </div>
+
+        <div className="grid grid-cols-10 pt-4 border-t">
+          <div className="col-span-5 ">
+            <span>
+              Nhấn "Đặt hàng" đồng nghĩa với việc bạn xác nhận mua hàng
+            </span>
+          </div>
+          <div className="col-span-5 text-right">
+            <button
+              onClick={() =>
+                handleCheckout({
+                  productList: currentCart,
+                  totalPrice: priceCounting,
+                  address: currentData?.address,
+                  method: paymentMethod,
+                  profit: profitCounting,
+                })
+              }
+              className={clsx(
+                "px-[40px] py-2 border bg-main text-white",
+                paymentMethod !== "cod" ? "cursor-not-allowed opacity-50" : ""
+              )}
+            >
+              Đặt hàng
+            </button>
           </div>
         </div>
       </div>

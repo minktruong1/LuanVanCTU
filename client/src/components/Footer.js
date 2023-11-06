@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
           <div>
             <div className="font-semibold mb-[8px]">CHÍNH SÁCH</div>
-            <div className="grid grid-rows-1">
+            <div className="grid grid-rows-1 text-[13px] md:text-base">
               {policy.map((Element, index) => (
                 <Link
                   key={index}
@@ -61,7 +61,7 @@ const Footer = () => {
             <div className="flex flex-row font-semibold mb-[8px]">
               THÔNG TIN
             </div>
-            <div className="grid grid-rows-1">
+            <div className="grid grid-rows-1 text-[13px] md:text-base">
               {detail.map((Element, index) => (
                 <Link
                   key={index}
@@ -75,9 +75,13 @@ const Footer = () => {
           <div>
             <div className="grid grid-rows-1">
               <div className="font-semibold mb-[8px]">TỔNG ĐÀI HỖ TRỢ</div>
-              <p>Gọi mua: 1800.6975 (8:00 - 21:00)</p>
-              <p>CSKH: 1800.6173 (8:00 - 21:00)</p>
-              <p>Email: cskh@ggear.com</p>
+              <p className="text-[13px] md:text-base">
+                Gọi mua: 1800.6975 (8:00 - 21:00)
+              </p>
+              <p className="text-[13px] md:text-base">
+                CSKH: 1800.6173 (8:00 - 21:00)
+              </p>
+              <p className="text-[13px] md:text-base">Email: cskh@ggear.com</p>
             </div>
           </div>
           <div className="col-span-2 md:col-span-1">
@@ -110,7 +114,7 @@ const Footer = () => {
               </span>
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="">
             <img alt="" src={legit} width={`130px`} />
           </div>
         </div>

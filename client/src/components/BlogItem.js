@@ -15,7 +15,7 @@ const BlogItem = ({ data }) => {
       <div className="col-span-7 md:col-span-8">
         <div className="grid grid-rows-1">
           <Link
-            to={`/blogs/${data?._id}/${data?.title}`}
+            to={`/blogs/${data?._id}/${data?.slug}`}
             className="font-semibold hover:text-main cursor-pointer"
           >
             {data.title}

@@ -99,9 +99,7 @@ const Products = () => {
 
   return (
     <div className="w-[calc(100%-20px)] xl:w-main">
-      <div className="pt-[18px] pb-[18px]">
-        <Breadcrumb category={category} />
-      </div>
+      <Breadcrumb category={category} />
       <div className="bg-white w-full rounded mb-[14px]">
         <div className="p-[24px] flex-auto flex items-center gap-4">
           <SearchItem

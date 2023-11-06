@@ -81,8 +81,8 @@ const registerCheck = asyncHandler(async (req, res) => {
   return res.json({
     success: notActiveEmail ? true : false,
     message: notActiveEmail
-      ? "Complete create account, go to login"
-      : "Register check fail",
+      ? "Tạo tài khoản thành công, bạn có thể đăng nhập"
+      : "Lỗi xác mã xác thực",
   });
 });
 
@@ -134,7 +134,7 @@ const getUser = asyncHandler(async (req, res) => {
       path: "cart",
       populate: {
         path: "product",
-        select: "title images price category buyInPrice",
+        select: "slug",
       },
     })
     .populate({
@@ -363,7 +363,16 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, quantity, price, title, images, buyInPrice } = req.body;
+  const {
+    pid,
+    cid,
+    categoryTitle,
+    quantity,
+    price,
+    title,
+    images,
+    buyInPrice,
+  } = req.body;
   if (!pid) {
     throw new Error("Missing inputs");
   }
@@ -390,7 +399,16 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
       _id,
       {
         $push: {
-          cart: { product: pid, quantity, price, title, images, buyInPrice },
+          cart: {
+            product: pid,
+            category: cid,
+            categoryTitle,
+            quantity,
+            price,
+            title,
+            images,
+            buyInPrice,
+          },
         },
       },
       { new: true }
@@ -428,7 +446,8 @@ const adminCreateUser = asyncHandler(async (req, res) => {
 
 const addProductToWishList = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid } = req.body;
+  const { pid, category, price, title, images } = req.body;
+
   if (!pid) {
     throw new Error("Missing inputs");
   }
@@ -453,7 +472,15 @@ const addProductToWishList = asyncHandler(async (req, res) => {
     const response = await User.findByIdAndUpdate(
       _id,
       {
-        $push: { wishList: { product: pid } },
+        $push: {
+          wishList: {
+            product: pid,
+            category,
+            price,
+            title,
+            images,
+          },
+        },
       },
       { new: true }
     );

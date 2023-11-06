@@ -5,6 +5,7 @@ const upload = require("../config/cloudinary.config.js");
 
 router.post(
   "/",
+  [verifyLoginToken, isAdmin],
   upload.fields([
     {
       name: "image",
@@ -17,6 +18,7 @@ router.post(
 router.get("/", controllers.getAllCategories);
 router.put(
   "/:cateid",
+  [verifyLoginToken, isAdmin],
   upload.fields([
     {
       name: "image",
@@ -25,6 +27,10 @@ router.put(
   ]),
   controllers.updateCategory
 );
-router.delete("/:cateid", controllers.deleteCategory);
+router.delete(
+  "/:cateid",
+  [verifyLoginToken, isAdmin],
+  controllers.deleteCategory
+);
 
 module.exports = router;

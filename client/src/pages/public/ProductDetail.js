@@ -44,7 +44,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [chooseImage, setChooseImage] = useState(null);
-  const [updateRatingBar, setUpdateRatingBar] = useState(false);
+  const [updateRatingBar] = useState(false);
 
   const { isLogin, currentData } = useSelector((state) => state.user);
 
@@ -186,6 +186,7 @@ const ProductDetail = () => {
     const response = await apiUpdateCart({
       pid: product?._id,
       title: product?.title,
+      category: product?.category,
       quantity,
       price: product?.price,
       images: product?.images,

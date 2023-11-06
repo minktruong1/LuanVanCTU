@@ -2,7 +2,7 @@ import path from "./path";
 import icons from "./icons.js";
 import { FaChartBar, FaShoppingBag } from "react-icons/fa";
 import { BiSolidUser } from "react-icons/bi";
-import { BsBagHeartFill } from "react-icons/bs";
+import { BsBagHeartFill, BsYoutube } from "react-icons/bs";
 import { AiFillEye } from "react-icons/ai";
 
 const {
@@ -48,9 +48,9 @@ export const navigation = [
   },
   {
     id: 6,
-    icon: <BsShieldCheck />,
-    value: "Chính sách bảo hành",
-    path: `/${path.WARRANTY}`,
+    icon: <BsYoutube />,
+    value: "Kênh youtube",
+    path: `/`,
   },
 ];
 

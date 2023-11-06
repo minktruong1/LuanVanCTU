@@ -13,11 +13,14 @@ const Breadcrumb = ({ title, category }) => {
     { path: "/blogs", breadcrumb: "Tin tức" },
     { path: "/blogs/:bid/:title", breadcrumb: title },
     { path: "/all-products", breadcrumb: "Tất cả sản phẩm" },
+    { path: "/main-cart", breadcrumb: "Giỏ hàng" },
+    { path: "/coupons", breadcrumb: "Mã giảm giá" },
+    { path: "/faqs", breadcrumb: "Hỏi đáp" },
   ];
 
   const breadcrumb = useBreadcrumbs(routes);
   return (
-    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden mb-2">
+    <div className="text-sm flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden my-4">
       {breadcrumb
         ?.filter((element) => !element.match.route === false)
         .map(({ match, breadcrumb }, index, count) => (

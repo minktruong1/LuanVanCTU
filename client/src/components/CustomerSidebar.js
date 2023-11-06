@@ -26,8 +26,8 @@ const CustomerSidebar = () => {
   };
 
   return (
-    <div className="bg-white md:h-full rounded-sm md:max-h-[500px]">
-      <div className="md:w-full flex items-center p-4 border-b border-[#ECECEC]">
+    <div className="bg-white md:h-full rounded-sm md:max-h-[500px] mb-4">
+      <div className="flex items-center p-4 border-b border-[#ECECEC]">
         <img
           src={currentData?.avatar || defaultAvatar}
           alt="avatar"

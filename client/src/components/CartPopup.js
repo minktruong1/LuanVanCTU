@@ -40,22 +40,20 @@ const CartPopup = () => {
                 >
                   <div className="w-[25%]">
                     <img
-                      src={element?.product?.images[0]}
+                      src={element?.images[0]}
                       alt="productImage"
                       className="w-16 h-16 object-cover"
                     />
                   </div>
                   <div className="w-[50%]">
-                    <span className="line-clamp-1">
-                      {element?.product?.title}
-                    </span>
+                    <span className="line-clamp-1">{element?.title}</span>
                     <span className="line-clamp-1 text-[12px] text-[#6d6e72] mt-6">
                       Số lượng: {element?.quantity}
                     </span>
                   </div>
                   <div className="w-[25%] text-right">
                     <span className="text-main">
-                      {`${formatVND(element?.product?.price)}đ`}
+                      {`${formatVND(element?.price)}đ`}
                     </span>
                   </div>
                 </div>

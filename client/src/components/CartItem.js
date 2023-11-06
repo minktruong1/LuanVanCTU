@@ -63,17 +63,18 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
     updateCartItemQuantity(element?.product?._id, quantitySelect);
   }, [quantitySelect]);
 
+  // console.log(element);
   return (
     <div className="grid grid-cols-5 md:grid-cols-5 mb-6">
       <div className="grid grid-rows-1 gap-3 place-content-center">
         <Link
-          to={`/${element?.product?.category?.toLowerCase()}/${
-            element?.product?._id
-          }/${element?.product?.title}`}
+          to={`/${element.category?.toLowerCase()}/${element?.product._id}/${
+            element?.product.slug
+          }`}
           className="line-clamp-1"
         >
           <img
-            src={element?.product?.images[0]}
+            src={element?.images[0]}
             alt="productImage"
             className="w-[68px] h-[68px] md:w-[88px] md:h-[88px] object-cover border"
           />
@@ -90,19 +91,17 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
         <div className="grid grid-rows-1 md:grid-cols-3">
           <div className="md:col-span-2">
             <Link
-              to={`/${element?.product?.category?.toLowerCase()}/${
-                element?.product?._id
-              }/${element?.product?.title}`}
+              to={`/${element.category?.toLowerCase()}/${
+                element?.product._id
+              }/${element?.product.slug}`}
               className="md:line-clamp-1 "
             >
-              <span className="text-sm md:text-base">
-                {element?.product?.title}
-              </span>
+              <span className="text-sm md:text-base">{element?.title}</span>
             </Link>
           </div>
           <div className="text-right">
-            <span className=" text-main mb-4 font-medium text-[18px]">
-              {`${formatVND(element?.product?.price * quantitySelect)}đ`}
+            <span className=" text-main mb-4 font-medium text-base md:text-[18px]">
+              {`${formatVND(element?.price * quantitySelect)}đ`}
             </span>
             <div className="flex justify-end">
               <QuantitySelector

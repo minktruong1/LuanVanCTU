@@ -15,9 +15,9 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div className="w-[calc(100%-20px)] md:w-main rounded ">
+    <div className="w-[calc(100%-20px)] md:w-main  ">
       <Breadcrumb />
-      <div className="w-full bg-white p-4">
+      <div className="w-full bg-white p-4 rounded">
         {blogList?.length === 0 ? (
           <div className="flex justify-center min-h-[600px]">
             <img alt="empty" src={emptyData} className="object-contain" />

@@ -7,6 +7,12 @@ export const apiGetCoupon = (params) =>
     params,
   });
 
+export const apiUserGetCoupon = () =>
+  axios({
+    url: "/coupon/user-get",
+    method: "GET",
+  });
+
 export const apiUpdateCoupon = (data, cid) =>
   axios({
     url: "/coupon/" + cid,

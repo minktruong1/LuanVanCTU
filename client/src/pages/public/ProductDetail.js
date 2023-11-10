@@ -40,7 +40,7 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { pid, title, category } = useParams();
+  const { pid, category } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [chooseImage, setChooseImage] = useState(null);
@@ -151,7 +151,7 @@ const ProductDetail = () => {
       dispatch(apiGetCurrentAccount());
     }
   };
-  console.log(product);
+
   return (
     <>
       <div className="w-[calc(100%-20px)] md:w-main">

@@ -25,7 +25,7 @@ export const navigation = [
     id: 2,
     icon: <FaListUl />,
     value: "Tất cả sản phẩm",
-    path: `/all-products`,
+    path: `/categories/all-products`,
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ export const navigation = [
     id: 6,
     icon: <BsYoutube />,
     value: "Kênh youtube",
-    path: `youtube.com`,
+    path: `/`,
   },
 ];
 

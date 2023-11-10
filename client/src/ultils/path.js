@@ -2,7 +2,7 @@ const path = {
   PUBLIC: "/",
   HOME: "",
   ALL: "*",
-  PRODUCTS: ":category",
+  PRODUCTS: "categories/:category",
   LOGIN: "login",
   REGISTER: "register",
   FORGOT_PASSWORD: "forgot-password",

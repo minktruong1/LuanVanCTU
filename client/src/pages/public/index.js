@@ -13,3 +13,4 @@ export { default as BlogDetail } from "./BlogDetail.js";
 export { default as SearchProduct } from "./SearchProduct.js";
 export { default as ForgotPassword } from "./ForgotPassword.js";
 export { default as Register } from "./Register.js";
+export { default as NotFound } from "./NotFound.js";

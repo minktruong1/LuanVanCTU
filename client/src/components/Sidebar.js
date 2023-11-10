@@ -14,7 +14,7 @@ const Sidebar = () => {
       {categories?.map((element, index) => (
         <Link
           key={slugifyByHand(element.title)}
-          to={slugifyByHand(element.title)}
+          to={`/categories/${slugifyByHand(element.title)}`}
           className={`px-3 pt-[4px] pb-[4px] justify-between flex flex-row items-center hover:bg-main hover:text-white ${
             index === 0 ? "rounded-t " : ""
           }${index === categories.length - 1 ? "rounded-b " : ""} `}

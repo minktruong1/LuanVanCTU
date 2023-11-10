@@ -68,7 +68,6 @@ const getAllProducts = asyncHandler(async (req, res) => {
         { title: { $regex: queries.query, $options: "i" } },
         { category: { $regex: queries.query, $options: "i" } },
         { brand: { $regex: queries.query, $options: "i" } },
-        // { description: { $regex: queries.query, $options: "i" } },
       ],
     };
   }
@@ -190,7 +189,6 @@ const reviews = asyncHandler(async (req, res) => {
       },
       { new: true }
     );
-    // console.log(response);
   }
 
   //Counting reviews point

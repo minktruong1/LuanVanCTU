@@ -9,7 +9,6 @@ import {
   ProductDetail,
   Faqs,
   PaymentInstruction,
-  LastRegister,
   RsPassword,
   MainCart,
   Checkout,
@@ -17,6 +16,7 @@ import {
   SearchProduct,
   ForgotPassword,
   Register,
+  NotFound,
 } from "./pages/public/index.js";
 import path from "./ultils/path.js";
 import { apiGetCateList } from "./store/app/asyncActions.js";
@@ -91,9 +91,9 @@ function App() {
             path={path.PRODUCT_DETAIL__CATEGORY__PID__TITLE}
             element={<ProductDetail />}
           ></Route>
-          <Route path={path.PRODUCTS} element={<Products />}></Route>
           <Route path={path.BLOGS} element={<Blogs />}></Route>
           <Route path={path.BLOG_DETAIL} element={<BlogDetail />}></Route>
+          <Route path={path.PRODUCTS} element={<Products />}></Route>
           <Route path={path.FAQS} element={<Faqs />}></Route>
           <Route path={path.COUPONS} element={<CouponsList />}></Route>
           <Route
@@ -109,7 +109,6 @@ function App() {
           <Route path={path.MAIN_CART} element={<MainCart />}></Route>
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>
           <Route path={path.CHECKOUT} element={<Checkout />}></Route>
-          <Route path={path.ALL} element={<Home />}></Route>
           <Route path={path.SEARCH} element={<SearchProduct />}></Route>
         </Route>
 
@@ -137,6 +136,7 @@ function App() {
             element={<CheckedProductList />}
           />
         </Route>
+        <Route path={path.ALL} element={<NotFound />} />
       </Routes>
     </div>
   );

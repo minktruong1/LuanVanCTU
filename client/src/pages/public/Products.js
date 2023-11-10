@@ -35,16 +35,19 @@ const Products = () => {
   const fetchProductByCate = async (queries) => {
     if (category === "all-products") {
       const response = await apiGetProducts({ ...queries });
-      if (response.success) setProducts(response);
+      if (response.success) {
+        setProducts(response);
+      }
     } else {
       const response = await apiGetProducts({ ...queries, category });
-      if (response.success) setProducts(response);
+      if (response.success) {
+        setProducts(response);
+      }
     }
   };
 
   useEffect(() => {
     const queries = Object.fromEntries([...params]);
-
     let priceFilterQuery = {};
     if (queries.from && queries.to) {
       priceFilterQuery = {
@@ -91,7 +94,7 @@ const Products = () => {
   useEffect(() => {
     if (sort) {
       navigate({
-        pathname: `/${category}`,
+        pathname: `/categories/${category}`,
         search: createSearchParams({ sort }).toString(),
       });
     }

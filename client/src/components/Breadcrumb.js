@@ -8,14 +8,14 @@ const { BsFillHouseFill } = icons;
 const Breadcrumb = ({ title, category }) => {
   const routes = [
     { path: "/", breadcrumb: "Trang chủ" },
-    { path: "/:category", breadcrumb: category },
-    { path: "/:category/:pid/:title", breadcrumb: title },
     { path: "/blogs", breadcrumb: "Tin tức" },
     { path: "/blogs/:bid/:title", breadcrumb: title },
     { path: "/all-products", breadcrumb: "Tất cả sản phẩm" },
     { path: "/main-cart", breadcrumb: "Giỏ hàng" },
     { path: "/coupons", breadcrumb: "Mã giảm giá" },
     { path: "/faqs", breadcrumb: "Hỏi đáp" },
+    { path: "/:category", breadcrumb: category },
+    { path: "/:category/:pid/:title", breadcrumb: title },
   ];
 
   const breadcrumb = useBreadcrumbs(routes);

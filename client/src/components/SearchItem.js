@@ -41,7 +41,6 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
     } else {
       setSelected((previous) => [...previous, e.target.value]);
     }
-    // changeActiveBox(null);
   };
 
   const handleReset = () => {
@@ -81,7 +80,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
       delete queries.category;
     }
     navigate({
-      pathname: `/${category}`,
+      pathname: `/categories/${category}`,
       search: createSearchParams(queries).toString(),
     });
   }, [selected]);
@@ -121,7 +120,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
 
     queries.page = 1;
     navigate({
-      pathname: `/${category}`,
+      pathname: `/categories/${category}`,
       search: createSearchParams(queries).toString(),
     });
   }, [debouncePriceFrom, debouncePriceTo]);

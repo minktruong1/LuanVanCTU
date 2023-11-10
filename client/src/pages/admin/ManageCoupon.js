@@ -118,7 +118,7 @@ const ManageCoupon = () => {
   }, [queryDebounce]);
 
   return (
-    <div className="w-full p-4 relative">
+    <div className="w-full p-4 relative overflow-auto">
       <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b">
         <h1>Quản lý mã giảm giá</h1>
       </div>
@@ -133,7 +133,7 @@ const ManageCoupon = () => {
         />
       </form>
       <form onSubmit={handleSubmit(handleUpdate)}>
-        <table className="table-auto w-full">
+        <table className="table-auto w-[800px] md:w-full">
           <thead className="bg-[#362f4b] text-white ">
             <tr>
               <th className="p-4 rounded-tl-md ">#</th>

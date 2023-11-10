@@ -1,10 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { apiGetUserOrders, apiUpdateOrderStatus } from "../../apis";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  apiGetUserOrders,
+  apiReview,
+  apiUpdateOrderStatus,
+  apiUpdateReviewProductStatus,
+} from "../../apis";
 import clsx from "clsx";
 import { BiSearch } from "react-icons/bi";
 import emptyImg from "../../assets/no-data.png";
-import { Button, ReactInputForm } from "../../components";
+import { Button, RatingModal, ReactInputForm } from "../../components";
 import { formatVND } from "../../ultils/helpers";
 import {
   createSearchParams,
@@ -14,8 +19,10 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import sweetAlert from "sweetalert2";
+import { showModal } from "../../store/app/appSlice";
 import { useForm } from "react-hook-form";
 import useDebounce from "../../hooks/useDebounce";
+import moment from "moment";
 
 const tabs = [
   { id: 1, name: "Tất cả" },
@@ -35,6 +42,7 @@ const OrderHistory = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const [orders, setOrders] = useState(null);
 
@@ -87,11 +95,47 @@ const OrderHistory = () => {
     }
   };
 
+  const handlePostReview = async (productItem, orderSelected) => {
+    dispatch(
+      showModal({
+        isShowModal: true,
+        modalContent: (
+          <RatingModal
+            oid={orderSelected._id}
+            oIid={productItem._id}
+            pid={productItem.product}
+            productName={productItem?.title}
+            productImage={productItem?.images[0]}
+            handleCollectReview={handleCollectReview}
+          />
+        ),
+      })
+    );
+  };
+
+  const handleCollectReview = async ({ comment, point, pid, oid, oIid }) => {
+    if (!comment && !point) {
+      alert("Hãy nhập nội dung đánh giá");
+      return;
+    }
+    const response = await apiReview({
+      star: point,
+      comment: comment,
+      pid,
+      updatedAt: Date.now(),
+    });
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+    if (response.success) {
+      apiUpdateReviewProductStatus({ oid, oIid });
+      toast.success("Đánh giá sản phẩm thành công");
+    }
+  };
+
   const handleCancel = async (order) => {
     return sweetAlert
       .fire({
         title: "Xác nhận",
-        text: "Bạn chắc chắn muốn xóa?",
+        text: "Bạn chắc chắn muốn hủy?",
         icon: "info",
         cancelButtonText: "Trở lại",
         showCancelButton: true,
@@ -257,6 +301,21 @@ const OrderHistory = () => {
                         <div className="grid grid-rows-1">
                           <span className="truncate">{productItem?.title}</span>
                           <span>x{productItem?.quantity}</span>
+                          {order.status === "Hoàn thành" &&
+                          productItem.isReview === false ? (
+                            <div
+                              onClick={() =>
+                                handlePostReview(productItem, order)
+                              }
+                              className="text-canClick cursor-pointer underline"
+                            >
+                              Đánh giá
+                            </div>
+                          ) : (
+                            <div className="text-[#767676]">
+                              Đã đánh giá sản phẩm
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="col-span-2 md:col-span-1">
@@ -269,22 +328,25 @@ const OrderHistory = () => {
                 </div>
                 <div className="flex items-center justify-between border-t pt-2">
                   <div>
-                    {order?.status === "Đang xử lý" && (
+                    {order?.status === "Đang xử lý" ? (
                       <div
                         onClick={() => handleCancel(order)}
                         className="text-canClick underline cursor-pointer px-3"
                       >
                         Hủy
                       </div>
-                    )}
-                    {order?.status === "Đang vận chuyển" && (
+                    ) : order?.status === "Đang vận chuyển" ? (
                       <div
                         onClick={() => handleConfirm(order)}
                         className="bg-main text-white cursor-pointer px-2 py-2"
                       >
                         Đã nhận được hàng
                       </div>
-                    )}
+                    ) : order?.status === "Hoàn thành" ? (
+                      <div className="text-[#767676]">{`Đã nhận vào: ${moment(
+                        order?.updatedAt
+                      ).format("DD-MM-YYYY HH:mm")}`}</div>
+                    ) : null}
                   </div>
                   <div className="flex items-center">
                     <span className="mr-1">Tổng cộng: </span>

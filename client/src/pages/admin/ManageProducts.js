@@ -84,7 +84,7 @@ const ManageProducts = () => {
   }, [params, editProductTab]);
 
   return (
-    <div className="w-full flex flex-col relative">
+    <div className="w-full flex flex-col relative overflow-auto">
       {editProductTab && (
         <div className="absolute inset-0 min-h-screen bg-webBackground">
           <UpdateProduct
@@ -94,7 +94,7 @@ const ManageProducts = () => {
           />
         </div>
       )}
-      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b   bg-webBackground">
+      <div className="h-[75px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b bg-webBackground">
         <h1>Quản lý sản phẩm</h1>
       </div>
       <div className="w-full p-4">
@@ -137,7 +137,7 @@ const ManageProducts = () => {
                     (params.get("page") - 1) * 10 + index + 1}
                   {!params.get("page") && index + 1}
                 </td>
-                <td className="flex items-center">
+                <td className="flex items-center w-[400px]">
                   <img
                     src={element?.images[0]}
                     alt="avt"

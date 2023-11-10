@@ -58,11 +58,11 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
   }, []);
 
   return (
-    <div className="w-full p-4">
+    <div className="w-[1200px] md:w-full p-4 overflow-auto">
       <div className="mt-[60px] text-lg">
         <span
           onClick={() => setEditOrderTab(null)}
-          className="underline text-canClick flex items-center cursor-pointer"
+          className="underline text-canClick flex w-fit items-center cursor-pointer"
         >
           <MdArrowBackIosNew />
           Trở về

@@ -71,7 +71,6 @@ const ManageOrders = () => {
         response?.orders.filter((order) => order?.status === "Đang vận chuyển")
           ?.length
       );
-      // Đánh dấu đã tính toán
     }
   };
 
@@ -95,9 +94,9 @@ const ManageOrders = () => {
   }, [params, editOrderTab]);
 
   return (
-    <div className="w-full p-4 relative">
+    <div className="w-full p-4 relative overflow-auto">
       {editOrderTab && (
-        <div className="absolute inset-0 min-h-screen bg-webBackground z-20">
+        <div className="absolute inset-0 min-h-screen bg-webBackground z-20 w-[1300px] md:w-full">
           <UpdateOrder
             editOrderTab={editOrderTab}
             setEditOrderTab={setEditOrderTab}
@@ -107,7 +106,7 @@ const ManageOrders = () => {
       <div className="mt-[60px] w-full flex justify-between items-center text-2xl font-bold px-4 border-b bg-webBackground">
         <h1>Quản lý đơn hàng</h1>
       </div>
-      <div className="grid grid-cols-5 my-4">
+      <div className="grid grid-cols-5 my-4 w-[1000px] md:w-full">
         <div
           onClick={() => navigate(`?`)}
           className="grid grid-rows-1 border p-4 rounded bg-white cursor-pointer hover:shadow-2xl"
@@ -189,7 +188,7 @@ const ManageOrders = () => {
           placeholder="Tìm kiếm đơn hàng"
         />
       </form>
-      <div className="w-full ">
+      <div className="w-[1200px] md:w-full">
         <table className="table-auto w-full">
           <thead className="bg-[#362f4b] text-white ">
             <tr>
@@ -218,7 +217,7 @@ const ManageOrders = () => {
                   {!params.get("page") && index + 1}
                 </td>
                 <td>{element?._id}</td>
-                <td>{moment(element?.createdAt).format("YYYY-MM-DD HH:mm")}</td>
+                <td>{moment(element?.createdAt).format("DD-MM-YYYY HH:mm")}</td>
                 <td>
                   {`${element?.buyer?.firstName} ${element?.buyer?.lastName}`}
                 </td>

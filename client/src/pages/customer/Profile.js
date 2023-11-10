@@ -22,7 +22,6 @@ const Profile = () => {
     reset({
       firstName: currentData?.firstName,
       lastName: currentData?.lastName,
-      email: currentData?.email,
       mobile: currentData?.mobile,
       avatar: currentData?.avatar,
       address: currentData?.address,
@@ -104,25 +103,7 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="flex items-center mb-4">
-          <label className="flex-3 text-right">Email</label>
-          <div className="flex-7 ml-8">
-            <ReactInputForm
-              register={register}
-              errors={errors}
-              id="email"
-              validate={{
-                required: "Vui lòng nhập",
-                pattern: {
-                  value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                  message: "Vui lòng kiểm tra lại email",
-                },
-              }}
-              fullWidth
-              placeholder="Email người dùng"
-            />
-          </div>
-        </div>
+
         <div className="flex items-center mb-4">
           <label className="flex-3 text-right">Số điện thoại</label>
           <div className="flex-7 ml-8">
@@ -142,6 +123,10 @@ const Profile = () => {
               placeholder="Số điện thoại người dùng"
             />
           </div>
+        </div>
+        <div className="flex items-center mb-4">
+          <label className="flex-3 text-right">Email</label>
+          <div className="flex-7 ml-8">{currentData?.email}</div>
         </div>
         <div className="flex items-center mb-4 relative">
           <label className="flex-3 text-right">Địa chỉ</label>

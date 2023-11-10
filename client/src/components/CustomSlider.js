@@ -21,7 +21,8 @@ const CustomSlider = ({ products, targetTab }) => {
               key={index}
               pid={element.id}
               productData={element}
-              isNew={targetTab === 1 ? false : true}
+              isNew={targetTab === 3 && true}
+              isHot={targetTab === 2 && true}
             />
           ))}
         </Slider>

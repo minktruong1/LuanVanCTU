@@ -56,9 +56,9 @@ const ManageBlog = () => {
   }, [params, editBlogTab]);
 
   return (
-    <div className="w-full p-4 relative">
+    <div className="w-full p-4 relative overflow-auto h-full">
       {editBlogTab && (
-        <div className="absolute inset-0 min-h-screen bg-webBackground z-20">
+        <div className="absolute inset-0 min-h-screen bg-webBackground z-20  md:w-full">
           <UpdateBlog
             editBlogTab={editBlogTab}
             setEditBlogTab={setEditBlogTab}
@@ -78,7 +78,7 @@ const ManageBlog = () => {
           placeholder="Tìm kiếm đơn hàng"
         />
       </form>
-      <div className="w-full ">
+      <div className={clsx(" md:w-full", editBlogTab ? "" : "w-[1000px]")}>
         <table className="table-auto w-full">
           <thead className="bg-[#362f4b] text-white ">
             <tr>

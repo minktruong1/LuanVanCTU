@@ -47,7 +47,7 @@ const OrderDashboard = () => {
   };
 
   const fetchOrders = async () => {
-    const response = await apiAdminGetUserOrders();
+    const response = await apiAdminGetUserOrders({ limit: 99999 });
     if (response.success) {
       console.log(response);
       const orders = response.orders;
@@ -86,7 +86,7 @@ const OrderDashboard = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 mt-[80px] p-4 ">
+    <div className="grid grid-rows-1 md:grid-cols-2 mt-[80px] p-4 overflow-auto">
       <div>
         <ChartLine
           OderDatasets1={Object.values(failOrder)}

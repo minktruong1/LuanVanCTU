@@ -26,3 +26,10 @@ export const apiAllOrderForCount = () =>
     url: "/order/all-count/",
     method: "GET",
   });
+
+export const apiUpdateReviewProductStatus = (data) =>
+  axios({
+    url: "/order/review/",
+    method: "PUT",
+    data,
+  });

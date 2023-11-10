@@ -4,7 +4,6 @@ const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
 router.post("/register", controllers.registerUser);
-router.post("/mock", controllers.adminCreateUser);
 
 router.put("/register-confirm/:token", controllers.registerCheck);
 router.post("/login", controllers.loginUser);

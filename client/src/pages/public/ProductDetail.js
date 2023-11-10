@@ -48,52 +48,6 @@ const ProductDetail = () => {
 
   const { isLogin, currentData } = useSelector((state) => state.user);
 
-  const handleCollectReview = async ({ comment, point }) => {
-    if (!comment && !point && pid) {
-      alert("Hãy nhập nội dung đánh giá");
-      return;
-    }
-    apiReview({ star: point, comment: comment, pid, updatedAt: Date.now() });
-    dispatch(showModal({ isShowModal: false, modalContent: null }));
-    setTimeout(() => {
-      fetchProductData();
-    }, 1000);
-  };
-
-  const handlePostReview = () => {
-    if (!isLogin) {
-      sweetAlert
-        .fire({
-          text: "Đăng nhập trước khi review",
-          cancelButtonText: "Hủy",
-          confirmButtonText: "Đến trang đăng nhập",
-          showCancelButton: true,
-          title: "Cảnh báo",
-        })
-        .then((rs) => {
-          if (rs.isConfirmed) {
-            navigate(`/${path.LOGIN}`);
-            setTimeout(() => {
-              window.scrollTo(0, 0);
-            }, 100);
-          }
-        });
-    } else {
-      dispatch(
-        showModal({
-          isShowModal: true,
-          modalContent: (
-            <RatingModal
-              productName={product?.title}
-              productImage={product?.images[0]}
-              handleCollectReview={handleCollectReview}
-            />
-          ),
-        })
-      );
-    }
-  };
-
   const fetchProductData = async () => {
     const response = await apiGetProductDetail(pid);
     if (response.success) {
@@ -202,7 +156,7 @@ const ProductDetail = () => {
     <>
       <div className="w-[calc(100%-20px)] md:w-main">
         <div className="">
-          <Breadcrumb title={title} category={category} />
+          <Breadcrumb title={product?.title} category={category} />
         </div>
         <div className="grid grid-cols-1 gap-2">
           <div className="bg-white grid grid-cols-1 md:grid-cols-3 rounded p-2 md:p-6 ">
@@ -247,17 +201,17 @@ const ProductDetail = () => {
                     )}
                   </span>
                 </div>
-                <div className=" pl-2">
+                <div className="pl-2 text-[#767676]">
                   <span className="mr-[4px]">{product?.reviews.length}</span>
-                  <span className="text-[#767676]">Đánh giá</span>
+                  <span>Đánh giá</span>
                 </div>
-                <div className="pl-2 ">
+                <div className="pl-2 text-[#767676]">
                   <span className="mr-[4px]">{product?.sold}</span>
-                  <span className="text-[#767676]">Đã bán</span>
+                  <span>Đã bán</span>
                 </div>
               </div>
               <div className="w-full p-[12px] bg-webBackground text-lg md:text-xl  text-[#e30019] font-semibold mb-[12px]">
-                <span className="">{`${formatVND(product?.price)} VNĐ`}</span>
+                <span>{`${formatVND(product?.price)} VNĐ`}</span>
               </div>
               <div className="mb-[30px] mt-[16px]">
                 <ul className="leading-5">
@@ -350,23 +304,21 @@ const ProductDetail = () => {
                     ))}
                 </div>
               </div>
-              <div className="border-t  ">
-                <div className="flex items-center justify-center flex-col gap-2 mt-3">
-                  <span>Hãy để lại đánh giá</span>
-                  <Button handleOnClick={handlePostReview}>
-                    Đánh giá ngay
-                  </Button>
-                </div>
+              <div className="border-t">
                 <div className="flex flex-col gap-3">
-                  {product?.reviews?.map((element) => (
-                    <Comment
-                      key={element._id}
-                      star={element.star}
-                      updatedAt={element.updatedAt}
-                      comment={element.comment}
-                      name={`${element.owner?.lastName} ${element.owner?.firstName}`}
-                    />
-                  ))}
+                  {product?.reviews
+                    .sort(
+                      (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+                    )
+                    .map((element) => (
+                      <Comment
+                        key={element._id}
+                        star={element.star}
+                        updatedAt={element.updatedAt}
+                        comment={element.comment}
+                        name={`${element.owner?.lastName} ${element.owner?.firstName}`}
+                      />
+                    ))}
                 </div>
               </div>
             </div>

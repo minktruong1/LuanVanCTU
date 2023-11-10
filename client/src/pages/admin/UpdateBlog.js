@@ -134,7 +134,7 @@ const UpdateBlog = ({ editBlogTab, setEditBlogTab }) => {
           Trở về
         </span>
       </div>
-      <div className="p-4 ">
+      <div className="md:p-4">
         <form onSubmit={handleSubmit(handleUpdateBlog)}>
           <div className="flex flex-col gap-2 mt-8 mb-8 ">
             <label className="font-semibold" htmlFor="productImages">

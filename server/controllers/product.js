@@ -205,7 +205,7 @@ const reviews = asyncHandler(async (req, res) => {
   await updatedProduct.save();
 
   return res.status(200).json({
-    status: true,
+    success: true,
     updatedProduct,
   });
 });

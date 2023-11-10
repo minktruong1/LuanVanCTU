@@ -30,7 +30,7 @@ const Comment = ({
             ))}
           </span>
           <span className="text-[13px] text-[#767676]">
-            {moment(updatedAt)?.fromNow()}
+            {moment(updatedAt).format("YYYY-MM-DD HH:mm")}
           </span>
         </div>
         <span className="">

@@ -104,7 +104,7 @@ const ManageUsers = () => {
 
   // console.log(editUser);
   return (
-    <div className="w-full ">
+    <div className="w-full overflow-auto">
       <div className="h-[75px] flex justify-between items-center text-2xl font-bold px-4 border-b mt-[60px]">
         <h1>Manage Users</h1>
       </div>

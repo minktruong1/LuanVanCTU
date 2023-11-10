@@ -54,7 +54,7 @@ const ProductDashboard = () => {
 
   return (
     <>
-      <div className="grid grid-cols-2 mt-[80px] p-4 ">
+      <div className="grid grid-rows-1 md:grid-cols-2 mt-[80px] p-4 overflow-auto">
         <div>
           <ChartVertical
             nameProduct={topSoldOut.labels}
@@ -63,9 +63,6 @@ const ProductDashboard = () => {
             color="rgba(53, 162, 235, 0.5)"
             title="Biểu đồ thống kê Top 5 sản phẩm bán chạy nhất"
           />
-        </div>
-        <div>
-          <ChartPie OderDatasets={Object.values(orderCounts)} />
         </div>
       </div>
     </>

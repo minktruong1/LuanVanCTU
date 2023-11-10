@@ -10,6 +10,8 @@ import { apiCreateOrder } from "../../apis";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { apiCreateVNpayPayment, apiDataBack } from "../../apis/VNpay";
+import { AiOutlineWarning } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const { MdLocationPin } = icons;
 
@@ -27,6 +29,7 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
   const [params] = useSearchParams();
+  const [note, setNote] = useState(null);
 
   const priceCounting = Math.round(
     +currentCart?.reduce(
@@ -53,6 +56,9 @@ const Checkout = () => {
   );
 
   const handleSelectMethod = async (selectedMethod) => {
+    if (!currentData?.address) {
+      return;
+    }
     setSelectedButton(selectedMethod.id);
     setPaymentMethod(selectedMethod.value);
 
@@ -60,6 +66,7 @@ const Checkout = () => {
     if (selectedMethod.value === "VNpay") {
       const response = await apiCreateVNpayPayment({ amount: priceCounting });
       if (response.success) {
+        localStorage.setItem("note", note);
         window.location.href = response.VNpayUrl;
       }
     }
@@ -70,17 +77,22 @@ const Checkout = () => {
     const queryParams = new URLSearchParams(queryString).toString();
     const response = await apiDataBack(queryParams);
 
+    // Sau khi quay lại trang
+    const savedNote = localStorage.getItem("note");
+
     const data = {
       productList: currentCart,
       totalPrice: priceCounting,
       address: currentData?.address,
       profit: profitCounting,
+      note: savedNote,
       method: "VNpay",
     };
 
     if (response.Message === "Success") {
       const saveOrder = await apiCreateOrder(data);
       if (saveOrder.success) {
+        localStorage.removeItem("note"); // Xóa giá trị đã lưu
         setTimeout(() => {
           sweetAlert
             .fire({
@@ -103,6 +115,9 @@ const Checkout = () => {
   };
 
   const handleCheckout = async (payload) => {
+    if (!currentData?.address) {
+      return;
+    }
     const response = await apiCreateOrder({
       ...payload,
       status: "Đang xử lý",
@@ -125,6 +140,8 @@ const Checkout = () => {
             }, 100);
           });
       }, 1500);
+    } else {
+      toast.error(response.message);
     }
   };
 
@@ -137,8 +154,6 @@ const Checkout = () => {
   if (!isLogin || !currentData) {
     return <Navigate to={`/`} replace={true} />;
   }
-
-  console.log(currentCart);
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 gap-3 my-8 text-sm md:text-base">
@@ -156,7 +171,16 @@ const Checkout = () => {
           <div className="md:grid grid-cols-8 hidden">
             <span className="col-span-1 text-[#6d6e72]">Địa chỉ:</span>
             <span className="col-span-7 font-semibold">
-              <span>{currentData?.address}</span>
+              <span>
+                {currentData?.address === "" ? (
+                  <span className="flex text-main items-center">
+                    Thiếu địa chỉ
+                    <AiOutlineWarning />
+                  </span>
+                ) : (
+                  <span>{currentData?.address}</span>
+                )}
+              </span>
             </span>
           </div>
           <div className="md:grid grid-cols-8 hidden">
@@ -171,8 +195,8 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className="md:w-main bg-white rounded p-6">
-        <div className="hidden md:grid grid-cols-10 mb-8">
+      <div className="md:w-main grid grid-rows-1 bg-white rounded p-6 gap-6">
+        <div className="hidden md:grid grid-cols-10">
           <div className="col-span-4">
             <span>Sản phẩm</span>
           </div>
@@ -186,9 +210,9 @@ const Checkout = () => {
             <span>Thành tiền</span>
           </div>
         </div>
-        <div className="grid grid-rows-1 gap-6">
+        <div className="">
           {currentCart?.map((element) => (
-            <div className="grid grid-cols-10 ">
+            <div className="grid grid-cols-10 mb-4">
               <div className="md:col-span-1 col-span-2">
                 <img
                   src={element.images[0]}
@@ -220,6 +244,14 @@ const Checkout = () => {
             </div>
           ))}
         </div>
+        <div className="grid grid-cols-10 ">
+          <span className="leading-10">Lời nhắn:</span>
+          <input
+            onChange={(event) => setNote(event.target.value)}
+            placeholder="Lưu ý tới cửa hàng..."
+            className="border focus:outline-none p-2 w-[320px]"
+          />
+        </div>
       </div>
       <div className="md:w-main bg-white rounded p-6">
         <div className="grid grid-rows-1 gap-6">
@@ -234,6 +266,8 @@ const Checkout = () => {
                     onClick={() => handleSelectMethod(element)}
                     className={clsx(
                       "border p-2 mr-2 text-[#6d6e72] border-[#6d6e72]",
+                      currentData?.address === "" &&
+                        "cursor-not-allowed opacity-50",
                       selectedButton === element.id
                         ? "!border-main text-main"
                         : ""
@@ -243,6 +277,11 @@ const Checkout = () => {
                   </button>
                 ))}
               </div>
+              {currentData?.address === "" && (
+                <div className="text-red-600 test-sm">
+                  Nhập địa chỉ trước khi chọn phương thức thanh toán
+                </div>
+              )}
             </div>
           </div>
 
@@ -283,6 +322,7 @@ const Checkout = () => {
                 address: currentData?.address,
                 method: paymentMethod,
                 profit: profitCounting,
+                note: note,
               }}
               amount={priceCountingToUSD}
             />
@@ -304,6 +344,7 @@ const Checkout = () => {
                   address: currentData?.address,
                   method: paymentMethod,
                   profit: profitCounting,
+                  note: note,
                 })
               }
               className={clsx(

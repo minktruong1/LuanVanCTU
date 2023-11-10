@@ -20,8 +20,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findOne({ email });
+
   if (user) {
-    throw new Error("User already exist");
+    throw new Error("Email đã được đăng ký");
   } else {
     const token = createToken();
     const emailTransform = btoa(email) + "@" + token;
@@ -255,9 +256,13 @@ const logout = asyncHandler(async (req, res) => {
 
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
-  if (!email) throw new Error("Missing email");
+  if (!email) {
+    throw new Error("Missing email");
+  }
   const user = await User.findOne({ email });
-  if (!user) throw new Error("User not found");
+  if (!user) {
+    throw new Error("User not found");
+  }
   const resetToken = user.createPasswordChangedToken();
   await user.save();
 
@@ -284,16 +289,24 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
 const resetPassword = asyncHandler(async (req, res) => {
   const { password, token } = req.body;
-  if (!password || !token) throw new Error("Missing input");
+  if (!password || !token) {
+    throw new Error("Missing input");
+  }
+
   const passwordResetToken = crypto
     .createHash("sha256")
     .update(token)
     .digest("hex");
+
   const user = await User.findOne({
     passwordResetToken,
     passwordResetExpires: { $gt: Date.now() },
   });
-  if (!user) throw new Error("Invalid reset token");
+
+  if (!user) {
+    throw new Error("Invalid reset token");
+  }
+
   user.password = password;
   user.passwordResetToken = undefined;
   user.passwordChangeAt = Date.now();
@@ -301,7 +314,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   await user.save();
   return res.status(200).json({
     success: user ? true : false,
-    message: user ? "Update password success" : "Something went wrong",
+    message: user ? "Đổi lại mật khẩu thành công" : "Lỗi cập nhật mật khẩu",
   });
 });
 
@@ -318,8 +331,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 const updateUserByUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { firstName, lastName, email, mobile, address } = req.body;
-  const data = { firstName, lastName, email, mobile, address };
+  const { firstName, lastName, mobile, address } = req.body;
+  const data = { firstName, lastName, mobile, address };
   if (req.file) data.avatar = req.file.path;
   if (!_id || Object.keys(req.body).length === 0) {
     throw new Error("Missing inputs");
@@ -363,16 +376,8 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const addProductIntoUserCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const {
-    pid,
-    cid,
-    categoryTitle,
-    quantity,
-    price,
-    title,
-    images,
-    buyInPrice,
-  } = req.body;
+  const { pid, cid, category, quantity, price, title, images, buyInPrice } =
+    req.body;
   if (!pid) {
     throw new Error("Missing inputs");
   }
@@ -402,7 +407,7 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
           cart: {
             product: pid,
             category: cid,
-            categoryTitle,
+            category,
             quantity,
             price,
             title,
@@ -433,14 +438,6 @@ const removeProductFromCart = asyncHandler(async (req, res) => {
   return res.status(200).json({
     success: response ? true : false,
     message: response ? "Xóa sản phẩm thành công" : "Lỗi xóa sản phẩm",
-  });
-});
-
-const adminCreateUser = asyncHandler(async (req, res) => {
-  const response = await User.create(users);
-  return res.status(200).json({
-    success: response ? true : false,
-    users: response ? response : "fail",
   });
 });
 
@@ -506,7 +503,6 @@ module.exports = {
   updateUserByAdmin,
   addProductIntoUserCart,
   registerCheck,
-  adminCreateUser,
   removeProductFromCart,
   addProductToWishList,
 };

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../../components";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { apiResetPassword } from "../../apis";
+import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import { resetPasswordSchema } from "../../hooks/formikSchema";
+import clsx from "clsx";
 import { toast } from "react-toastify";
 import path from "../../ultils/path";
 
 const RsPassword = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-
-  //Define token match with what u define in path
   const { token } = useParams();
 
-  const handleResetPassword = async () => {
+  const onSubmit = async ({ confirmPassword, password }) => {
     const response = await apiResetPassword({ password, token });
 
     if (response.success) {
@@ -24,30 +24,72 @@ const RsPassword = () => {
     navigate(`/${path.LOGIN}`);
   };
 
+  const { values, handleBlur, errors, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: resetPasswordSchema,
+      onSubmit,
+    });
+
   return (
-    <>
-      <div className="flex justify-center ">
-        <div className="flex bg-white justify-center p-8 min-w-[544px] w-1/2 mt-[30px] mb-[30px]">
-          <div className="w-[80%] ">
-            <div className="flex flex-col gap-4">
-              <label htmlFor="email">Hãy nhập mật khẩu mới của bạn:</label>
+    <div className="flex justify-center w-[calc(100%-20px)] ">
+      <div className="flex bg-white w-full md:w-[550px] justify-center p-4 md:p-8 mt-[30px] mb-[30px]">
+        <div className="w-full">
+          <form onSubmit={handleSubmit} className="grid grid-rows-1">
+            <h1 className="flex justify-center uppercase mb-[12px] text-xl font-medium ">
+              Đổi mật khẩu mới
+            </h1>
+            <div className="grid grid-rows-1">
+              <label>Mật khẩu</label>
               <input
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="password"
                 type="password"
-                className="px-4 py-2 border w-full my-2 outline-none"
-                placeholder="Mật khẩu mới"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Email của bạn"
+                className={clsx(
+                  "border focus:outline-none p-2",
+                  errors.password && touched.password ? "border-main" : ""
+                )}
               />
-              <div className="flex items-center justify-center w-full">
-                <Button handleOnClick={handleResetPassword} wFull>
-                  Gửi yêu cầu
-                </Button>
-              </div>
+              {errors.password && touched.password && (
+                <p className="text-red-600 ">{errors.password}</p>
+              )}
             </div>
-          </div>
+            <div className="grid grid-rows-1">
+              <label>Nhập lại mật khẩu</label>
+              <input
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="confirmPassword"
+                type="password"
+                placeholder="Email của bạn"
+                className={clsx(
+                  "border focus:outline-none p-2",
+                  errors.confirmPassword && touched.confirmPassword
+                    ? "border-main"
+                    : ""
+                )}
+              />
+              {errors.confirmPassword && touched.confirmPassword && (
+                <p className="text-red-600 ">{errors.confirmPassword}</p>
+              )}
+            </div>
+
+            <div className="mt-4">
+              <Button type="submit" widthFull>
+                Gửi yêu cầu
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

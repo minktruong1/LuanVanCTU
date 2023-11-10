@@ -40,7 +40,7 @@ const UserDirectionPopup = () => {
         </Link>
         {currentData.role === "admin" && (
           <Link
-            to={`/${path.ADMIN}/${path.DASHBOARD}`}
+            to={`/${path.ADMIN}/${path.ORDER_DASHBOARD}`}
             className="flex items-center h-[34px] justify-start hover:underline cursor-pointer"
           >
             <AiOutlineControl className="mr-2 text-[16px]" />

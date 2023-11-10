@@ -24,7 +24,7 @@ const AdminSidebar = () => {
   return (
     <div
       className={clsx(
-        "bg-[#10163a] fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30  ",
+        "bg-[#10163a] fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30 overflow-x-auto",
         isShowAdminSidebar ? "w-fit" : "translate-x-[-100%]"
       )}
     >

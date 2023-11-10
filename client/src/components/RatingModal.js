@@ -8,7 +8,14 @@ import Button from "./Button";
 
 const { FaTimes } = icons;
 
-const RatingModal = ({ productImage, productName, handleCollectReview }) => {
+const RatingModal = ({
+  productImage,
+  productName,
+  handleCollectReview,
+  pid,
+  oid,
+  oIid,
+}) => {
   const dispatch = useDispatch();
   const [star, setStar] = useState(null);
   const [comment, setComment] = useState("");
@@ -16,7 +23,7 @@ const RatingModal = ({ productImage, productName, handleCollectReview }) => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="bg-white w-[1140px] h-[420px] flex fixed top-[19%] left-[13%] "
+      className="bg-white w-[1140px] h-[420px] flex fixed top-[19%] left-[13%]"
     >
       <div className="w-[30%] bg-main relative">
         <div className="absolute bg-main right-[-8px] top-1/2 rotate-45 w-[20px] h-[20px]"></div>
@@ -85,7 +92,7 @@ const RatingModal = ({ productImage, productName, handleCollectReview }) => {
           <div>
             <Button
               handleOnClick={() =>
-                handleCollectReview({ comment, point: star })
+                handleCollectReview({ comment, point: star, pid, oid, oIid })
               }
             >
               Gửi đánh giá

@@ -6,8 +6,16 @@ const asyncHandler = require("express-async-handler");
 
 const createOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { productList, totalPrice, address, status, buyer, method, profit } =
-    req.body;
+  const {
+    productList,
+    totalPrice,
+    address,
+    status,
+    buyer,
+    method,
+    profit,
+    note,
+  } = req.body;
 
   if (address) {
     const buyerInfo = await User.findById(_id).select(
@@ -21,6 +29,7 @@ const createOrder = asyncHandler(async (req, res) => {
       address,
       method,
       profit,
+      note,
     };
     if (status) {
       data.status = status;
@@ -43,6 +52,8 @@ const createOrder = asyncHandler(async (req, res) => {
       success: result ? true : false,
       result: result ? result : "error when create Order ",
     });
+  } else {
+    throw new Error("Cập nhật địa chỉ giao hàng");
   }
 });
 
@@ -194,10 +205,47 @@ const getOrderForCount = asyncHandler(async (req, res) => {
   });
 });
 
+const updateProductReviewStatus = asyncHandler(async (req, res) => {
+  // oid là _id của đơn hàng, oIid là _id của sản phẩm trong danh sách đơn hàng
+  const { oid, oIid } = req.body;
+
+  // Kiểm tra xem đơn hàng tồn tại
+  const order = await Order.findById(oid);
+
+  if (!order) {
+    return res.status(404).json({
+      success: false,
+      message: "Đơn hàng không tồn tại",
+    });
+  }
+
+  // Tìm sản phẩm cần cập nhật
+  const product = order.productList.find((item) => item._id == oIid);
+
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      message: "Sản phẩm không tồn tại trong đơn hàng",
+    });
+  }
+
+  // Cập nhật trường isReview thành true
+  product.isReview = true;
+
+  // Lưu thay đổi
+  await order.save();
+
+  return res.status(200).json({
+    success: true,
+    message: "Cập nhật trạng thái đánh giá thành công",
+  });
+});
+
 module.exports = {
   createOrder,
   updateOrderStatus,
   userGetOrder,
   getOrderList,
   getOrderForCount,
+  updateProductReviewStatus,
 };

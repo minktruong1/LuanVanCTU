@@ -4,6 +4,8 @@ const path = {
   ALL: "*",
   PRODUCTS: ":category",
   LOGIN: "login",
+  REGISTER: "register",
+  FORGOT_PASSWORD: "forgot-password",
   MAIN_CART: "main-cart",
   BLOGS: "blogs",
   BLOG_DETAIL: "blogs/:bid/:slug",
@@ -20,7 +22,6 @@ const path = {
 
   //admin path
   ADMIN: "admin",
-  DASHBOARD: "dashboard",
   PRODUCT_DASHBOARD: "product-dashboard",
   ORDER_DASHBOARD: "order-dashboard",
   MANAGE_USER: "manage-user",

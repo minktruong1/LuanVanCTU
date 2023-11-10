@@ -209,7 +209,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
               fullWidth
             />
             <ReactInputForm
-              label="Số lượng sản phẩm"
+              label="Số lượng"
               register={register}
               errors={errors}
               id="quantity"

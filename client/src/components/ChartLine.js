@@ -27,22 +27,40 @@ const ChartLine = ({
   OderDatasets3,
   DataFor,
 }) => {
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        position: "bottom",
-        text: "Biểu đồ số đơn hàng nhận được trong năm",
-        font: {
-          size: 14,
-        },
-      },
-    },
-  };
+  const options =
+    DataFor === "profit"
+      ? {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              position: "bottom",
+              text: "Biểu đồ lợi nhuận trong năm",
+              font: {
+                size: 14,
+              },
+            },
+          },
+        }
+      : {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              position: "bottom",
+              text: "Biểu đồ số đơn hàng nhận được trong năm",
+              font: {
+                size: 14,
+              },
+            },
+          },
+        };
 
   const labels = [
     "Tháng 1",

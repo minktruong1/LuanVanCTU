@@ -50,7 +50,7 @@ export const navigation = [
     id: 6,
     icon: <BsYoutube />,
     value: "Kênh youtube",
-    path: `/`,
+    path: `youtube.com`,
   },
 ];
 

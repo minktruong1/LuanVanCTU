@@ -6,13 +6,16 @@ var orderSchema = new mongoose.Schema(
     productList: [
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
-        category: { type: mongoose.Types.ObjectId, ref: "Category" },
-        categoryTitle: String,
+        category: String,
         title: String,
         quantity: Number,
         images: Array,
         price: Number,
         buyInPrice: Number,
+        isReview: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
     status: {
@@ -25,6 +28,8 @@ var orderSchema = new mongoose.Schema(
       default: "cod",
       enum: ["cod", "paypal", "VNpay"],
     },
+    note: String,
+    couponApply: String,
     totalPrice: Number,
     profit: Number,
     address: String,

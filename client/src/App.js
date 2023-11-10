@@ -15,6 +15,8 @@ import {
   Checkout,
   BlogDetail,
   SearchProduct,
+  ForgotPassword,
+  Register,
 } from "./pages/public/index.js";
 import path from "./ultils/path.js";
 import { apiGetCateList } from "./store/app/asyncActions.js";
@@ -28,7 +30,6 @@ import {
   CreateCategory,
   CreateCoupon,
   CreateProduct,
-  Dashboard,
   ManageBlog,
   ManageCate,
   ManageCoupon,
@@ -42,7 +43,6 @@ import {
 import {
   CustomerLayout,
   Profile,
-  Cart,
   FavoriteProducts,
   OrderHistory,
   CheckedProductList,
@@ -101,6 +101,11 @@ function App() {
             element={<PaymentInstruction />}
           ></Route>
           <Route path={path.LOGIN} element={<Login />}></Route>
+          <Route
+            path={path.FORGOT_PASSWORD}
+            element={<ForgotPassword />}
+          ></Route>
+          <Route path={path.REGISTER} element={<Register />}></Route>
           <Route path={path.MAIN_CART} element={<MainCart />}></Route>
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>
           <Route path={path.CHECKOUT} element={<Checkout />}></Route>
@@ -109,7 +114,6 @@ function App() {
         </Route>
 
         <Route path={path.ADMIN} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
           <Route path={path.PRODUCT_DASHBOARD} element={<ProductDashboard />} />
           <Route path={path.ORDER_DASHBOARD} element={<OrderDashboard />} />
           <Route path={path.MANAGE_ORDER} element={<ManageOrders />} />
@@ -133,8 +137,6 @@ function App() {
             element={<CheckedProductList />}
           />
         </Route>
-
-        <Route path={path.LAST_REGISTER} element={<LastRegister />}></Route>
       </Routes>
     </div>
   );

@@ -41,9 +41,9 @@ var userSchema = new mongoose.Schema(
         category: String,
         quantity: Number,
         price: Number,
+        buyInPrice: Number,
         title: String,
         images: Array,
-        buyInPrice: Number,
       },
     ],
     address: {
@@ -54,6 +54,7 @@ var userSchema = new mongoose.Schema(
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
         category: String,
         price: Number,
+        buyInPrice: Number,
         title: String,
         images: Array,
       },

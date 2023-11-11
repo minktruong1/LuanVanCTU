@@ -32,3 +32,10 @@ export const apiCreateCoupon = (data) =>
     method: "POST",
     data,
   });
+
+export const apiGetDetailCoupon = (data) =>
+  axios({
+    url: "/coupon/detail",
+    method: "POST",
+    data,
+  });

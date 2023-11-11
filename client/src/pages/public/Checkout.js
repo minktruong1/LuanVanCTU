@@ -6,12 +6,13 @@ import icons from "../../ultils/icons";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { Button } from "../../components";
 import clsx from "clsx";
-import { apiCreateOrder } from "../../apis";
+import { apiCreateOrder, apiGetDetailCoupon } from "../../apis";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { apiCreateVNpayPayment, apiDataBack } from "../../apis/VNpay";
 import { AiOutlineWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
+import useDebounce from "../../hooks/useDebounce";
 
 const { MdLocationPin } = icons;
 
@@ -30,6 +31,8 @@ const Checkout = () => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [params] = useSearchParams();
   const [note, setNote] = useState(null);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponData, setCouponData] = useState(null);
 
   const priceCounting = Math.round(
     +currentCart?.reduce(
@@ -38,22 +41,37 @@ const Checkout = () => {
     )
   );
 
-  const profitCounting =
-    priceCounting -
-    Math.round(
-      currentCart.reduce(
-        (totalProfit, cartItem) =>
-          cartItem.buyInPrice * cartItem.quantity + totalProfit,
-        0
-      )
-    );
+  // Kiểm tra nếu có dữ liệu về giảm giá trực tiếp
+  const directDiscount = couponData?.directDiscount || 0;
 
-  const priceCountingToUSD = Math.round(
-    +currentCart?.reduce(
-      (sum, element) => +element?.price * element?.quantity + sum,
-      0
-    ) / 23000
+  // Kiểm tra nếu có dữ liệu về giảm giá theo phần trăm
+  const percentDiscount = couponData?.percentDiscount || 0;
+
+  // Tính giảm giá theo phần trăm
+  const percentDiscountAmount = (priceCounting * percentDiscount) / 100;
+
+  // Tính tổng giảm giá
+  const totalDiscount = directDiscount + percentDiscountAmount;
+
+  // Tính lastPriceCounting
+  const lastPriceCounting = Math.max(priceCounting - totalDiscount, 0);
+
+  const profitCounting = Math.max(
+    lastPriceCounting -
+      Math.round(
+        currentCart.reduce(
+          (totalProfit, cartItem) =>
+            cartItem.buyInPrice * cartItem.quantity + totalProfit,
+          0
+        )
+      ),
+    0
   );
+
+  const priceCountingToUSD =
+    Math.round((lastPriceCounting / 23000) * 100) / 100;
+
+  const queryDebounce = useDebounce(couponCode, 800);
 
   const handleSelectMethod = async (selectedMethod) => {
     if (!currentData?.address) {
@@ -64,11 +82,25 @@ const Checkout = () => {
 
     //execute vnpay checck
     if (selectedMethod.value === "VNpay") {
-      const response = await apiCreateVNpayPayment({ amount: priceCounting });
+      const response = await apiCreateVNpayPayment({
+        amount: lastPriceCounting,
+      });
       if (response.success) {
-        localStorage.setItem("note", note);
+        localStorage.setItem("noteLocal", note);
+        localStorage.setItem("couponCodeLocal", couponCode);
+        localStorage.setItem("lastPriceLocal", lastPriceCounting);
+        localStorage.setItem("profitLocal", profitCounting);
         window.location.href = response.VNpayUrl;
       }
+    }
+  };
+
+  const fetchCoupon = async (code) => {
+    const response = await apiGetDetailCoupon({ code });
+    if (response.success) {
+      setCouponData(response.coupon);
+    } else {
+      setCouponData(response);
     }
   };
 
@@ -78,13 +110,18 @@ const Checkout = () => {
     const response = await apiDataBack(queryParams);
 
     // Sau khi quay lại trang
-    const savedNote = localStorage.getItem("note");
+    const savedNote = localStorage.getItem("noteLocal");
+    const savedCouponCode = localStorage.getItem("couponCodeLocal");
+    const savedLastPrice = localStorage.getItem("lastPriceLocal");
+    const savedProfit = localStorage.getItem("profitLocal");
 
     const data = {
       productList: currentCart,
+      couponCode: savedCouponCode,
       totalPrice: priceCounting,
+      lastPrice: savedLastPrice,
       address: currentData?.address,
-      profit: profitCounting,
+      profit: savedProfit,
       note: savedNote,
       method: "VNpay",
     };
@@ -92,7 +129,10 @@ const Checkout = () => {
     if (response.Message === "Success") {
       const saveOrder = await apiCreateOrder(data);
       if (saveOrder.success) {
-        localStorage.removeItem("note"); // Xóa giá trị đã lưu
+        localStorage.removeItem("noteLocal"); // Xóa giá trị đã lưu
+        localStorage.removeItem("couponCodeLocal"); // Xóa giá trị đã lưu
+        localStorage.removeItem("lastPriceLocal"); // Xóa giá trị đã lưu
+        localStorage.removeItem("profitLocal"); // Xóa giá trị đã lưu
         setTimeout(() => {
           sweetAlert
             .fire({
@@ -150,6 +190,14 @@ const Checkout = () => {
       decodeVNpayDataBack();
     }
   }, [params]);
+
+  useEffect(() => {
+    if (couponCode !== "") {
+      fetchCoupon(couponCode);
+    } else {
+      setCouponData(null);
+    }
+  }, [queryDebounce]);
 
   if (!isLogin || !currentData) {
     return <Navigate to={`/`} replace={true} />;
@@ -285,7 +333,20 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="md:hidden border-b whitespace-nowrap overflow-x-scroll overflow-y-hidden">
+          <div className=" place-self-end">
+            <div className="">
+              <input
+                className="border border-black p-2"
+                type="text"
+                onChange={(event) => setCouponCode(event.target.value)}
+                placeholder="Nhập mã giảm giá"
+              />
+            </div>
+            {couponCode !== "" &&
+              (couponData?.name || couponData?.message || couponData?.coupon)}
+          </div>
+
+          <div className="md:hidden border-t border-b whitespace-nowrap overflow-x-scroll overflow-y-hidden">
             {method?.map((element) => (
               <button
                 onClick={() => handleSelectMethod(element)}
@@ -294,21 +355,31 @@ const Checkout = () => {
                   selectedButton === element.id ? "!border-main text-main" : ""
                 )}
               >
-                {element.text}{" "}
+                {element.text}
               </button>
             ))}
           </div>
 
-          <div className=" text-right">
+          <div className="border-t pt-4 text-right">
+            <h1>Áp dụng mã giảm giá:</h1>
+            <span className="text-[18px] text-main">
+              {couponData?.directDiscount || couponData?.percentDiscount ? (
+                couponData.directDiscount === 0 ? (
+                  <span>{`Giá gốc: ${formatVND(priceCounting)}đ - ${
+                    couponData.percentDiscount
+                  }%`}</span>
+                ) : (
+                  <span>{`Giá gốc: ${formatVND(priceCounting)}đ - ${formatVND(
+                    couponData.directDiscount
+                  )}đ`}</span>
+                )
+              ) : (
+                <span>0đ</span>
+              )}
+            </span>
             <h1>{`Tổng thanh toán (${currentCart?.length} sản phẩm):`}</h1>
             <span className="text-main text-[24px]">
-              {`${formatVND(
-                currentCart?.reduce(
-                  (sum, element) => +element?.price * element?.quantity + sum,
-                  0
-                )
-              )}`}
-              đ
+              {`${formatVND(lastPriceCounting)}đ`}
             </span>
           </div>
         </div>
@@ -318,7 +389,9 @@ const Checkout = () => {
             <Payment
               payload={{
                 productList: currentCart,
+                couponCode: couponCode,
                 totalPrice: priceCounting,
+                lastPrice: lastPriceCounting,
                 address: currentData?.address,
                 method: paymentMethod,
                 profit: profitCounting,
@@ -340,7 +413,9 @@ const Checkout = () => {
               onClick={() =>
                 handleCheckout({
                   productList: currentCart,
+                  couponCode: couponCode,
                   totalPrice: priceCounting,
+                  lastPrice: lastPriceCounting,
                   address: currentData?.address,
                   method: paymentMethod,
                   profit: profitCounting,

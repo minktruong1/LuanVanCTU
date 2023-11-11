@@ -9,6 +9,11 @@ var categorySchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+    },
     brand: {
       type: Array,
       unique: true,

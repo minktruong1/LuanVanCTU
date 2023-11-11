@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  apiDeleteCategory,
-  apiGetCategories,
-  apiUpdateCategory,
-} from "../../apis/category";
+import React, { useCallback, useEffect, useState } from "react";
+import { apiDeleteCategory, apiUpdateCategory } from "../../apis/category";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
@@ -14,6 +10,7 @@ import { showModal } from "../../store/app/appSlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import sweetAlert from "sweetalert2";
+import { apiGetCategories } from "../../apis";
 
 const ManageCate = () => {
   const {
@@ -28,12 +25,24 @@ const ManageCate = () => {
   });
   const dispatch = useDispatch();
 
-  const { categories } = useSelector((state) => state.appReducer);
   const [params] = useSearchParams();
   const [editCate, setEditCate] = useState(null);
+  const [update, setUpdate] = useState(false);
+  const [categories, setCategories] = useState(null);
   const [review, setReview] = useState({
     image: "",
   });
+
+  const reRender = useCallback(() => {
+    setUpdate(!update);
+  }, [update]);
+
+  const fetchCategories = async () => {
+    const response = await apiGetCategories();
+    if (response.success) {
+      setCategories(response.categories);
+    }
+  };
 
   const handleBack = () => {
     setEditCate(null);
@@ -92,9 +101,8 @@ const ManageCate = () => {
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) {
       toast.success(response.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      reRender();
+      setEditCate(false);
     } else {
       toast.error(response.message);
     }
@@ -116,6 +124,10 @@ const ManageCate = () => {
       });
     }
   }, [editCate]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [update]);
 
   return (
     <div className="w-full p-4 relative overflow-auto">

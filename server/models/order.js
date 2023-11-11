@@ -28,9 +28,16 @@ var orderSchema = new mongoose.Schema(
       default: "cod",
       enum: ["cod", "paypal", "VNpay"],
     },
+    couponApply: {
+      coupon: { type: mongoose.Types.ObjectId, ref: "Coupon" },
+      name: String,
+      code: String,
+      percentDiscount: Number,
+      directDiscount: Number,
+    },
     note: String,
-    couponApply: String,
     totalPrice: Number,
+    lastPrice: Number,
     profit: Number,
     address: String,
     buyer: {

@@ -1,5 +1,6 @@
 const Category = require("../models/category.js");
 const asyncHandler = require("express-async-handler");
+const slugify = require("slugify");
 
 // Tạo một danh mục mới
 const createCategory = asyncHandler(async (req, res) => {
@@ -17,6 +18,8 @@ const createCategory = asyncHandler(async (req, res) => {
   if (req.body.brand && typeof req.body.brand === "string") {
     req.body.brand = req.body.brand.split(",").map((item) => item.trim());
   }
+
+  req.body.slug = slugify(title);
 
   const response = await Category.create(req.body);
 
@@ -48,6 +51,8 @@ const updateCategory = asyncHandler(async (req, res) => {
   if (files?.image) {
     req.body.image = files?.image[0]?.path;
   }
+
+  req.body.slug = slugify(req.body.title);
 
   const response = await Category.findByIdAndUpdate(cateid, req.body, {
     new: true,

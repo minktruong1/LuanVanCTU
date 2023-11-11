@@ -11,7 +11,7 @@ const AdminLayout = () => {
   const { isShowAdminSidebar } = useSelector((state) => state.appReducer);
 
   if (!isLogin || !currentData || currentData.role !== "admin") {
-    return <Navigate to={`/${path.LOGIN}/${path.DASHBOARD}`} replace={true} />;
+    return <Navigate to={`/${path.LOGIN}`} replace={true} />;
   }
 
   return (

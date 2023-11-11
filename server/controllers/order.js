@@ -8,7 +8,10 @@ const createOrder = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const {
     productList,
+    couponCode,
+    couponApply,
     totalPrice,
+    lastPrice,
     address,
     status,
     buyer,
@@ -22,9 +25,19 @@ const createOrder = asyncHandler(async (req, res) => {
       "firstName lastName mobile address"
     );
 
+    const couponDetail = await Coupon.findOne({
+      code: { $regex: new RegExp("^" + couponCode + "$") },
+    }).select("_id name code percentDiscount directDiscount");
+
+    if (couponDetail?.quantity === 0) {
+      throw new Error("Đã hết lượt");
+    }
+
     const data = {
       productList,
+      couponApply,
       totalPrice,
+      lastPrice,
       buyer,
       address,
       method,
@@ -33,6 +46,21 @@ const createOrder = asyncHandler(async (req, res) => {
     };
     if (status) {
       data.status = status;
+    }
+
+    if (couponCode) {
+      data.couponApply = {
+        coupon: couponDetail._id,
+        name: couponDetail.name,
+        code: couponDetail.code,
+        percentDiscount: couponDetail.percentDiscount,
+        directDiscount: couponDetail.directDiscount,
+      };
+
+      // Giảm đi 1 từ trường quantity của Coupon
+      await Coupon.findByIdAndUpdate(couponDetail._id, {
+        $inc: { quantity: -1 },
+      });
     }
 
     data.buyer = {
@@ -60,19 +88,44 @@ const createOrder = asyncHandler(async (req, res) => {
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const { oid } = req.params;
   const { status } = req.body;
+
   if (!status) {
     throw new Error("Missing status");
   }
 
-  const response = await Order.findByIdAndUpdate(
-    oid,
-    { status },
-    { new: true }
-  );
+  const order = await Order.findByIdAndUpdate(oid, { status }, { new: true });
+
+  if (!order) {
+    return res.status(404).json({
+      success: false,
+      message: "Order not found",
+    });
+  }
+
+  // Check if the status is "Hoàn thành"
+  if (status === "Hoàn thành") {
+    // Loop through each product in the order and update quantity and sold
+    for (const product of order.productList) {
+      const productId = product.product;
+      const quantity = product.quantity;
+
+      // Update product quantity and sold count
+      await Product.findByIdAndUpdate(
+        productId,
+        {
+          $inc: {
+            quantity: -quantity, // Subtract quantity from inventory
+            sold: quantity, // Add quantity to sold count
+          },
+        },
+        { new: true }
+      );
+    }
+  }
 
   return res.status(200).json({
-    success: response ? true : false,
-    message: response ? "Cập nhật thành công" : "Lỗi cập nhật",
+    success: true,
+    message: "Cập nhật thành công",
   });
 });
 
@@ -102,7 +155,7 @@ const userGetOrder = asyncHandler(async (req, res) => {
   }
 
   const groupQuery = { "buyer.user": _id, ...formatQueries, ...queryBlock };
-  let queryCommand = Order.find(groupQuery);
+  let queryCommand = Order.find(groupQuery).sort({ createdAt: -1 });
 
   queryCommand = queryCommand.populate("buyer", "firstName lastName mobile");
 
@@ -153,7 +206,8 @@ const getOrderList = asyncHandler(async (req, res) => {
         { method: { $regex: queries.query, $options: "i" } },
         { status: { $regex: queries.query, $options: "i" } },
         { "buyer.lastName": { $regex: queries.query, $options: "i" } },
-        // { _id: { $regex: queries.query, $options: "i" } },
+        { "buyer.firstName": { $regex: queries.query, $options: "i" } },
+        { "buyer.mobile": { $regex: queries.query, $options: "i" } },
       ],
     };
   }

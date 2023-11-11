@@ -98,7 +98,7 @@ export default function Payment({ amount, payload }) {
           payload={payload}
           currency={"USD"}
           amount={amount}
-          showSpinner={false}
+          showSpinner={true}
         />
       </PayPalScriptProvider>
     </div>

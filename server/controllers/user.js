@@ -257,11 +257,11 @@ const logout = asyncHandler(async (req, res) => {
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   if (!email) {
-    throw new Error("Missing email");
+    throw new Error("Hãy nhập email");
   }
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error("User not found");
+    throw new Error("Không tìm thấy người dùng");
   }
   const resetToken = user.createPasswordChangedToken();
   await user.save();
@@ -443,7 +443,7 @@ const removeProductFromCart = asyncHandler(async (req, res) => {
 
 const addProductToWishList = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, category, price, title, images } = req.body;
+  const { pid, category, price, buyInPrice, title, images } = req.body;
 
   if (!pid) {
     throw new Error("Missing inputs");
@@ -474,6 +474,7 @@ const addProductToWishList = asyncHandler(async (req, res) => {
             product: pid,
             category,
             price,
+            buyInPrice,
             title,
             images,
           },

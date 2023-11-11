@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { apiUserGetCoupon } from "../../apis/coupon";
 import { Breadcrumb } from "../../components";
+import clsx from "clsx";
+import moment from "moment";
+import { formatVND } from "../../ultils/helpers";
 
 const CouponsList = () => {
   const [couponsList, setCouponsList] = useState(null);
@@ -26,8 +29,29 @@ const CouponsList = () => {
         <div>
           {couponsList?.map((element) => (
             <>
-              <div className="text-lg font-medium">{element.name}</div>
-              <div>{`${element.code}: còn lại ${element.quantity} lượt`}</div>
+              <div className="text-lg font-medium">
+                {`${element?.name}: ${
+                  element?.directDiscount
+                    ? `giảm giá trực tiếp: ${formatVND(
+                        element?.directDiscount
+                      )}đ`
+                    : element?.percentDiscount
+                    ? `giảm giá ${element?.percentDiscount}%`
+                    : "không có giảm giá"
+                }`}
+              </div>
+              <div>
+                <span
+                  className={clsx(
+                    "",
+                    element?.quantity === 0 && "line-through"
+                  )}
+                >{`${element?.code}: còn lại ${
+                  element?.quantity
+                } lượt, hạn cuối sử dụng ${moment(element?.expire).format(
+                  "DD-MM-YYYY HH:mm"
+                )}`}</span>
+              </div>
             </>
           ))}
         </div>

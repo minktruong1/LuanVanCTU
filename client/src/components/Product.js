@@ -48,6 +48,7 @@ const Product = ({ productData, isNew, isHot }) => {
     const response = await apiFavProduct({
       pid: productData?._id,
       category: productData?.category,
+      buyInPrice: productData?.buyInPrice,
       price: productData?.price,
       title: productData?.title,
       images: productData?.images,

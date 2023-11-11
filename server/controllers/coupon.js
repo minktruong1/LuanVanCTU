@@ -174,10 +174,33 @@ const userGetCoupon = asyncHandler(async (req, res) => {
   });
 });
 
+const getCouponDetail = asyncHandler(async (req, res) => {
+  const { code } = req.body;
+
+  const response = await Coupon.findOne({
+    code: { $regex: new RegExp("^" + code + "$") },
+  });
+
+  if (response?.quantity === 0) {
+    throw new Error("Đã hết lượt");
+  }
+
+  const currentDate = new Date();
+  if (response?.expire < currentDate) {
+    throw new Error("Đã hết hạn");
+  }
+
+  return res.status(200).json({
+    success: response ? true : false,
+    coupon: response ? response : "Không tìm thấy mã giảm giá",
+  });
+});
+
 module.exports = {
   createCoupon,
   getAllCoupons,
   updateCoupon,
   deleteCoupon,
   userGetCoupon,
+  getCouponDetail,
 };

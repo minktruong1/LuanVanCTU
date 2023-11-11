@@ -326,33 +326,44 @@ const OrderHistory = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center justify-between border-t pt-2">
-                  <div>
-                    {order?.status === "Đang xử lý" ? (
-                      <div
-                        onClick={() => handleCancel(order)}
-                        className="text-canClick underline cursor-pointer px-3"
-                      >
-                        Hủy
-                      </div>
-                    ) : order?.status === "Đang vận chuyển" ? (
-                      <div
-                        onClick={() => handleConfirm(order)}
-                        className="bg-main text-white cursor-pointer px-2 py-2"
-                      >
-                        Đã nhận được hàng
-                      </div>
-                    ) : order?.status === "Hoàn thành" ? (
-                      <div className="text-[#767676]">{`Đã nhận vào: ${moment(
-                        order?.updatedAt
-                      ).format("DD-MM-YYYY HH:mm")}`}</div>
-                    ) : null}
+                <div className="grid grid-rows-1 border-t pt-2">
+                  <div className="grid grid-cols-2">
+                    <div>
+                      {order?.status === "Đang xử lý" ? (
+                        <div
+                          onClick={() => handleCancel(order)}
+                          className="text-canClick underline cursor-pointer px-3"
+                        >
+                          Hủy
+                        </div>
+                      ) : order?.status === "Đang vận chuyển" ? (
+                        <div
+                          onClick={() => handleConfirm(order)}
+                          className="bg-main text-white cursor-pointer px-2 py-2 w-fit"
+                        >
+                          Đã nhận hàng
+                        </div>
+                      ) : order?.status === "Hoàn thành" ? (
+                        <div className="text-[#767676]">{`Đã nhận vào: ${moment(
+                          order?.updatedAt
+                        ).format("DD-MM-YYYY")}`}</div>
+                      ) : null}
+                    </div>
+
+                    <div className="flex items-center place-content-end">
+                      <span className="mr-1">Tổng cộng: </span>
+                      <span className="text-base md:text-2xl text-main">
+                        {`${formatVND(order?.lastPrice)}đ`}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <span className="mr-1">Tổng cộng: </span>
-                    <span className="text-base md:text-2xl text-main">
-                      {`${formatVND(order?.totalPrice)}đ`}
-                    </span>
+                </div>
+                <div className="grid grid-cols-2">
+                  <div></div>
+                  <div className="text-[#767676] text-right">
+                    {order.method !== "cod" && (
+                      <span>Đã thanh toán bằng: {order.method}</span>
+                    )}
                   </div>
                 </div>
               </div>

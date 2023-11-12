@@ -12,7 +12,7 @@ const CategoriesList = () => {
         <div className="grid grid-cols-5 md:grid-cols-10 ">
           {categories?.map((element) => (
             <Link
-              to={`/${slugifyByHand(element.title)}`}
+              to={`/categories/${slugifyByHand(element.title)}`}
               key={element._id}
               className="cursor-pointer "
             >

@@ -115,7 +115,7 @@ const ManageUsers = () => {
             value={queries.queryCollect}
             setValue={setQueries}
             style={"w30"}
-            placeholder="Search..."
+            placeholder="Tìm kiếm theo tên, email, SĐT"
             isShowLabel={true}
           />
         </div>

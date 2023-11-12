@@ -27,10 +27,10 @@ const createOrder = asyncHandler(async (req, res) => {
 
     const couponDetail = await Coupon.findOne({
       code: { $regex: new RegExp("^" + couponCode + "$") },
-    }).select("_id name code percentDiscount directDiscount");
+    }).select("_id name quantity code percentDiscount directDiscount");
 
     if (couponDetail?.quantity === 0) {
-      throw new Error("Đã hết lượt");
+      throw new Error("Code đã hết lượt");
     }
 
     const data = {

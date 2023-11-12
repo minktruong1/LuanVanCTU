@@ -24,6 +24,7 @@ const path = {
   ADMIN: "admin",
   PRODUCT_DASHBOARD: "product-dashboard",
   ORDER_DASHBOARD: "order-dashboard",
+  PROFIT_DASHBOARD: "profit-dashboard",
   MANAGE_USER: "manage-user",
   MANAGE_PRODUCT: "manage-products",
   CREATE_PRODUCT: "create-product",

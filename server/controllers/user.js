@@ -179,6 +179,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
       { firstName: { $regex: req.query.queryCollect, $options: "i" } },
       { lastName: { $regex: req.query.queryCollect, $options: "i" } },
       { email: { $regex: req.query.queryCollect, $options: "i" } },
+      { mobile: { $regex: req.query.queryCollect, $options: "i" } },
     ];
   }
 
@@ -381,6 +382,11 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
   if (!pid) {
     throw new Error("Missing inputs");
   }
+  const findProduct = await Product.findOne({ _id: pid });
+  if (findProduct.quantity === 0) {
+    throw new Error("Đã hết");
+  }
+
   const user = await User.findById(_id).select("cart");
   const alreadyInCart = user?.cart?.find(
     (element) => element.product.toString() === pid

@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatVND } from "../../ultils/helpers";
 import Payment from "../../components/Payment";
 import icons from "../../ultils/icons";
 import { Navigate, useSearchParams } from "react-router-dom";
-import { Button } from "../../components";
 import clsx from "clsx";
 import { apiCreateOrder, apiGetDetailCoupon } from "../../apis";
 import sweetAlert from "sweetalert2";
+import { showModal } from "../../store/app/appSlice";
+
 import { useNavigate } from "react-router-dom";
 import { apiCreateVNpayPayment, apiDataBack } from "../../apis/VNpay";
 import { AiOutlineWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import useDebounce from "../../hooks/useDebounce";
+import { Loading } from "../../components";
 
 const { MdLocationPin } = icons;
 
@@ -23,6 +25,8 @@ const method = [
 ];
 
 const Checkout = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const { isLogin, currentData, currentCart } = useSelector(
     (state) => state.user
@@ -158,10 +162,14 @@ const Checkout = () => {
     if (!currentData?.address) {
       return;
     }
+
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiCreateOrder({
       ...payload,
       status: "Đang xử lý",
     });
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+
     if (response.success) {
       setTimeout(() => {
         sweetAlert
@@ -273,7 +281,7 @@ const Checkout = () => {
                   <span className="truncate">{element.title}</span>
                   <span className="text-right">{`x ${element.quantity}`}</span>
                   <span className="text-right">{`${formatVND(
-                    element.product.price
+                    element.price
                   )}đ`}</span>
                 </div>
               </div>
@@ -292,13 +300,15 @@ const Checkout = () => {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-10 ">
-          <span className="leading-10">Lời nhắn:</span>
-          <input
-            onChange={(event) => setNote(event.target.value)}
-            placeholder="Lưu ý tới cửa hàng..."
-            className="border focus:outline-none p-2 w-[320px]"
-          />
+        <div className="grid grid-cols-10">
+          <span className="col-span-3 md:col-span-1 leading-10">Lời nhắn:</span>
+          <div className="col-span-6 md:col-span-3">
+            <input
+              onChange={(event) => setNote(event.target.value)}
+              placeholder="Lưu ý tới cửa hàng..."
+              className="border focus:outline-none p-2 w-full"
+            />
+          </div>
         </div>
       </div>
       <div className="md:w-main bg-white rounded p-6">
@@ -346,7 +356,7 @@ const Checkout = () => {
               (couponData?.name || couponData?.message || couponData?.coupon)}
           </div>
 
-          <div className="md:hidden border-t border-b whitespace-nowrap overflow-x-scroll overflow-y-hidden">
+          <div className="md:hidden whitespace-nowrap overflow-x-scroll overflow-y-hidden">
             {method?.map((element) => (
               <button
                 onClick={() => handleSelectMethod(element)}

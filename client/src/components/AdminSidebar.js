@@ -32,7 +32,7 @@ const AdminSidebar = () => {
         to={"/admin/product-dashboard"}
         className="flex flex-col justify-center items-center py-2 "
       >
-        <span className={clsx("text-4xl font-extrabold ")}>WORK STATION</span>
+        <span className={clsx("text-4xl font-extrabold")}>QUAN LY</span>
       </Link>
       <div className={clsx("text-lg")}>
         {adminSidebar.map((element) => (

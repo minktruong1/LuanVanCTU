@@ -149,6 +149,8 @@ const ProductDetail = () => {
     if (response.success) {
       toast.success(response.message);
       dispatch(apiGetCurrentAccount());
+    } else {
+      toast.error(response.message);
     }
   };
 

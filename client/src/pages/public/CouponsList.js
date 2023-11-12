@@ -28,7 +28,7 @@ const CouponsList = () => {
         </div>
         <div>
           {couponsList?.map((element) => (
-            <>
+            <div className="mb-4">
               <div className="text-lg font-medium">
                 {`${element?.name}: ${
                   element?.directDiscount
@@ -52,7 +52,7 @@ const CouponsList = () => {
                   "DD-MM-YYYY HH:mm"
                 )}`}</span>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </div>

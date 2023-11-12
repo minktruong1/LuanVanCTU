@@ -103,12 +103,16 @@ export const adminSidebar = [
     text: "Thống kê",
     submenu: [
       {
-        text: "Theo sản phẩm",
+        text: "Về sản phẩm",
         path: `/${path.ADMIN}/${path.PRODUCT_DASHBOARD}`,
       },
       {
-        text: "Theo đơn hàng",
+        text: "Về đơn hàng",
         path: `/${path.ADMIN}/${path.ORDER_DASHBOARD}`,
+      },
+      {
+        text: "Về lợi nhuận",
+        path: `/${path.ADMIN}/${path.PROFIT_DASHBOARD}`,
       },
     ],
   },

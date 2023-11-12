@@ -28,6 +28,7 @@ const MobileToolbar = () => {
   const handleOnclick = (signal) => {
     switch (signal) {
       case 1:
+        dispatch(showModal({ isShowModal: false, modalContent: null }));
         navigate(`/`);
         break;
       case 2:
@@ -36,15 +37,19 @@ const MobileToolbar = () => {
         );
         break;
       case 3:
-        console.log(signal);
+        dispatch(showModal({ isShowModal: false, modalContent: null }));
+
+        navigate(`/${path.COUPONS}`);
         break;
       case 4:
         console.log(signal);
         break;
       case 5:
         if (isLogin) {
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
           navigate(`/${path.CUSTOMER}/${path.PROFILE}`);
         } else {
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
           navigate(`/${path.LOGIN}`);
         }
         break;

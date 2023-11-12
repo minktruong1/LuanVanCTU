@@ -33,7 +33,7 @@ const MobileSidebar = () => {
         <div>
           <ul className="uppercase">
             {categories?.map((element) => (
-              <Link to={slugifyByHand(element.title)}>
+              <Link to={`/categories/${slugifyByHand(element.title)}`}>
                 <li className="px-[20px] py-[12px] border border-b text-[13px]">
                   {element.title}
                 </li>

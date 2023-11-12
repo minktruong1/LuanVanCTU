@@ -45,7 +45,7 @@ const MainCart = () => {
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main">
-      <div className=" pb-[18px]">
+      <div className="">
         <Breadcrumb />
       </div>
 

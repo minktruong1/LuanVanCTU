@@ -28,7 +28,7 @@ const ChartLine = ({
   DataFor,
 }) => {
   const options =
-    DataFor === "profit"
+    DataFor === "yearProfit"
       ? {
           responsive: true,
           plugins: {
@@ -40,7 +40,24 @@ const ChartLine = ({
               position: "bottom",
               text: "Biểu đồ lợi nhuận trong năm",
               font: {
-                size: 14,
+                size: 18,
+              },
+            },
+          },
+        }
+      : DataFor === "quarterProfit"
+      ? {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              position: "bottom",
+              text: "Biểu đồ lợi nhuận theo quý",
+              font: {
+                size: 18,
               },
             },
           },
@@ -56,29 +73,31 @@ const ChartLine = ({
               position: "bottom",
               text: "Biểu đồ số đơn hàng nhận được trong năm",
               font: {
-                size: 14,
+                size: 18,
               },
             },
           },
         };
 
-  const labels = [
-    "Tháng 1",
-    "Tháng 2",
-    "Tháng 3",
-    "Tháng 4",
-    "Tháng 5",
-    "Tháng 6",
-    "Tháng 7",
-    "Tháng 8",
-    "Tháng 9",
-    "Tháng 10",
-    "Tháng 11",
-    "Tháng 12",
-  ];
-
+  const labels =
+    DataFor === "quarterProfit"
+      ? ["Quý 1", "Quý 2", "Quý 3", "Quý 4"]
+      : [
+          "Tháng 1",
+          "Tháng 2",
+          "Tháng 3",
+          "Tháng 4",
+          "Tháng 5",
+          "Tháng 6",
+          "Tháng 7",
+          "Tháng 8",
+          "Tháng 9",
+          "Tháng 10",
+          "Tháng 11",
+          "Tháng 12",
+        ];
   const datasets =
-    DataFor === "profit"
+    DataFor === "yearProfit" || DataFor === "quarterProfit"
       ? [
           {
             label: "VNĐ",

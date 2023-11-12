@@ -27,7 +27,11 @@ const BlogsMap = () => {
               className=""
             >
               <div>
-                <img alt="" src={element.image} className="md:h-[160px]" />
+                <img
+                  alt=""
+                  src={element.image}
+                  className="w-[165px] h-[90px] md:w-full md:h-[160px]"
+                />
               </div>
               <span className="line-clamp-2 text-sm md:text-normal">
                 {element.title}

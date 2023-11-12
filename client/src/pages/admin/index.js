@@ -15,3 +15,4 @@ export { default as UpdateBlog } from "./UpdateBlog";
 export { default as ManageCoupon } from "./ManageCoupon";
 export { default as CreateCoupon } from "./CreateCoupon";
 export { default as CreateCategory } from "./CreateCategory";
+export { default as ProfitDashboard } from "./ProfitDashboard";

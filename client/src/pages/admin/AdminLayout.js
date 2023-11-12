@@ -21,7 +21,7 @@ const AdminLayout = () => {
       <div
         className={clsx(
           "w-full flex-auto text-black duration-300",
-          isShowAdminSidebar ? "ml-[284px]" : "ml-0"
+          isShowAdminSidebar ? "ml-[276px]" : "ml-0"
         )}
       >
         <AdminHeader />

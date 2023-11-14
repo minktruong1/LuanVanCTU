@@ -61,7 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     setTimeout(async () => {
       await User.deleteOne({ email: emailTransform });
-    }, [300000]);
+    }, [15 * 60 * 1000]);
 
     return res.json({
       success: newUser ? true : false,
@@ -268,15 +268,14 @@ const forgotPassword = asyncHandler(async (req, res) => {
   await user.save();
 
   const html = `
-  Click here to reset your password, this link
-   will be expired after 15 minutes
+  Nhấn vào đường link để đặt lại mật khẩu, đường link này hết hạn sau 15 phút 
   <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click here</a>
   `;
 
   const data = {
     email,
     html,
-    subject: "Reset your password",
+    subject: "Đặt lại mật khẩu của bạn",
   };
 
   const result = await sendMail(data);
@@ -290,8 +289,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
 const resetPassword = asyncHandler(async (req, res) => {
   const { password, token } = req.body;
+
   if (!password || !token) {
-    throw new Error("Missing input");
+    throw new Error("Thiếu dữ liệu");
   }
 
   const passwordResetToken = crypto
@@ -305,7 +305,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    throw new Error("Invalid reset token");
+    throw new Error("Đã quá hạn đặt lại mật khẩu");
   }
 
   user.password = password;
@@ -325,8 +325,8 @@ const deleteUser = asyncHandler(async (req, res) => {
   return res.status(200).json({
     success: result ? true : false,
     message: result
-      ? `User with email ${result.email} has been deleted`
-      : `Can't found your user`,
+      ? `Đã xóa người dùng với email ${result.email}`
+      : `Không tìm thấy người dùng`,
   });
 });
 

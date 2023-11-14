@@ -8,7 +8,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import path from "../ultils/path";
-import { apiGetProducts, apiGetBrandFromCate } from "../apis";
+import { apiGetProducts } from "../apis";
 import useDebounce from "../hooks/useDebounce";
 
 const { BiSolidDownArrow } = icons;

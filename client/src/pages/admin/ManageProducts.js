@@ -75,7 +75,7 @@ const ManageProducts = () => {
         pathname: location.pathname,
       });
     }
-  }, [queryDebounce]);
+  }, [queryDebounce, update]);
 
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);

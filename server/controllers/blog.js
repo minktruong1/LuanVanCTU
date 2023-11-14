@@ -69,15 +69,24 @@ const userGetAllBlog = asyncHandler(async (req, res) => {
 const likeBlog = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { bid } = req.params;
-  if (!bid) throw new Error("Missing inputs");
+
+  if (!bid) {
+    throw new Error("Missing inputs");
+  }
+
   const blog = await Blog.findById(bid);
-  const alreadyDisliked = blog?.listOfDislikes?.find(
-    (el) => el.toString() === _id
+
+  const alreadyDisliked = blog?.listOfDislikes?.some(
+    (element) => element.toString() === _id
   );
+
   if (alreadyDisliked) {
     const response = await Blog.findByIdAndUpdate(
       bid,
-      { $pull: { listOfDislikes: _id, isDisliked: false } },
+      {
+        $pull: { listOfDislikes: _id },
+        $addToSet: { listOfLikes: _id },
+      },
       { new: true }
     );
     return res.json({
@@ -85,7 +94,11 @@ const likeBlog = asyncHandler(async (req, res) => {
       results: response,
     });
   }
-  const isLiked = blog?.listOfLikes?.find((el) => el.toString() === _id);
+
+  const isLiked = blog?.listOfLikes?.some(
+    (element) => element.toString() === _id
+  );
+
   if (isLiked) {
     const response = await Blog.findByIdAndUpdate(
       bid,
@@ -99,7 +112,7 @@ const likeBlog = asyncHandler(async (req, res) => {
   } else {
     const response = await Blog.findByIdAndUpdate(
       bid,
-      { $push: { listOfLikes: _id } },
+      { $addToSet: { listOfLikes: _id } },
       { new: true }
     );
     return res.json({
@@ -112,13 +125,24 @@ const likeBlog = asyncHandler(async (req, res) => {
 const dislikeBlog = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { bid } = req.params;
-  if (!bid) throw new Error("Missing inputs");
+
+  if (!bid) {
+    throw new Error("Missing inputs");
+  }
+
   const blog = await Blog.findById(bid);
-  const alreadyLiked = blog?.listOfLikes?.find((el) => el.toString() === _id);
+
+  const alreadyLiked = blog?.listOfLikes?.some(
+    (element) => element.toString() === _id
+  );
+
   if (alreadyLiked) {
     const response = await Blog.findByIdAndUpdate(
       bid,
-      { $pull: { listOfLikes: _id, isDisliked: false } },
+      {
+        $pull: { listOfLikes: _id },
+        $addToSet: { listOfDislikes: _id },
+      },
       { new: true }
     );
     return res.json({
@@ -126,8 +150,12 @@ const dislikeBlog = asyncHandler(async (req, res) => {
       results: response,
     });
   }
-  const isDislike = blog?.listOfDislikes?.find((el) => el.toString() === _id);
-  if (isDislike) {
+
+  const isDisliked = blog?.listOfDislikes?.some(
+    (element) => element.toString() === _id
+  );
+
+  if (isDisliked) {
     const response = await Blog.findByIdAndUpdate(
       bid,
       { $pull: { listOfDislikes: _id } },
@@ -140,7 +168,7 @@ const dislikeBlog = asyncHandler(async (req, res) => {
   } else {
     const response = await Blog.findByIdAndUpdate(
       bid,
-      { $push: { listOfDislikes: _id } },
+      { $addToSet: { listOfDislikes: _id } },
       { new: true }
     );
     return res.json({
@@ -152,6 +180,7 @@ const dislikeBlog = asyncHandler(async (req, res) => {
 
 const getBlog = asyncHandler(async (req, res) => {
   const { bid } = req.params;
+
   const blog = await Blog.findByIdAndUpdate(
     bid,
     { $inc: { viewNumber: 1 } },
@@ -159,8 +188,14 @@ const getBlog = asyncHandler(async (req, res) => {
   )
     .populate("listOfLikes", "firstName lastName")
     .populate("listOfDislikes", "firstName lastName");
+
+  const countLike = blog.listOfLikes.length;
+  const countDislike = blog.listOfDislikes.length;
+
   return res.json({
     success: blog ? true : false,
+    countLike,
+    countDislike,
     getBlog: blog,
   });
 });

@@ -37,6 +37,7 @@ const reactSlickSetting = {
 };
 
 const ProductDetail = () => {
+  window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -153,6 +154,10 @@ const ProductDetail = () => {
       toast.error(response.message);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

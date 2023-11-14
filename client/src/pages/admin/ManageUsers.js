@@ -29,7 +29,6 @@ const ManageUsers = () => {
     lastName: "",
     role: "",
     mobile: "",
-    isBlocked: "",
   });
 
   const [users, setUsers] = useState(null);
@@ -98,7 +97,6 @@ const ManageUsers = () => {
         lastName: editUser.lastName,
         role: editUser.role,
         mobile: editUser.mobile,
-        isBlocked: editUser.isBlocked,
       });
   }, [editUser]);
 
@@ -129,7 +127,6 @@ const ManageUsers = () => {
                 <th className="px-4 py-2">Tên</th>
                 <th className="px-4 py-2">Vai trò</th>
                 <th className="px-4 py-2">SĐT</th>
-                <th className="px-4 py-2">Trạng thái</th>
                 <th className="px-4 py-2">Ngày đăng ký</th>
                 <th className="px-4 py-2">Thao tác</th>
               </tr>
@@ -157,9 +154,7 @@ const ManageUsers = () => {
                     <td className="py-2 px-4">
                       <span>{element.mobile}</span>
                     </td>
-                    <td className="py-2 px-4">
-                      <span>{element.isBlocked ? "Blocked" : "Active"}</span>
-                    </td>
+
                     <td className="py-2 px-4">
                       {moment(element.createdAt).format("DD/MM/YYYY")}
                     </td>
@@ -256,17 +251,7 @@ const ManageUsers = () => {
                             />
                           </span>
                         </td>
-                        <td className="py-2 px-2">
-                          <AdminSelector
-                            register={register}
-                            errors={errors}
-                            id={"isBlocked"}
-                            validate={{ required: "Vui lòng nhập" }}
-                            defaultValue={element.isBlocked}
-                            options={userStatus}
-                            fullWidth
-                          />
-                        </td>
+
                         <td className="py-2 px-2">
                           {moment(element.createdAt).format("DD/MM/YYYY")}
                         </td>

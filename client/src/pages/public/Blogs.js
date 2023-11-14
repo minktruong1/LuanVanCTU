@@ -1,18 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { BlogItem, Breadcrumb } from "../../components";
 import emptyData from "../../assets/no-data.png";
 
 const Blogs = () => {
   const { blogList } = useSelector((state) => state.blogReducer);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      console.log(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main  ">

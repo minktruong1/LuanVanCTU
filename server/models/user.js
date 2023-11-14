@@ -18,6 +18,9 @@ var userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    address: {
+      type: String,
+    },
     avatar: {
       type: String,
     },
@@ -46,9 +49,6 @@ var userSchema = new mongoose.Schema(
         images: Array,
       },
     ],
-    address: {
-      type: String,
-    },
     wishList: [
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
@@ -59,10 +59,6 @@ var userSchema = new mongoose.Schema(
         images: Array,
       },
     ],
-    isBlocked: {
-      type: Boolean,
-      default: false,
-    },
     refreshToken: {
       type: String,
     },
@@ -73,10 +69,7 @@ var userSchema = new mongoose.Schema(
       type: String,
     },
     passwordResetExpires: {
-      type: String,
-    },
-    registerToken: {
-      type: String,
+      type: Date,
     },
   },
   {

@@ -54,7 +54,7 @@ const MainCart = () => {
           <div className="bg-white md:w-[600px] rounded">
             <div className="p-4">
               <Link
-                to={`/all-products`}
+                to={`/categories/all-products`}
                 className="text-canClick cursor-pointer flex items-center"
               >
                 <MdArrowBackIosNew />

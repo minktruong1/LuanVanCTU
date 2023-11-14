@@ -172,7 +172,7 @@ const CreateProduct = () => {
           />
           <div className="w-full my-6 flex gap-4">
             <ReactInputForm
-              label="Giá sản phẩm"
+              label="Giá bán ra"
               register={register}
               errors={errors}
               id="price"
@@ -240,7 +240,7 @@ const CreateProduct = () => {
           <MarkdownEditor
             name="description"
             changeValue={changeValue}
-            label="Description"
+            label="Mô tả sản phẩm"
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
           />

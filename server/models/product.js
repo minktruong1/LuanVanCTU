@@ -44,14 +44,10 @@ var productSchema = new mongoose.Schema(
     images: {
       type: Array,
     },
-    origin: {
-      type: String,
-      require: true,
-    },
     reviews: [
       {
-        star: { type: Number },
         owner: { type: mongoose.Types.ObjectId, ref: "User" },
+        star: { type: Number },
         comment: { type: String },
         updatedAt: { type: Date },
       },

@@ -42,8 +42,8 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
       price: editProductTab?.price || "",
       buyInPrice: editProductTab?.buyInPrice || "",
       quantity: editProductTab?.quantity || "",
-      category: editProductTab?.category?.toLowerCase() || "",
-      brand: editProductTab?.brand?.toLowerCase() || "",
+      category: editProductTab?.category || "",
+      brand: editProductTab?.brand || "",
     });
     setPayload({
       description:
@@ -83,22 +83,19 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
     if (invalids === 0) {
       if (data.category) {
         const groupData = { ...data, ...payload };
-
-        groupData.images =
-          data?.images?.length === 0 ? review.images : data.images;
-
-        data.category = categories?.find(
-          (element) => element.title === data.category
-        )?.title;
-
         const formData = new FormData();
 
         for (let i of Object.entries(groupData)) {
-          formData.append(i[0], i[1]);
-        }
-
-        for (let image of groupData.images) {
-          formData.append("images", image);
+          if (i[0] === "images") {
+            if (i[1] instanceof FileList && i[1].length > 0) {
+              const imagesToUpload = Array.from(i[1]);
+              for (let image of imagesToUpload) {
+                formData.append("images", image);
+              }
+            }
+          } else {
+            formData.append(i[0], i[1]);
+          }
         }
 
         dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
@@ -196,7 +193,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
               fullWidth
             />
             <ReactInputForm
-              label="Giá sản phẩm"
+              label="Giá bán ra"
               register={register}
               errors={errors}
               id="price"
@@ -226,7 +223,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
             <AdminSelector
               label="Category"
               options={categories?.map((element) => ({
-                value: element.title.toLowerCase(),
+                value: element.title,
                 text: element.title.replace(
                   /^./,
                   element.title[0].toUpperCase()
@@ -244,7 +241,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
               options={categories
                 ?.find((element) => element.title === watch("category"))
                 ?.brand?.map((element) => ({
-                  value: element.toLowerCase(),
+                  value: element,
                   text: element,
                 }))}
               register={register}
@@ -257,7 +254,7 @@ const UpdateProduct = ({ editProductTab, render, setEditProductTab }) => {
           <MarkdownEditor
             name="description"
             changeValue={changeValue}
-            label="Description"
+            label="Mô tả sản phẩm"
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
             value={payload.description}

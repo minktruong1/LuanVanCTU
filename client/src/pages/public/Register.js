@@ -19,6 +19,8 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { showModal } from "../../store/app/appSlice";
 
 const Register = () => {
+  window.scrollTo(0, 0);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();

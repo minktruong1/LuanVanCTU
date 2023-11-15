@@ -4,6 +4,8 @@ import { BlogItem, Breadcrumb } from "../../components";
 import emptyData from "../../assets/no-data.png";
 
 const Blogs = () => {
+  window.scrollTo(0, 0);
+
   const { blogList } = useSelector((state) => state.blogReducer);
 
   return (

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { showModal } from "../../store/app/appSlice";
 
 const ForgotPassword = () => {
+  window.scrollTo(0, 0);
   const dispatch = useDispatch();
 
   const onSubmit = async (email) => {

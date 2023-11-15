@@ -36,6 +36,8 @@ const content = [
 ];
 
 const Faqs = () => {
+  window.scrollTo(0, 0);
+
   return (
     <div className="w-[calc(100%-20px)] md:w-main ">
       <Breadcrumb />

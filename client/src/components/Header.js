@@ -148,7 +148,7 @@ const Header = ({ setSearch, handleSearch }) => {
                   <span className="flex ">Giỏ</span>
                   <span className="flex ">hàng</span>
                 </span>
-                <div className="bg-black top-[38px] w-[90px] right-[20px] absolute h-[30px] opacity-0"></div>
+                <div className="hidden md:block top-[38px] w-[90px] right-[20px] absolute h-[30px] opacity-0"></div>
               </Link>
               {isShowCartPopup && (
                 <div className="absolute top-[68px] right-[8px] cursor-default hidden  md:block">

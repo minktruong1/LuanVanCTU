@@ -25,6 +25,7 @@ const breakpointColumnsObj = {
 };
 
 const Products = () => {
+  window.scrollTo(0, 0);
   const navigate = useNavigate();
   const [products, setProducts] = useState(null);
   const [activeBox, setActiveBox] = useState(null);

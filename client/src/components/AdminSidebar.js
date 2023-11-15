@@ -5,8 +5,8 @@ import clsx from "clsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { useSelector } from "react-redux";
 
-const activeStyling = "px-4 py-2 flex items-center gap-2 bg-overlay ";
-const unActiveStyling = "px-4 py-2 flex items-center gap-2 hover:bg-overlay";
+const activeStyling = "px-4 py-2 flex items-center gap-2 bg-[#26baee] ";
+const unActiveStyling = "px-4 py-2 flex items-center gap-2 hover:bg-[#26baee]";
 
 const AdminSidebar = () => {
   const [active, setActive] = useState([]);
@@ -24,7 +24,7 @@ const AdminSidebar = () => {
   return (
     <div
       className={clsx(
-        "bg-[#10163a] fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30 overflow-x-auto",
+        "bg-[#9fe8fa] text-black fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30 overflow-x-auto",
         isShowAdminSidebar ? "w-fit" : "translate-x-[-100%]"
       )}
     >
@@ -50,9 +50,9 @@ const AdminSidebar = () => {
             {element.type === "PARENT" && (
               <div
                 onClick={() => handleToggle(+element.id)}
-                className=" flex flex-col "
+                className="flex flex-col "
               >
-                <div className="flex items-center justify-between gap-2 hover:bg-overlay px-4 py-2 cursor-pointer">
+                <div className="flex items-center justify-between gap-2 hover:bg-[#26baee] px-4 py-2 cursor-pointer">
                   <span>{element.text}</span>
                   {active.some((id) => id === element.id) ? (
                     <BiSolidUpArrow />

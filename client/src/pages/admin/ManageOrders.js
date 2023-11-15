@@ -193,12 +193,12 @@ const ManageOrders = () => {
           <thead className="bg-[#362f4b] text-white ">
             <tr>
               <th className="p-4 rounded-tl-md ">#</th>
-              <th className="w-[200px]">Mã đơn hàng</th>
               <th>Ngày đặt</th>
               <th>Tên người nhận</th>
               <th>SĐT</th>
               <th>Địa chỉ</th>
               <th>Thanh toán</th>
+              <th>Mã giảm giá áp dụng</th>
               <th>Lợi nhuận</th>
               <th>Phương thức thanh toán</th>
               <th>Trạng thái</th>
@@ -211,19 +211,19 @@ const ManageOrders = () => {
                 key={element._id}
                 className={clsx("", index % 2 === 1 && "bg-[#fff]")}
               >
-                <td>
+                <td className="h-[40px]">
                   {params.get("page") > 0 &&
                     (params.get("page") - 1) * 10 + index + 1}
                   {!params.get("page") && index + 1}
                 </td>
-                <td>{element?._id}</td>
                 <td>{moment(element?.createdAt).format("DD-MM-YYYY HH:mm")}</td>
                 <td>
                   {`${element?.buyer?.firstName} ${element?.buyer?.lastName}`}
                 </td>
                 <td>{element?.buyer.mobile}</td>
                 <td>{element?.address}</td>
-                <td>{`${formatVND(element?.totalPrice)}đ`}</td>
+                <td>{`${formatVND(element?.lastPrice)}đ`}</td>
+                <td>{element?.couponApply?.code}</td>
                 <td>{`${formatVND(element?.profit)}đ`}</td>
                 <td>{element?.method}</td>
                 <td>{element?.status}</td>

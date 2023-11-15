@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import {
-  Footer,
-  Header,
-  MobileToolbar,
-  Navigation,
-  UpperHeader,
-} from "../../components";
+import { Footer, Header, MobileToolbar, Navigation } from "../../components";
 import { useNavigate } from "react-router-dom";
 
 const Public = () => {
@@ -23,8 +17,7 @@ const Public = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex flex-col items-center ">
-        <UpperHeader />
+      <div className="w-full flex flex-col items-center ">
         <Header setSearch={setSearch} handleSearch={handleSearch} />
         <Navigation />
         <div className="w-full flex flex-col items-center bg-webBackground pb-6">

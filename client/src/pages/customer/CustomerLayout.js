@@ -7,7 +7,6 @@ import {
   Footer,
   Header,
   Navigation,
-  UpperHeader,
   MobileToolbar,
 } from "../../components";
 
@@ -21,7 +20,6 @@ const CustomerLayout = () => {
   return (
     <>
       <div className="w-full flex flex-col items-center">
-        <UpperHeader />
         <Header />
         <Navigation />
         <div className="w-full flex flex-col items-center bg-webBackground py-4">

@@ -68,7 +68,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen font-main relative overflow-x-hidden overflow-y-auto text-sm md:text-base">
+    <div className="w-full font-main relative text-sm md:text-base">
       {isShowModal && <Modal>{modalContent}</Modal>}
       <ToastContainer
         position="top-right"

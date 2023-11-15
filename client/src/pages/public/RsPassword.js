@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import path from "../../ultils/path";
 
 const RsPassword = () => {
+  window.scrollTo(0, 0);
+
   const navigate = useNavigate();
   const { token } = useParams();
 

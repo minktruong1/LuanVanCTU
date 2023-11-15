@@ -11,6 +11,8 @@ const breakpointColumnsObj = {
 };
 
 const SearchProduct = ({ search }) => {
+  window.scrollTo(0, 0);
+
   const [keysearch, setkeysearch] = useState(
     sessionStorage.getItem("keysearch")
   );

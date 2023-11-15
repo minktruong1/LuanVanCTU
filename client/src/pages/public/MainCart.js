@@ -13,6 +13,8 @@ import sweetAlert from "sweetalert2";
 const { MdArrowBackIosNew } = icons;
 
 const MainCart = () => {
+  window.scrollTo(0, 0);
+
   const navigate = useNavigate();
   const { isLogin, currentCart } = useSelector((state) => state.user);
   const location = useLocation();

@@ -6,6 +6,7 @@ import moment from "moment";
 import { formatVND } from "../../ultils/helpers";
 
 const CouponsList = () => {
+  window.scrollTo(0, 0);
   const [couponsList, setCouponsList] = useState(null);
 
   const fetchCoupon = async () => {

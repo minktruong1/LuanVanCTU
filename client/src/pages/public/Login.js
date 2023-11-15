@@ -13,6 +13,8 @@ import { loginSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
 
 const Login = () => {
+  window.scrollTo(0, 0);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();

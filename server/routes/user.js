@@ -7,7 +7,7 @@ router.post("/register", controllers.registerUser);
 
 router.put("/register-confirm/:token", controllers.registerCheck);
 router.post("/login", controllers.loginUser);
-router.get("/current", verifyLoginToken, controllers.getUser);
+router.get("/current", [verifyLoginToken], controllers.getUser);
 router.post("/refreshtoken", controllers.refreshLoginToken);
 router.get("/logout", controllers.logout);
 router.post("/forgotpassword", controllers.forgotPassword);

@@ -46,10 +46,3 @@ export const apiCreateOrder = (data) =>
     method: "POST",
     data,
   });
-
-export const apiSearchProduct = (data) =>
-  axios({
-    url: "/product/searchproduct/",
-    method: "POST",
-    data,
-  });

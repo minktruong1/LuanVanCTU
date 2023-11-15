@@ -227,22 +227,6 @@ const uploadProductImg = asyncHandler(async (req, res) => {
   });
 });
 
-const searchProduct = async (req, res) => {
-  const searchQuery = req.body.searchProduct;
-
-  const response = await Product.find({
-    title: { $regex: searchQuery, $options: "i" },
-  });
-
-  const counts = response.length;
-
-  return res.status(200).json({
-    success: response ? true : false,
-    counts,
-    searchProduct: response ? response : "Lỗi tìm kiếm",
-  });
-};
-
 module.exports = {
   createProduct,
   getProduct,
@@ -251,5 +235,4 @@ module.exports = {
   deleteProduct,
   reviews,
   uploadProductImg,
-  searchProduct,
 };

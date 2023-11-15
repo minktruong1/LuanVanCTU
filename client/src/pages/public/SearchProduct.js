@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
-import { Pagination, Product } from "../../components";
+import { Breadcrumb, Pagination, Product } from "../../components";
 
 const breakpointColumnsObj = {
   default: 5,
@@ -10,29 +10,46 @@ const breakpointColumnsObj = {
   300: 2,
 };
 
-const SearchProduct = ({ productSearch }) => {
-  const [products, setProducts] = useState(null);
+const SearchProduct = ({ search }) => {
+  const [keysearch, setkeysearch] = useState(
+    sessionStorage.getItem("keysearch")
+  );
+  const [products, setProducts] = useState([]);
+  const fetchProduct = async () => {
+    const res = await fetch(
+      `http://localhost:5000/api/search/searchproduct/${keysearch}`
+    );
+    const data = await res.json();
+    console.log(data);
+    setProducts(data);
+  };
+
+  console.log(products);
 
   useEffect(() => {
-    // Tại đây, bạn có thể sử dụng giá trị productSearch để thực hiện tác vụ tìm kiếm sản phẩm hoặc hiển thị dữ liệu.
-    console.log(productSearch);
-    // if (productSearch) {
-    //   const foundProducts = productSearch.products; // Giả sử productSearch chứa danh sách sản phẩm tìm kiếm.
-    //   setProducts(foundProducts);
-    // }
-  }, [productSearch]);
+    fetchProduct();
+    console.log("keysearch changed:", keysearch);
+  }, [keysearch]);
 
   return (
-    <div className="w-[calc(100%-20px)] md:w-main bg-white rounded">
-      {/* <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid flex mb-[20px]"
-        columnClassName="my-masonry-grid_column "
-      >
-        {products?.products?.map((element) => (
-          <Product key={element._id} pid={element.id} productData={element} />
-        ))}
-      </Masonry> */}
+    <div className="w-[calc(100%-20px)] md:w-main ">
+      <Breadcrumb />
+
+      <div className="bg-white rounded">
+        <h2 className="text-center text-xl py-3">
+          Kết quả tìm kiếm cho từ khoá{" "}
+          <strong className="text-main">{keysearch}</strong>{" "}
+        </h2>
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid flex mb-[20px]"
+          columnClassName="my-masonry-grid_column "
+        >
+          {products.map((product) => (
+            <Product key={product._id} pid={product.id} productData={product} />
+          ))}
+        </Masonry>
+      </div>
     </div>
   );
 };

@@ -14,6 +14,7 @@ const Breadcrumb = ({ title, category }) => {
     { path: "/main-cart", breadcrumb: "Giỏ hàng" },
     { path: "/coupons", breadcrumb: "Mã giảm giá" },
     { path: "/faqs", breadcrumb: "Hỏi đáp" },
+    { path: "/search", breadcrumb: "Tìm kiếm" },
     { path: "/:category", breadcrumb: category },
     { path: "/:category/:pid/:title", breadcrumb: title },
   ];

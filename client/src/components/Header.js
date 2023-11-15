@@ -28,7 +28,7 @@ const {
   BiSearch,
 } = icons;
 
-const Header = () => {
+const Header = ({ setSearch, handleSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogin, currentData, currentCart, message } = useSelector(
@@ -37,20 +37,7 @@ const Header = () => {
   const { isShowCartPopup } = useSelector((state) => state.appReducer);
   const { isShowUserDirection } = useSelector((state) => state.appReducer);
 
-  const [search, setSearch] = useState(null);
   const [productSearch, setProductSearch] = useState(null);
-
-  const handleSearch = async () => {
-    if (search) {
-      const data = {
-        searchProduct: search,
-      };
-      const response = await apiSearchProduct(data);
-      if (response.success) {
-        setProductSearch(response);
-      }
-    }
-  };
 
   useEffect(() => {
     const setTimeoutGetCurrent = setTimeout(() => {

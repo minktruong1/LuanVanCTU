@@ -4,7 +4,12 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { apiGetProductDetail, apiUpdateCart, apiReview } from "../../apis";
+import {
+  apiGetProductDetail,
+  apiUpdateCart,
+  apiReview,
+  apiCheckedProduct,
+} from "../../apis";
 import {
   Breadcrumb,
   Button,
@@ -157,6 +162,9 @@ const ProductDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (currentData) {
+      apiCheckedProduct({ _id: currentData._id, pid: pid });
+    }
   }, []);
 
   return (
@@ -178,8 +186,8 @@ const ProductDetail = () => {
                   {...reactSlickSetting}
                   className="product-detail-slick flex gap-2 justify-between "
                 >
-                  {product?.images?.map((element) => (
-                    <div key={element} className=" flex-1 border-none">
+                  {product?.images?.map((element, index) => (
+                    <div key={index} className=" flex-1 border-none">
                       <img
                         onClick={(e) => handleChooseImage(e, element)}
                         src={element}
@@ -297,9 +305,9 @@ const ProductDetail = () => {
                 <div className="md:col-span-2">
                   {Array.from(Array(5).keys())
                     .reverse()
-                    .map((element) => (
+                    .map((element, index) => (
                       <RatingBar
-                        key={element}
+                        key={index}
                         number={element + 1}
                         numberOfRatingCount={
                           product?.reviews?.filter(
@@ -317,9 +325,9 @@ const ProductDetail = () => {
                     .sort(
                       (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
                     )
-                    .map((element) => (
+                    .map((element, index) => (
                       <Comment
-                        key={element._id}
+                        key={index}
                         star={element.star}
                         updatedAt={element.updatedAt}
                         comment={element.comment}

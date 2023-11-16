@@ -1,17 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Loading } from "../../components";
-import { apiLogin, apiRegister, apiRegisterCheck } from "../../apis";
+import { apiRegister, apiRegisterCheck } from "../../apis";
 import sweetAlert from "sweetalert2";
-import {
-  Link,
-  createSearchParams,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
-import { login } from "../../store/users/userSlice";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { registerSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
@@ -19,13 +12,9 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { showModal } from "../../store/app/appSlice";
 
 const Register = () => {
-  window.scrollTo(0, 0);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
 
-  const [searchParams] = useSearchParams();
   const [isRegisterConfirm, setIsRegisterConfirm] = useState(false);
   const [registerToken, setRegisterToken] = useState("");
 
@@ -33,7 +22,6 @@ const Register = () => {
     dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const responseRegis = await apiRegister(formValues);
     dispatch(showModal({ isShowModal: false, modalContent: null }));
-    // console.log(responseRegis);
     if (responseRegis.success) {
       sweetAlert
         .fire(
@@ -93,6 +81,10 @@ const Register = () => {
     validationSchema: registerSchema,
     onSubmit,
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex justify-center w-[calc(100%-20px)] ">

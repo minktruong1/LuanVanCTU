@@ -47,6 +47,7 @@ import {
   FavoriteProducts,
   OrderHistory,
   CheckedProductList,
+  ChangePassword,
 } from "./pages/customer/index.js";
 
 //About toastify
@@ -72,7 +73,7 @@ function App() {
       {isShowModal && <Modal>{modalContent}</Modal>}
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -82,8 +83,6 @@ function App() {
         pauseOnHover
         theme="light"
       />
-      {/* Same as */}
-      <ToastContainer />
 
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
@@ -133,6 +132,7 @@ function App() {
           <Route path={path.PROFILE} element={<Profile />} />
           <Route path={path.FAV_PRODUCTS} element={<FavoriteProducts />} />
           <Route path={path.ORDER_HISTORY} element={<OrderHistory />} />
+          <Route path={path.CHANGE_PASSWORD} element={<ChangePassword />} />
           <Route
             path={path.HAVE_CHECK_PRODUCTS}
             element={<CheckedProductList />}

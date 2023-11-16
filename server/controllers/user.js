@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail.js");
 const crypto = require("crypto");
 const createToken = require("uniqid");
+const bcrypt = require("bcrypt");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password, firstName, lastName, mobile } = req.body;
@@ -140,6 +141,13 @@ const getUser = asyncHandler(async (req, res) => {
     })
     .populate({
       path: "wishList",
+      populate: {
+        path: "product",
+        select: "title images price quantity category reviewPoint",
+      },
+    })
+    .populate({
+      path: "checkedProducts",
       populate: {
         path: "product",
         select: "title images price quantity category reviewPoint",
@@ -495,6 +503,71 @@ const addProductToWishList = asyncHandler(async (req, res) => {
   }
 });
 
+const pushCheckedProduct = asyncHandler(async (req, res) => {
+  const { _id, pid } = req.body;
+
+  const user = await User.findById(_id).select("checkedProducts");
+
+  // Check if the product is already in checkedProducts
+  const index = user.checkedProducts.findIndex(
+    (element) => element.product.toString() === pid
+  );
+
+  if (index !== -1) {
+    // If the product is already in the checkedProducts, remove it from its current position
+    const [existingProduct] = user.checkedProducts.splice(index, 1);
+    user.checkedProducts.unshift(existingProduct); // Move the existing product to the beginning of the array
+  } else {
+    // If the product is not in checkedProducts, add it to the beginning
+    const productToAdd = await Product.findById(pid);
+    if (productToAdd) {
+      const newProduct = {
+        product: productToAdd._id,
+        category: productToAdd.category,
+        price: productToAdd.price,
+        buyInPrice: productToAdd.buyInPrice,
+        title: productToAdd.title,
+        images: productToAdd.images,
+      };
+      user.checkedProducts.unshift(newProduct);
+    } else {
+      throw new Error("Product not found");
+    }
+  }
+
+  // Limit checkedProducts array to 10 items
+  if (user.checkedProducts.length > 10) {
+    user.checkedProducts = user.checkedProducts.slice(0, 10);
+  }
+
+  await user.save();
+
+  return res.status(200).json({
+    success: true,
+    message: "Đã cập nhật sản phẩm đã xem gần đây",
+  });
+});
+
+const changePassword = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { oldPassword, newPassword } = req.body;
+
+  const findUser = await User.findOne({ _id });
+
+  if (findUser && (await findUser.isCorrectPassword(oldPassword))) {
+    findUser.password = newPassword;
+    findUser.passwordChangeAt = Date.now();
+    await findUser.save();
+  } else {
+    throw new Error("Kiểm tra lại mật khẩu cũ");
+  }
+
+  return res.status(200).json({
+    success: findUser ? true : false,
+    message: findUser ? "Đổi mật khẩu thành công" : "Lỗi đổi mật khẩu",
+  });
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -512,4 +585,6 @@ module.exports = {
   registerCheck,
   removeProductFromCart,
   addProductToWishList,
+  pushCheckedProduct,
+  changePassword,
 };

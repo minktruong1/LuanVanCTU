@@ -59,6 +59,16 @@ var userSchema = new mongoose.Schema(
         images: Array,
       },
     ],
+    checkedProducts: [
+      {
+        product: { type: mongoose.Types.ObjectId, ref: "Product" },
+        category: String,
+        price: Number,
+        buyInPrice: Number,
+        title: String,
+        images: Array,
+      },
+    ],
     refreshToken: {
       type: String,
     },

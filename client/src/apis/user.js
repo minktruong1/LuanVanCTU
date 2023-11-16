@@ -87,3 +87,17 @@ export const apiFavProduct = (data) =>
     method: "PUT",
     data,
   });
+
+export const apiCheckedProduct = (data) =>
+  axios({
+    url: "/user/pushProduct",
+    method: "PUT",
+    data,
+  });
+
+export const apiChangePassword = (data) =>
+  axios({
+    url: "/user/changepassword",
+    method: "PUT",
+    data,
+  });

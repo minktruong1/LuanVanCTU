@@ -4,6 +4,7 @@ import { FaChartBar, FaShoppingBag } from "react-icons/fa";
 import { BiSolidUser } from "react-icons/bi";
 import { BsBagHeartFill, BsYoutube } from "react-icons/bs";
 import { AiFillEye } from "react-icons/ai";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const {
   TiTags,
@@ -193,28 +194,30 @@ export const adminSidebar = [
 export const customerSidebar = [
   {
     id: 1,
-    type: "SINGLE",
     text: "Thông tin tài khoản",
     path: `/${path.CUSTOMER}/${path.PROFILE}`,
     icon: <BiSolidUser />,
   },
   {
+    id: 1,
+    text: "Đổi mật khẩu",
+    path: `/${path.CUSTOMER}/${path.CHANGE_PASSWORD}`,
+    icon: <RiLockPasswordFill />,
+  },
+  {
     id: 2,
-    type: "SINGLE",
     text: "Quản lý đơn hàng",
     path: `/${path.CUSTOMER}/${path.ORDER_HISTORY}`,
     icon: <FaShoppingBag />,
   },
   {
     id: 3,
-    type: "SINGLE",
     text: "Danh sách yêu thích",
     path: `/${path.CUSTOMER}/${path.FAV_PRODUCTS}`,
     icon: <BsBagHeartFill />,
   },
   {
     id: 4,
-    type: "SINGLE",
     text: "Sản phẩm đã xem",
     path: `/${path.CUSTOMER}/${path.HAVE_CHECK_PRODUCTS}`,
     icon: <AiFillEye />,

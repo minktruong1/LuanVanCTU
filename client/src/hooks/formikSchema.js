@@ -60,3 +60,24 @@ export const resetPasswordSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Mật khẩu chưa trùng nhau")
     .required("Không được để trống"),
 });
+
+export const changePasswordSchema = yup.object().shape({
+  oldPassword: yup
+    .string()
+    .min(8, "Mật khẩu phải ít nhất 8 ký tự")
+    .matches(passwordRules, {
+      message: "Mật khẩu phải trên 8 kí tự và có viết in kèm 1 số",
+    })
+    .required("Không được để trống"),
+  newPassword: yup
+    .string()
+    .min(8, "Mật khẩu phải ít nhất 8 ký tự")
+    .matches(passwordRules, {
+      message: "Mật khẩu phải trên 8 kí tự và có viết in kèm 1 số",
+    })
+    .required("Không được để trống"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Mật khẩu chưa trùng nhau")
+    .required("Không được để trống"),
+});

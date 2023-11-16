@@ -40,17 +40,15 @@ const CustomerSidebar = () => {
       <div className="text-medium">
         {customerSidebar.map((element) => (
           <Fragment key={element.id}>
-            {element.type === "SINGLE" && (
-              <NavLink
-                to={element.path}
-                className={({ isActive }) =>
-                  clsx(isActive && activeStyling, !isActive && unActiveStyling)
-                }
-              >
-                {element.icon}
-                <span>{element.text}</span>
-              </NavLink>
-            )}
+            <NavLink
+              to={element.path}
+              className={({ isActive }) =>
+                clsx(isActive && activeStyling, !isActive && unActiveStyling)
+              }
+            >
+              {element.icon}
+              <span>{element.text}</span>
+            </NavLink>
           </Fragment>
         ))}
         <span className="px-4 py-2 flex items-center border-t">

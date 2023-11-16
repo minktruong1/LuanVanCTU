@@ -13,8 +13,6 @@ import { loginSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
 
 const Login = () => {
-  window.scrollTo(0, 0);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -46,6 +44,10 @@ const Login = () => {
       validationSchema: loginSchema,
       onSubmit,
     });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex justify-center w-[calc(100%-20px)] ">

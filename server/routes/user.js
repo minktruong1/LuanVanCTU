@@ -11,6 +11,7 @@ router.get("/current", [verifyLoginToken], controllers.getUser);
 router.post("/refreshtoken", controllers.refreshLoginToken);
 router.get("/logout", controllers.logout);
 router.post("/forgotpassword", controllers.forgotPassword);
+router.put("/changepassword", [verifyLoginToken], controllers.changePassword);
 router.put("/resetpassword", controllers.resetPassword);
 router.put("/address", [verifyLoginToken], controllers.updateUserAddress);
 router.put("/cart", [verifyLoginToken], controllers.addProductIntoUserCart);
@@ -21,7 +22,8 @@ router.delete(
   controllers.removeProductFromCart
 );
 
-router.get("/", controllers.getAllUsers); //[verifyLoginToken, isAdmin],
+router.put("/pushProduct", controllers.pushCheckedProduct);
+router.get("/", controllers.getAllUsers);
 router.delete("/:uid", [verifyLoginToken, isAdmin], controllers.deleteUser);
 router.put(
   "/current",

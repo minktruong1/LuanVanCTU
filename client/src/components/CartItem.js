@@ -67,7 +67,6 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
       setOutOfStock(false);
     }
   }, [quantitySelect]);
-
   return (
     <div className={clsx("grid grid-cols-5 md:grid-cols-5 mb-6 relative p-2")}>
       {outOfStock && (

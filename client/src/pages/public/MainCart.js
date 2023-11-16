@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import icons from "../../ultils/icons";
 import { Link, createSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -58,7 +58,6 @@ const MainCart = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   return (
     <div className="w-[calc(100%-20px)] md:w-main">
       <div className="">
@@ -78,7 +77,7 @@ const MainCart = () => {
               </Link>
             </div>
             <div className="flex p-6 ">
-              {currentCart.length === 0 ? (
+              {currentCart?.length === 0 || !isLogin ? (
                 <div className="flex flex-col justify-center items-center p-4">
                   <img src={emptyCart} alt="emptyCart" />
                   <span className="text-[16px] font-medium">
@@ -126,4 +125,4 @@ const MainCart = () => {
   );
 };
 
-export default MainCart;
+export default memo(MainCart);

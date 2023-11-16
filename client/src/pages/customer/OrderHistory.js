@@ -128,6 +128,7 @@ const OrderHistory = () => {
     if (response.success) {
       apiUpdateReviewProductStatus({ oid, oIid });
       toast.success("Đánh giá sản phẩm thành công");
+      reRender();
     }
   };
 
@@ -301,19 +302,22 @@ const OrderHistory = () => {
                         <div className="grid grid-rows-1">
                           <span className="truncate">{productItem?.title}</span>
                           <span>x{productItem?.quantity}</span>
-                          {order.status === "Hoàn thành" &&
-                          productItem.isReview === false ? (
-                            <div
-                              onClick={() =>
-                                handlePostReview(productItem, order)
-                              }
-                              className="text-canClick cursor-pointer underline"
-                            >
-                              Đánh giá
-                            </div>
-                          ) : (
-                            <div className="text-[#767676]">
-                              Đã đánh giá sản phẩm
+                          {order.status === "Hoàn thành" && (
+                            <div>
+                              {productItem.isReview === false ? (
+                                <div
+                                  onClick={() =>
+                                    handlePostReview(productItem, order)
+                                  }
+                                  className="text-canClick cursor-pointer underline"
+                                >
+                                  Đánh giá
+                                </div>
+                              ) : (
+                                <div className="text-[#767676]">
+                                  Đã đánh giá sản phẩm
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

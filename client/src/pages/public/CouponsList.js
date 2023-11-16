@@ -6,7 +6,6 @@ import moment from "moment";
 import { formatVND } from "../../ultils/helpers";
 
 const CouponsList = () => {
-  window.scrollTo(0, 0);
   const [couponsList, setCouponsList] = useState(null);
 
   const fetchCoupon = async () => {
@@ -17,6 +16,7 @@ const CouponsList = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchCoupon();
   }, []);
 
@@ -28,8 +28,8 @@ const CouponsList = () => {
           Tổng hợp mã giảm giá
         </div>
         <div>
-          {couponsList?.map((element) => (
-            <div className="mb-4">
+          {couponsList?.map((element, index) => (
+            <div key={index} className="mb-4">
               <div className="text-lg font-medium">
                 {`${element?.name}: ${
                   element?.directDiscount

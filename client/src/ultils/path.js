@@ -42,6 +42,7 @@ const path = {
   ORDER_HISTORY: "order-history",
   FAV_PRODUCTS: "favorite-list",
   HAVE_CHECK_PRODUCTS: "checked-products",
+  CHANGE_PASSWORD: "change-password",
 };
 
 export default path;

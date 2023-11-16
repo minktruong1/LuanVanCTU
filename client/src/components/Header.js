@@ -250,7 +250,7 @@ const Header = () => {
             <div
               onMouseEnter={() => dispatch(showCartPopup())}
               onMouseLeave={() => dispatch(showCartPopup())}
-              className="flex flex-row  md:px-4 items-center relative"
+              className="flex flex-row md:px-4 items-center relative"
             >
               <Link
                 to={`/${path.MAIN_CART}`}

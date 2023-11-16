@@ -25,8 +25,6 @@ const method = [
 ];
 
 const Checkout = () => {
-  window.scrollTo(0, 0);
-
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -208,6 +206,10 @@ const Checkout = () => {
       setCouponData(null);
     }
   }, [queryDebounce]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!isLogin || !currentData) {
     return <Navigate to={`/`} replace={true} />;

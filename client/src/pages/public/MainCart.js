@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import icons from "../../ultils/icons";
 import { Link, createSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -13,15 +13,25 @@ import sweetAlert from "sweetalert2";
 const { MdArrowBackIosNew } = icons;
 
 const MainCart = () => {
-  window.scrollTo(0, 0);
-
   const navigate = useNavigate();
   const { isLogin, currentCart } = useSelector((state) => state.user);
   const location = useLocation();
 
   const handleCheckout = () => {
     if (isLogin) {
-      navigate(`/${path.CHECKOUT}`);
+      const insufficientQuantity = currentCart.some(
+        (item) => item.product.quantity < item.quantity
+      );
+
+      if (insufficientQuantity) {
+        return sweetAlert.fire({
+          title: "Thông báo",
+          text: "Số lượng hàng trong giỏ hàng vượt quá số lượng có sẵn trong kho",
+          icon: "warning",
+        });
+      } else {
+        navigate(`/${path.CHECKOUT}`);
+      }
     } else {
       return sweetAlert
         .fire({
@@ -44,6 +54,10 @@ const MainCart = () => {
         });
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main">

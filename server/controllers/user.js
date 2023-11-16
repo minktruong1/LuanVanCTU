@@ -135,7 +135,7 @@ const getUser = asyncHandler(async (req, res) => {
       path: "cart",
       populate: {
         path: "product",
-        select: "slug",
+        select: "slug quantity",
       },
     })
     .populate({
@@ -383,7 +383,7 @@ const addProductIntoUserCart = asyncHandler(async (req, res) => {
     throw new Error("Missing inputs");
   }
   const findProduct = await Product.findOne({ _id: pid });
-  if (findProduct.quantity === 0) {
+  if (findProduct.quantity < quantity) {
     throw new Error("Đã hết");
   }
 

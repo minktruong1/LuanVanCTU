@@ -56,6 +56,7 @@ export const userSlice = createSlice({
     builder.addCase(actions.apiGetCurrentAccount.rejected, (state, action) => {
       state.isLoading = false;
       state.currentData = null;
+      state.currentCart = [];
       state.isLogin = false;
       state.token = null;
       state.message = "Phiên đăng nhập hết hạn";

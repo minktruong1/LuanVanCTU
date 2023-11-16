@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.png";
 import icons from "../ultils/icons.js";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,7 +17,8 @@ import { Badge } from "antd";
 import UserDirectionPopup from "./UserDirectionPopup";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MobileSidebar } from "../components";
-import { apiSearchProduct } from "../apis";
+import useDebounce from "../hooks/useDebounce.js";
+import { formatVND } from "../ultils/helpers.js";
 
 const {
   TfiHeadphoneAlt,
@@ -28,16 +29,64 @@ const {
   BiSearch,
 } = icons;
 
-const Header = ({ setSearch, handleSearch }) => {
+const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogin, currentData, currentCart, message } = useSelector(
     (state) => state.user
   );
-  const { isShowCartPopup } = useSelector((state) => state.appReducer);
-  const { isShowUserDirection } = useSelector((state) => state.appReducer);
+  const { isShowCartPopup, isShowUserDirection } = useSelector(
+    (state) => state.appReducer
+  );
 
-  const [productSearch, setProductSearch] = useState(null);
+  const inputRef = useRef(null);
+  const searchResultRef = useRef(null);
+
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+
+  const [search, setSearch] = useState("");
+
+  const queryDebounce = useDebounce(search, 500);
+
+  const navigateAndReload = () => {
+    navigate(`/${path.HOME}`, { replace: true });
+    window.location.reload();
+  };
+
+  const clearSearchData = async () => {
+    setSearchResult(null);
+    setSearch("");
+  };
+
+  const fetchProduct = async () => {
+    const response = await fetch(
+      `http://localhost:5000/api/search/searchproduct/${search}`
+    );
+    const data = await response.json();
+    setSearchResult(data);
+  };
+
+  const handleSearch = () => {
+    if (search.trim() !== "") {
+      navigate({
+        pathname: `/search`,
+        search: `?title=${search}`,
+      });
+      clearSearchData();
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      inputRef.current &&
+      !inputRef.current.contains(event.target) &&
+      searchResultRef.current &&
+      !searchResultRef.current.contains(event.target)
+    ) {
+      setIsInputFocused(false);
+    }
+  };
 
   useEffect(() => {
     const setTimeoutGetCurrent = setTimeout(() => {
@@ -60,13 +109,31 @@ const Header = ({ setSearch, handleSearch }) => {
     }
   }, [message]);
 
+  useEffect(() => {
+    if (search !== "") {
+      fetchProduct();
+    } else {
+      clearSearchData();
+    }
+  }, [queryDebounce]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="w-full bg-main flex items-center justify-center sticky top-0 z-40">
         <div className="w-main h-[88px] py-[20px] flex justify-between items-center">
-          <Link className="hidden md:flex" to={`/${path.HOME}`}>
+          <span
+            onClick={navigateAndReload}
+            className="hidden md:flex cursor-pointer"
+          >
             <span className="text-4xl font-extrabold text-white">TMĐT</span>
-          </Link>
+          </span>
           <div
             onClick={() =>
               dispatch(
@@ -86,15 +153,69 @@ const Header = ({ setSearch, handleSearch }) => {
           <div className="flex bg-white items-center w-1/2  md:w-1/3 rounded">
             <div className="flex relative w-full">
               <input
+                value={search}
+                ref={inputRef}
                 onChange={(event) => setSearch(event.target.value)}
+                onFocus={() => setIsInputFocused(true)}
                 className="w-[85%] m-2 focus:outline-none border-none"
               />
               <button
-                onClick={handleSearch}
+                onClick={() => handleSearch()}
                 className="w-[15%] flex justify-center absolute right-0 top-[12px]"
               >
                 <BiSearch />
               </button>
+              {isInputFocused && searchResult?.length > 0 && (
+                <div
+                  ref={searchResultRef}
+                  className="bg-white absolute top-[104%] rounded shadow w-[100%] max-h-[300px] p-3 text-[13px] overflow-x-auto"
+                >
+                  <div className="grid grid-rows-1 gap-2 ">
+                    {searchResult?.map((element) => (
+                      <div
+                        key={element._id}
+                        className="grid grid-cols-10 pb-2 border-b"
+                      >
+                        <div className="col-span-7">
+                          <div className="grid grid-rows-1">
+                            <Link
+                              onClick={() => clearSearchData()}
+                              to={`/${element?.category?.toLowerCase()}/${
+                                element?._id
+                              }/${element?.title}`}
+                              className="cursor-pointer hover:text-main duration-500"
+                            >
+                              {element.title}
+                            </Link>
+                            <span className="text-main">{`${formatVND(
+                              element.price
+                            )}đ`}</span>
+                          </div>
+                        </div>
+                        <Link
+                          onClick={() => clearSearchData()}
+                          to={`/${element?.category?.toLowerCase()}/${
+                            element?._id
+                          }/${element?.title}`}
+                          className="col-span-3 place-self-end"
+                        >
+                          <img
+                            className="w-12 h-12 border cursor-pointer"
+                            src={element.images[0]}
+                            alt={element.title}
+                          />
+                        </Link>
+                      </div>
+                    ))}
+                    <div
+                      onClick={() => handleSearch()}
+                      className="place-self-center hover:text-main cursor-pointer duration-300"
+                    >
+                      Xem tất cả
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

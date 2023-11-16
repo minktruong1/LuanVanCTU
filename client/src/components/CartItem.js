@@ -8,10 +8,12 @@ import QuantitySelector from "./QuantitySelector";
 import { formatVND } from "../ultils/helpers";
 import { updateCart } from "../store/users/userSlice";
 import { Link } from "react-router-dom";
+import clsx from "clsx";
 
 const CartItem = ({ element, firstQuantity = 1 }) => {
   const dispatch = useDispatch();
   const [quantitySelect, setQuantitySelect] = useState(() => firstQuantity);
+  const [outOfStock, setOutOfStock] = useState(false);
 
   const handleQuantity = (number, onStock) => {
     number = Number(number);
@@ -54,18 +56,27 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
     });
     if (response.success) {
       dispatch(updateCart({ pid: productId, quantity: newQuantity }));
-    } else {
-      toast.error(response.message);
     }
   };
 
   useEffect(() => {
     updateCartItemQuantity(element?.product?._id, quantitySelect);
+    if (quantitySelect > element.product.quantity) {
+      setOutOfStock(true);
+    } else {
+      setOutOfStock(false);
+    }
   }, [quantitySelect]);
 
-  // console.log(element);
   return (
-    <div className="grid grid-cols-5 md:grid-cols-5 mb-6">
+    <div className={clsx("grid grid-cols-5 md:grid-cols-5 mb-6 relative p-2")}>
+      {outOfStock && (
+        <div className="absolute bg-black bg-opacity-30 w-full h-full flex justify-center items-center z-10">
+          <span className="text-main -rotate-12 font-semibold ">
+            Chỉ còn {element?.product?.quantity} sản phẩm
+          </span>
+        </div>
+      )}
       <div className="grid grid-rows-1 gap-3 place-content-center">
         <Link
           to={`/${element.category?.toLowerCase()}/${element?.product._id}/${
@@ -99,11 +110,11 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
               <span className="text-sm md:text-base">{element?.title}</span>
             </Link>
           </div>
-          <div className="text-right">
-            <span className=" text-main mb-4 font-medium text-base md:text-[18px]">
+          <div className="text-right z-20">
+            <span className=" text-main mb-4 font-medium text-base md:text-[18px] ">
               {`${formatVND(element?.price * quantitySelect)}đ`}
             </span>
-            <div className="flex justify-end">
+            <div className="flex justify-end ">
               <QuantitySelector
                 quantity={quantitySelect}
                 handleQuantity={handleQuantity}

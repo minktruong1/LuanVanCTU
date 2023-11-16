@@ -9,8 +9,12 @@ import CategoriesList from "../../components/CategoriesList.js";
 import BlogsMap from "../../components/BlogsMap.js";
 import { useSelector } from "react-redux";
 import ProductSuggestion from "../../components/ProductSuggestion.js";
+import { useEffect } from "react";
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="w-full md:w-main">
       <div className="flex mt-4">

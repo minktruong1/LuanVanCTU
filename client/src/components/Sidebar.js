@@ -10,15 +10,14 @@ const Sidebar = () => {
   const { categories } = useSelector((state) => state.appReducer);
 
   return (
-    <div className="flex flex-col bg-white border rounded ">
+    <div className="flex flex-col bg-white border rounded h-full">
       {categories?.map((element, index) => (
         <Link
           key={slugifyByHand(element.title)}
           to={`/categories/${element.title}`}
           className={`px-3 pt-[4px] pb-[4px] justify-between flex flex-row items-center hover:bg-main hover:text-white ${
             index === 0 ? "rounded-t " : ""
-          }${index === categories.length - 1 ? "rounded-b " : ""} `}
-        >
+          }${index === categories.length - 1 ? "rounded-b " : ""} `}>
           <span className="capitalize">{element.title}</span>
           <span className="text-[10px] ">
             <MdArrowForwardIos className="font-bold" />

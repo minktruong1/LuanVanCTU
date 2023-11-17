@@ -113,19 +113,18 @@ const SpecialOffer = () => {
                 className={`w-full py-4 flex justify-center items-center cursor-pointer font-medium text-xl bg-white ${
                   targetTab === element.id ? "bg-opacity-0 text-white" : ""
                 }`}
-                onClick={() => setTargetTab(element.id)}
-              >
+                onClick={() => setTargetTab(element.id)}>
                 {element.name}
               </span>
             ))}
           </div>
-          <div className="mt-4 flex flex-row">
-            <div className="w-[25%] flex justify-center items-center ">
+          <div className="mt-4 flex flex-row w-full">
+            <div className="w-[296px] flex justify-center items-center ">
               <CountDown unit="Giờ" number={hours} />
               <CountDown unit="Phút" number={minutes} />
               <CountDown unit="Giây" number={seconds} />
             </div>
-            <div className="w-[75%] ">
+            <div className="flex-1 w-min-[500px] w-[200px]">
               <CustomSlider products={products} targetTab={targetTab} />
             </div>
           </div>

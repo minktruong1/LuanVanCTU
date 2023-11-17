@@ -126,12 +126,15 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-40">
-        <div className="w-main h-[88px] py-[20px] flex justify-between items-center">
+      <div className="w-screen bg-main flex items-center justify-center fixed top-0 z-40 px-2">
+        <div
+          className="h-[88px] py-[20px] flex justify-between items-center "
+          style={{
+            width: "1200px",
+          }}>
           <span
             onClick={navigateAndReload}
-            className="hidden md:flex cursor-pointer"
-          >
+            className="hidden lg:flex cursor-pointer">
             <span className="text-4xl font-extrabold text-white">TMĐT</span>
           </span>
           <div
@@ -143,8 +146,7 @@ const Header = () => {
                 })
               )
             }
-            className="flex items-center ml-4 md:hidden"
-          >
+            className="flex items-center ml-4 lg:hidden">
             <span>
               <AiOutlineMenu color="white" size={24} />
             </span>
@@ -161,21 +163,18 @@ const Header = () => {
               />
               <button
                 onClick={() => handleSearch()}
-                className="w-[15%] flex justify-center absolute right-0 top-[12px]"
-              >
+                className="w-[15%] flex justify-center absolute right-0 top-[12px]">
                 <BiSearch />
               </button>
               {isInputFocused && searchResult?.length > 0 && (
                 <div
                   ref={searchResultRef}
-                  className="bg-white absolute top-[104%] rounded shadow w-[100%] max-h-[300px] p-3 text-[13px] overflow-x-auto"
-                >
+                  className="bg-white absolute top-[104%] rounded shadow w-[100%] max-h-[300px] p-3 text-[13px] overflow-x-auto">
                   <div className="grid grid-rows-1 gap-2 ">
                     {searchResult?.map((element) => (
                       <div
                         key={element._id}
-                        className="grid grid-cols-10 pb-2 border-b"
-                      >
+                        className="grid grid-cols-10 pb-2 border-b">
                         <div className="col-span-7">
                           <div className="grid grid-rows-1">
                             <Link
@@ -183,8 +182,7 @@ const Header = () => {
                               to={`/${element?.category?.toLowerCase()}/${
                                 element?._id
                               }/${element?.title}`}
-                              className="cursor-pointer hover:text-main duration-500"
-                            >
+                              className="cursor-pointer hover:text-main duration-500">
                               {element.title}
                             </Link>
                             <span className="text-main">{`${formatVND(
@@ -197,8 +195,7 @@ const Header = () => {
                           to={`/${element?.category?.toLowerCase()}/${
                             element?._id
                           }/${element?.title}`}
-                          className="col-span-3 place-self-end"
-                        >
+                          className="col-span-3 place-self-end">
                           <img
                             className="w-12 h-12 border cursor-pointer"
                             src={element.images[0]}
@@ -209,8 +206,7 @@ const Header = () => {
                     ))}
                     <div
                       onClick={() => handleSearch()}
-                      className="place-self-center hover:text-main cursor-pointer duration-300"
-                    >
+                      className="place-self-center hover:text-main cursor-pointer duration-300">
                       Xem tất cả
                     </div>
                   </div>
@@ -220,7 +216,7 @@ const Header = () => {
           </div>
 
           <div className="flex text-[13px] text-white ">
-            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center ">
+            <div className="hidden  lg:flex  md:flex-row  md:px-4  md:items-center ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <TfiHeadphoneAlt />
               </span>
@@ -229,7 +225,7 @@ const Header = () => {
                 <span className="flex ">1800.1166</span>
               </span>
             </div>
-            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center  ">
+            <div className="hidden  lg:flex  md:flex-row  md:px-4  md:items-center  ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <MdOutlineLocationOn />
               </span>
@@ -238,7 +234,7 @@ const Header = () => {
                 <span className="flex ">TP.Cần Thơ</span>
               </span>
             </div>
-            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center ">
+            <div className="hidden  lg:flex  md:flex-row  md:px-4  md:items-center ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <PiNotepadLight />
               </span>
@@ -250,22 +246,19 @@ const Header = () => {
             <div
               onMouseEnter={() => dispatch(showCartPopup())}
               onMouseLeave={() => dispatch(showCartPopup())}
-              className="flex flex-row md:px-4 items-center relative"
-            >
+              className="flex flex-row md:px-4 items-center relative">
               <Link
                 to={`/${path.MAIN_CART}`}
-                className="flex flex-row px-4 items-center "
-              >
+                className="flex flex-row px-4 items-center ">
                 <Badge
                   offset={[-12, 2]}
                   count={currentCart?.length}
                   size="small"
                   showZero
-                  className="flex gap-4 items-center text-[24px] pr-2"
-                >
+                  className="flex gap-4 items-center text-[24px] pr-2">
                   <BsCart3 color="white" />
                 </Badge>
-                <span className="hidden  md:block">
+                <span className="hidden  lg:block">
                   <span className="flex ">Giỏ</span>
                   <span className="flex ">hàng</span>
                 </span>
@@ -282,8 +275,7 @@ const Header = () => {
                 <div
                   onMouseEnter={() => dispatch(showUserDirection())}
                   onMouseLeave={() => dispatch(showUserDirection())}
-                  className="account-model_hover bg-darkRed rounded items-center relative p-2"
-                >
+                  className="account-model_hover bg-darkRed rounded items-center relative p-2">
                   <div className=" flex flex-row items-center ">
                     <span className="flex gap-4 items-center text-[24px] pr-2">
                       <AiOutlineUser />
@@ -303,8 +295,7 @@ const Header = () => {
               ) : (
                 <Link
                   to={`/${path.LOGIN}`}
-                  className="flex bg-darkRed rounded "
-                >
+                  className="flex bg-darkRed rounded ">
                   <div className="flex px-2 py-1 items-center">
                     <span className="flex gap-4 justify-center text-[24px] pr-2">
                       <AiOutlineUser />

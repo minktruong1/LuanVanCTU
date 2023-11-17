@@ -6,7 +6,7 @@ module.exports = {
       main: ["Poppins", "sans-serif"],
     },
     extend: {
-      width: {
+      maxWidth: {
         main: "1200px",
       },
       backgroundColor: {

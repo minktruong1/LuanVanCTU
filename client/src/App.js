@@ -69,7 +69,7 @@ function App() {
   }, []);
 
   return (
-    <div className="w-full font-main relative text-sm md:text-base">
+    <div className="w-full font-main relative text-sm md:text-base ">
       {isShowModal && <Modal>{modalContent}</Modal>}
       <ToastContainer
         position="top-right"
@@ -89,8 +89,7 @@ function App() {
           <Route path={path.HOME} element={<Home />}></Route>
           <Route
             path={path.PRODUCT_DETAIL__CATEGORY__PID__TITLE}
-            element={<ProductDetail />}
-          ></Route>
+            element={<ProductDetail />}></Route>
           <Route path={path.BLOGS} element={<Blogs />}></Route>
           <Route path={path.BLOG_DETAIL} element={<BlogDetail />}></Route>
           <Route path={path.PRODUCTS} element={<Products />}></Route>
@@ -98,13 +97,11 @@ function App() {
           <Route path={path.COUPONS} element={<CouponsList />}></Route>
           <Route
             path={path.PAYMENT_INSTRUCTION}
-            element={<PaymentInstruction />}
-          ></Route>
+            element={<PaymentInstruction />}></Route>
           <Route path={path.LOGIN} element={<Login />}></Route>
           <Route
             path={path.FORGOT_PASSWORD}
-            element={<ForgotPassword />}
-          ></Route>
+            element={<ForgotPassword />}></Route>
           <Route path={path.REGISTER} element={<Register />}></Route>
           <Route path={path.MAIN_CART} element={<MainCart />}></Route>
           <Route path={path.RESET_PASSWORD} element={<RsPassword />}></Route>

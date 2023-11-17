@@ -59,17 +59,15 @@ const MobileToolbar = () => {
   };
 
   return (
-    <div className="bg-white w-full bottom-0 fixed left-0 border-[2px] border-t-main text-[10px] z-50 block md:hidden">
+    <div className="bg-white  bottom-0 fixed left-0 right-0 border-[2px] border-t-main text-[10px] z-50 block md:hidden">
       <ul className="flex justify-center items-center">
         {toolbarItem?.map((element) => (
           <li
             key={element.id}
-            className={clsx("flex flex-col justify-center w-[20%]")}
-          >
+            className={clsx("flex flex-col justify-center w-[20%]")}>
             <div
               onClick={() => handleOnclick(element.id)}
-              className="px-[5px] py-[8px]"
-            >
+              className="px-[5px] py-[8px]">
               <span className="flex justify-center pb-[2px]">
                 {element.icon}
               </span>

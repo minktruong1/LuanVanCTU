@@ -2,7 +2,7 @@ import React from "react";
 
 const MiniPoster = ({ src }) => {
   return (
-    <div>
+    <div className="w-min-[200px]">
       <img alt="MiniPoster" src={src} />
     </div>
   );

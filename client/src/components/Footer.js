@@ -28,8 +28,8 @@ const { BsFacebook, BsYoutube, AiFillInstagram, AiFillTwitterCircle } = icons;
 
 const Footer = () => {
   return (
-    <div className="w-full bg-white flex border-t-2 border-main justify-center ">
-      <div className="w-[calc(100%-20px)] md:w-main mb-[50px] md:m-0">
+    <div className="w-full bg-white flex border-t-2 border-main justify-center pb-4 ">
+      <div className="md:w-main mb-[50px] md:m-0 w-[1200px] px-5 md:px-2">
         <div className="grid grid-cols-2 md:grid-cols-5 mt-[22px] mb-[22px]">
           <div>
             <div className="font-semibold mb-[8px]">VỀ GGEAR</div>
@@ -37,8 +37,7 @@ const Footer = () => {
               {about.map((Element, index) => (
                 <Link
                   key={index}
-                  className="hover:underline hover:text-red-600 pb-[6px]"
-                >
+                  className="hover:underline hover:text-red-600 pb-[6px]">
                   {Element.title}
                 </Link>
               ))}
@@ -50,8 +49,7 @@ const Footer = () => {
               {policy.map((Element, index) => (
                 <Link
                   key={index}
-                  className="hover:underline hover:text-red-600 pb-[6px]"
-                >
+                  className="hover:underline hover:text-red-600 pb-[6px]">
                   {Element.title}
                 </Link>
               ))}
@@ -65,8 +63,7 @@ const Footer = () => {
               {detail.map((Element, index) => (
                 <Link
                   key={index}
-                  className="hover:underline hover:text-red-600 pb-[6px]"
-                >
+                  className="hover:underline hover:text-red-600 pb-[6px]">
                   {Element.title}
                 </Link>
               ))}

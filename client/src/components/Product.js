@@ -71,13 +71,12 @@ const Product = ({ productData, isNew, isHot }) => {
 
   return (
     <div>
-      <div className="items-center m-2 bg-white text-base border p-4">
+      <div className="items-center m-2 bg-white text-base border p-4 ">
         <Link
           to={`/categories/${productData?.category?.toLowerCase()}/${
             productData?._id
           }/${productData?.slug}`}
-          className="relative"
-        >
+          className="relative">
           <div className="overflow-hidden flex justify-center">
             <img
               src={productData?.images[0] || ""}
@@ -105,8 +104,7 @@ const Product = ({ productData, isNew, isHot }) => {
             to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
               productData?.title
             }`}
-            className="w-full truncate"
-          >
+            className="w-full truncate">
             {productData?.title}
           </Link>
           <span className="flex items-center text-yellow-500">
@@ -121,8 +119,7 @@ const Product = ({ productData, isNew, isHot }) => {
             <div>{`${formatVND(productData?.price)}đ`}</div>
             <div
               onClick={() => handleFavorite()}
-              className="text-[22px] cursor-pointer text-main"
-            >
+              className="text-[22px] cursor-pointer text-main">
               <span title="Yêu thích">
                 {favorite ? <AiFillHeart /> : <AiOutlineHeart />}
               </span>

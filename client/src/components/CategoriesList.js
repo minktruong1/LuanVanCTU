@@ -9,13 +9,12 @@ const CategoriesList = () => {
     <>
       <div className="bg-white w-[calc(100%-20px)] md:w-full ">
         <div className="p-[12px] text-xl hidden md:block">Danh mục</div>
-        <div className="grid grid-cols-5 md:grid-cols-10 ">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {categories?.map((element) => (
             <Link
               to={`/categories/${slugifyByHand(element.title)}`}
               key={element._id}
-              className="cursor-pointer "
-            >
+              className="cursor-pointer ">
               <div className="flex justify-center">
                 <div className="p-[20px] ">
                   <img

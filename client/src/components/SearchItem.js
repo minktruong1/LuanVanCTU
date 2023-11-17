@@ -128,8 +128,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
   return (
     <div
       className="p-2 border border-[#cfcfcf] flex justify-between items-center relative rounded cursor-pointer"
-      onClick={() => changeActiveBox(name)}
-    >
+      onClick={() => changeActiveBox(name)}>
       <span className="capitalize">{name}</span>
       <span className="text-[11px] ml-[10px]">
         <BiSolidDownArrow />
@@ -137,7 +136,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
       {onChoice === name && (
         <>
           <div className="transparent-bg z-10"></div>
-          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 w-[240px] md:w-[450px]">
+          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 w-[200px] sm:w-[240px] md:w-[450px]">
             {name === "Loại" && (
               <div onClick={(e) => e.stopPropagation()} className="p-1 w-full">
                 <div className="flex flex-wrap items-center gap-2">
@@ -154,8 +153,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                       />
                       <label
                         htmlFor={element._id}
-                        className="text-center cursor-pointer p-2 rounded capitalize"
-                      >
+                        className="text-center cursor-pointer p-2 rounded capitalize">
                         {element?.title}
                       </label>
                     </>
@@ -168,8 +166,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                       e.stopPropagation();
                       handleReset();
                     }}
-                    className="text-canClick"
-                  >
+                    className="text-canClick">
                     Reset
                   </span>
                 </div>
@@ -189,8 +186,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                       value={price.from}
                       onChange={(e) =>
                         setPrice((prev) => ({ ...prev, from: e.target.value }))
-                      }
-                    ></input>
+                      }></input>
                   </div>
                   <div className="flex items-center">
                     <label htmlFor="to" className="w-[20%]">
@@ -203,8 +199,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                       value={price.to}
                       onChange={(e) =>
                         setPrice((prev) => ({ ...prev, to: e.target.value }))
-                      }
-                    ></input>
+                      }></input>
                   </div>
                 </div>
                 <div className="grid grid-rows-1 md:grid-cols-2 justify-between mt-[18px]">
@@ -216,8 +211,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
                       e.stopPropagation();
                       setPrice({ from: "", to: "" });
                     }}
-                    className="text-canClick text-right"
-                  >
+                    className="text-canClick text-right">
                     Đặt lại
                   </span>
                 </div>

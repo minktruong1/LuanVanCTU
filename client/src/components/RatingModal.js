@@ -23,15 +23,15 @@ const RatingModal = ({
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="bg-white w-[1140px] h-[420px] flex fixed top-[19%] left-[13%]"
+      className="bg-white w-min-[240px] sm:w-min-[640px] md:w-min-[1240px] flex fixed top-[50%] left-[50%] flex-col sm:flex-row transform translate-x-[-50%] translate-y-[-56%] sm:translate-y-[-50%]"
     >
-      <div className="w-[30%] bg-main relative">
-        <div className="absolute bg-main right-[-8px] top-1/2 rotate-45 w-[20px] h-[20px]"></div>
+      <div className="sm:w-[40%] bg-main relative flex justify-center items-center">
+        <div className="hidden absolute bg-main right-[-8px] top-1/2 rotate-45 w-[20px] h-[20px]"></div>
         <div className="flex items-center justify-center p-4">
-          <img alt="" src={productImage} className="w-[312px] h-[312px] " />
+          <img alt="" src={productImage} className="w-[312px] aspect-square " />
         </div>
       </div>
-      <div className="w-[70%]">
+      <div className="sm:w-[60%]">
         <div className="p-4 flex justify-between border-b">
           <div>
             {`Đánh giá của bạn về: `}
@@ -76,7 +76,7 @@ const RatingModal = ({
             ))}
           </div>
         </div>
-        <div className="p-4 flex flex-col gap-2">
+        <div className="p-4 flex flex-col gap-2 bg-white">
           <span>Nội dung đánh giá</span>
           <div className=" h-[20%]">
             <textarea
@@ -87,16 +87,16 @@ const RatingModal = ({
               onChange={(e) => setComment(e.target.value)}
             ></textarea>
           </div>
-        </div>
-        <div className="p-4 absolute right-0 bottom-0">
-          <div>
-            <Button
-              handleOnClick={() =>
-                handleCollectReview({ comment, point: star, pid, oid, oIid })
-              }
-            >
-              Gửi đánh giá
-            </Button>
+          <div className="self-end">
+            <div>
+              <Button
+                handleOnClick={() =>
+                  handleCollectReview({ comment, point: star, pid, oid, oIid })
+                }
+              >
+                Gửi đánh giá
+              </Button>
+            </div>
           </div>
         </div>
       </div>

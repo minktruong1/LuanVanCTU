@@ -126,11 +126,16 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full bg-main flex items-center justify-center sticky top-0 z-40">
-        <div className="w-main h-[88px] py-[20px] flex justify-between items-center">
+      <div className="w-screen bg-main flex items-center justify-center sticky top-0 z-40 px-2">
+        <div
+          className="h-[88px] py-[20px] flex justify-between items-center "
+          style={{
+            width: "1200px",
+          }}
+        >
           <span
             onClick={navigateAndReload}
-            className="hidden md:flex cursor-pointer"
+            className="hidden lg:flex cursor-pointer"
           >
             <span className="text-4xl font-extrabold text-white">TMĐT</span>
           </span>
@@ -143,7 +148,7 @@ const Header = () => {
                 })
               )
             }
-            className="flex items-center ml-4 md:hidden"
+            className="flex items-center ml-4 lg:hidden"
           >
             <span>
               <AiOutlineMenu color="white" size={24} />
@@ -220,7 +225,7 @@ const Header = () => {
           </div>
 
           <div className="flex text-[13px] text-white ">
-            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center ">
+            <div className="hidden  lg:flex  md:flex-row  md:px-4  md:items-center ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <TfiHeadphoneAlt />
               </span>
@@ -229,7 +234,7 @@ const Header = () => {
                 <span className="flex ">1800.1166</span>
               </span>
             </div>
-            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center  ">
+            <div className="hidden  lg:flex  md:flex-row  md:px-4  md:items-center  ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <MdOutlineLocationOn />
               </span>
@@ -238,7 +243,7 @@ const Header = () => {
                 <span className="flex ">TP.Cần Thơ</span>
               </span>
             </div>
-            <div className="hidden  md:flex  md:flex-row  md:px-4  md:items-center ">
+            <div className="hidden  lg:flex  md:flex-row  md:px-4  md:items-center ">
               <span className="flex gap-4 items-center text-[24px] pr-2">
                 <PiNotepadLight />
               </span>
@@ -265,7 +270,7 @@ const Header = () => {
                 >
                   <BsCart3 color="white" />
                 </Badge>
-                <span className="hidden  md:block">
+                <span className="hidden  lg:block">
                   <span className="flex ">Giỏ</span>
                   <span className="flex ">hàng</span>
                 </span>

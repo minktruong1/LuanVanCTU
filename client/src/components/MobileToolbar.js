@@ -13,7 +13,7 @@ import path from "../ultils/path";
 const toolbarItem = [
   { id: 1, text: "Trang chủ", icon: <AiOutlineHome size={24} /> },
   { id: 2, text: "Danh mục", icon: <RiFileList2Line size={24} /> },
-  { id: 3, text: "Khuyến mãi", icon: <LuBadgePercent size={24} /> },
+  { id: 3, text: "Giảm giá", icon: <LuBadgePercent size={24} /> },
   { id: 4, text: "Tư vấn", icon: <TfiHeadphoneAlt size={24} /> },
   { id: 5, text: "Tài khoản", icon: <AiOutlineUser size={24} /> },
 ];
@@ -59,7 +59,7 @@ const MobileToolbar = () => {
   };
 
   return (
-    <div className="bg-white w-full bottom-0 fixed left-0 border-[2px] border-t-main text-[10px] z-50 block md:hidden">
+    <div className="bg-white  bottom-0 fixed left-0 right-0 border-[2px] border-t-main text-[10px] z-50 block md:hidden">
       <ul className="flex justify-center items-center">
         {toolbarItem?.map((element) => (
           <li

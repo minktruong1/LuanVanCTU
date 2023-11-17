@@ -71,7 +71,7 @@ const Product = ({ productData, isNew, isHot }) => {
 
   return (
     <div>
-      <div className="items-center m-2 bg-white text-base border p-4">
+      <div className="items-center m-2 bg-white text-base border p-4 ">
         <Link
           to={`/categories/${productData?.category?.toLowerCase()}/${
             productData?._id

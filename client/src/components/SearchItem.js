@@ -137,7 +137,7 @@ const SearchItem = ({ name, onChoice, changeActiveBox, type = "checkbox" }) => {
       {onChoice === name && (
         <>
           <div className="transparent-bg z-10"></div>
-          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 w-[240px] md:w-[450px]">
+          <div className="filter-modal absolute top-[calc(100%+10px)] left-0 p-4 bg-white rounded drop-shadow-4xl z-20 w-[200px] sm:w-[240px] md:w-[450px]">
             {name === "Loại" && (
               <div onClick={(e) => e.stopPropagation()} className="p-1 w-full">
                 <div className="flex flex-wrap items-center gap-2">

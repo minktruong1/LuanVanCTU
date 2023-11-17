@@ -90,7 +90,7 @@ const ChangePassword = () => {
                 onBlur={handleBlur}
                 id="newPassword"
                 type="password"
-                placeholder="Nhập mật khẩu mớia"
+                placeholder="Nhập mật khẩu mới"
                 className="border focus:outline-none p-2 w-full"
               />
               {errors.newPassword && touched.newPassword && (
@@ -100,7 +100,7 @@ const ChangePassword = () => {
           </div>
         </div>
         <div className="grid grid-cols-10">
-          <span className="col-span-3 text-right">Nhập lại mật khẩu mới</span>
+          <span className="col-span-3 text-right">Xác nhận mật khẩu mới</span>
           <div className="col-span-4">
             <div className="grid grid-rows-1">
               <input

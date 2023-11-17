@@ -16,6 +16,16 @@ const MainCart = () => {
   const navigate = useNavigate();
   const { isLogin, currentCart } = useSelector((state) => state.user);
   const location = useLocation();
+  const [shipPrice, setShipPrice] = useState(40000);
+
+  const priceCounting = Math.round(
+    +currentCart?.reduce(
+      (sum, element) => +element?.price * element?.quantity + sum,
+      0
+    )
+  );
+
+  const lastPriceCounting = priceCounting + shipPrice;
 
   const handleCheckout = () => {
     if (isLogin) {
@@ -58,6 +68,15 @@ const MainCart = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (priceCounting > 500000) {
+      setShipPrice(0);
+    } else {
+      setShipPrice(40000);
+    }
+  }, [priceCounting]);
+
   return (
     <div className="w-[calc(100%-20px)] md:w-main">
       <div className="">
@@ -96,19 +115,12 @@ const MainCart = () => {
                   <div className="border-t font-medium">
                     <div className="flex justify-between mt-2 mb-2 text-[16px]">
                       <span>Phí vận chuyển:</span>
-                      <span>Miễn phí</span>
+                      <span>{`${formatVND(shipPrice)}đ`}</span>
                     </div>
                     <div className="flex justify-between items-center mb-4 text-[18px]">
                       <span>Tổng tiền</span>
                       <span className="text-main text-lg md:text-2xl">
-                        {`${formatVND(
-                          currentCart?.reduce(
-                            (sum, element) =>
-                              +element?.price * element?.quantity + sum,
-                            0
-                          )
-                        )}`}
-                        đ
+                        {`${formatVND(lastPriceCounting)}đ`}
                       </span>
                     </div>
                     <Button handleOnClick={() => handleCheckout()} widthFull>

@@ -35,6 +35,8 @@ const Checkout = () => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [params] = useSearchParams();
   const [note, setNote] = useState(null);
+
+  const [shipPrice, setShipPrice] = useState(40000);
   const [couponCode, setCouponCode] = useState("");
   const [couponData, setCouponData] = useState(null);
 
@@ -58,10 +60,14 @@ const Checkout = () => {
   const totalDiscount = directDiscount + percentDiscountAmount;
 
   // Tính lastPriceCounting
-  const lastPriceCounting = Math.max(priceCounting - totalDiscount, 0);
+  const lastPriceCounting = Math.max(
+    priceCounting - totalDiscount + +shipPrice,
+    0
+  );
 
   const profitCounting = Math.max(
     lastPriceCounting -
+      +shipPrice -
       Math.round(
         currentCart.reduce(
           (totalProfit, cartItem) =>
@@ -92,6 +98,7 @@ const Checkout = () => {
       if (response.success) {
         localStorage.setItem("noteLocal", note);
         localStorage.setItem("couponCodeLocal", couponCode);
+        localStorage.setItem("shipPriceLocal", shipPrice);
         localStorage.setItem("lastPriceLocal", lastPriceCounting);
         localStorage.setItem("profitLocal", profitCounting);
         window.location.href = response.VNpayUrl;
@@ -116,12 +123,14 @@ const Checkout = () => {
     // Sau khi quay lại trang
     const savedNote = localStorage.getItem("noteLocal");
     const savedCouponCode = localStorage.getItem("couponCodeLocal");
+    const savedShipPrice = localStorage.getItem("shipPriceLocal");
     const savedLastPrice = localStorage.getItem("lastPriceLocal");
     const savedProfit = localStorage.getItem("profitLocal");
 
     const data = {
       productList: currentCart,
       couponCode: savedCouponCode,
+      shipPrice: savedShipPrice,
       totalPrice: priceCounting,
       lastPrice: savedLastPrice,
       address: currentData?.address,
@@ -211,10 +220,21 @@ const Checkout = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    const calculateShipPrice = () => {
+      if (priceCounting > 500000) {
+        setShipPrice(0);
+      } else {
+        setShipPrice(40000);
+      }
+    };
+
+    calculateShipPrice();
+  }, [totalDiscount]);
+
   if (!isLogin || !currentData) {
     return <Navigate to={`/`} replace={true} />;
   }
-
   return (
     <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 gap-3 my-8 text-sm md:text-base">
       <div className="grid grid-rows-1 bg-white rounded-b">
@@ -375,6 +395,10 @@ const Checkout = () => {
           </div>
 
           <div className="border-t pt-4 text-right">
+            <h1>Phí vận chuyển:</h1>
+            <span className="text-[18px] text-main">{`${formatVND(
+              shipPrice
+            )}đ`}</span>
             <h1>Áp dụng mã giảm giá:</h1>
             <span className="text-[18px] text-main">
               {couponData?.directDiscount || couponData?.percentDiscount ? (
@@ -404,6 +428,7 @@ const Checkout = () => {
               payload={{
                 productList: currentCart,
                 couponCode: couponCode,
+                shipPrice: shipPrice,
                 totalPrice: priceCounting,
                 lastPrice: lastPriceCounting,
                 address: currentData?.address,
@@ -428,6 +453,7 @@ const Checkout = () => {
                 handleCheckout({
                   productList: currentCart,
                   couponCode: couponCode,
+                  shipPrice: shipPrice,
                   totalPrice: priceCounting,
                   lastPrice: lastPriceCounting,
                   address: currentData?.address,

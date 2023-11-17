@@ -10,6 +10,7 @@ const createOrder = asyncHandler(async (req, res) => {
     productList,
     couponCode,
     couponApply,
+    shipPrice,
     totalPrice,
     lastPrice,
     address,
@@ -36,6 +37,7 @@ const createOrder = asyncHandler(async (req, res) => {
     const data = {
       productList,
       couponApply,
+      shipPrice,
       totalPrice,
       lastPrice,
       buyer,

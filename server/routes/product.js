@@ -18,13 +18,6 @@ router.get("/", controllers.getAllProducts);
 router.put("/reviews", verifyLoginToken, controllers.reviews);
 
 router.put(
-  "/uploadimg/:pid",
-  [verifyLoginToken, isAdmin],
-  upload.array("images", 6),
-  controllers.uploadProductImg
-);
-
-router.put(
   "/:pid",
   [verifyLoginToken, isAdmin],
   upload.fields([

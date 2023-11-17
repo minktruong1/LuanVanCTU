@@ -73,9 +73,9 @@ const Product = ({ productData, isNew, isHot }) => {
     <div>
       <div className="items-center m-2 bg-white text-base border p-4">
         <Link
-          to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
-            productData?.slug
-          }`}
+          to={`/categories/${productData?.category?.toLowerCase()}/${
+            productData?._id
+          }/${productData?.slug}`}
           className="relative"
         >
           <div className="overflow-hidden flex justify-center">

@@ -13,7 +13,7 @@ const path = {
   COUPONS: "coupons",
   PAYMENT_INSTRUCTION: "payment_instruction",
   FAQS: "faqs",
-  PRODUCT_DETAIL__CATEGORY__PID__TITLE: ":category/:pid/:slug",
+  PRODUCT_DETAIL__CATEGORY__PID__TITLE: "categories/:category/:pid/:slug",
   PRODUCT_DETAIL: "product",
   LAST_REGISTER: "last-register/:status",
   RESET_PASSWORD: "reset-password/:token",

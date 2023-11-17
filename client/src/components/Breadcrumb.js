@@ -15,8 +15,8 @@ const Breadcrumb = ({ title, category }) => {
     { path: "/coupons", breadcrumb: "Mã giảm giá" },
     { path: "/faqs", breadcrumb: "Hỏi đáp" },
     { path: "/search", breadcrumb: "Tìm kiếm" },
-    { path: "/:category", breadcrumb: category },
-    { path: "/:category/:pid/:title", breadcrumb: title },
+    { path: "/categories/:category", breadcrumb: category },
+    { path: "/categories/:category/:pid/:title", breadcrumb: title },
   ];
 
   const breadcrumb = useBreadcrumbs(routes);

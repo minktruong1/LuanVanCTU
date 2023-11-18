@@ -1,10 +1,11 @@
 const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var imagesSchema = new mongoose.Schema(
+var imageStoreSchema = new mongoose.Schema(
   {
     title: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },
@@ -23,4 +24,4 @@ var imagesSchema = new mongoose.Schema(
 );
 
 //Export the model
-module.exports = mongoose.model("Images", imageSchema);
+module.exports = mongoose.model("ImageStore", imageStoreSchema);

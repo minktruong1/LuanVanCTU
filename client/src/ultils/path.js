@@ -35,6 +35,8 @@ const path = {
   MANAGE_COUPON: "manage-coupon",
   CREATE_COUPON: "create-coupon",
   CREATE_CATEGORY: "create-category",
+  CREATE_IMG_STORE: "create-imgstore",
+  MANAGE_IMG_STORE: "manage-imgstore",
 
   //customer path
   CUSTOMER: "customer",

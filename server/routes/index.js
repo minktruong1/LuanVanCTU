@@ -6,7 +6,7 @@ const couponRoute = require("./coupon.js");
 const orderRoute = require("./order.js");
 const VNpayRoute = require("./VNpay.js");
 const searchRoute = require("./searchProduct.js");
-const imagesRoute = require("./searchProduct.js");
+const imagesRoute = require("./images.js");
 
 const { notFound, errorHandler } = require("../middlewares/prettyError.js");
 
@@ -19,7 +19,7 @@ const initRoutes = (app) => {
   app.use("/api/order", orderRoute);
   app.use("/api/vnpay", VNpayRoute);
   app.use("/api/search", searchRoute);
-  app.use("/api/images", imagesRoute);
+  app.use("/api/imagestore", imagesRoute);
 
   app.use(notFound);
   app.use(errorHandler);

@@ -10,9 +10,14 @@ import { showModal } from "../../store/app/appSlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import sweetAlert from "sweetalert2";
-import { apiGetCategories } from "../../apis";
+import {
+  apiDeleteImgStore,
+  apiGetAllImgStore,
+  apiGetCategories,
+  apiUpdateImgStore,
+} from "../../apis";
 
-const ManageCate = () => {
+const ManageImgStore = () => {
   const {
     handleSubmit,
     register,
@@ -21,16 +26,15 @@ const ManageCate = () => {
     watch,
   } = useForm({
     title: "",
-    brand: "",
   });
   const dispatch = useDispatch();
 
   const [params] = useSearchParams();
   const [editCate, setEditCate] = useState(null);
   const [update, setUpdate] = useState(false);
-  const [categories, setCategories] = useState(null);
+  const [imgBlock, setImgBlock] = useState(null);
   const [review, setReview] = useState({
-    image: "",
+    images: [],
   });
 
   const reRender = useCallback(() => {
@@ -38,32 +42,38 @@ const ManageCate = () => {
   }, [update]);
 
   const fetchCategories = async () => {
-    const response = await apiGetCategories();
+    const response = await apiGetAllImgStore();
+
     if (response.success) {
-      setCategories(response.categories);
+      setImgBlock(response.images);
     }
   };
 
   const handleBack = () => {
     setEditCate(null);
     setReview({
-      image: "",
+      images: [],
     });
+  };
+
+  const handleReviewImages = async (files) => {
+    const imagesReview = [];
+    for (let file of files) {
+      if (file.type !== "image/png" && file.type !== "image/jpeg") {
+        toast.warning("Định dạng file không hỗ trợ");
+        return;
+      }
+      const base64 = await getBase64(file);
+      imagesReview.push(base64);
+    }
+    setReview((prev) => ({ ...prev, images: imagesReview }));
   };
 
   const handleSelectUpdate = async (data) => {
     setEditCate(data);
-    setReview({
-      image: data.image,
-    });
   };
 
-  const handleReviewImage = async (file) => {
-    const base64Thumb = await getBase64(file);
-    setReview((prev) => ({ ...prev, image: base64Thumb }));
-  };
-
-  const handleDelete = (cateid) => {
+  const handleDelete = (imgid) => {
     sweetAlert
       .fire({
         title: "Xác nhận",
@@ -74,7 +84,10 @@ const ManageCate = () => {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          const response = await apiDeleteCategory(cateid);
+          dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
+          const response = await apiDeleteImgStore(imgid);
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
+
           if (response.success) {
             toast.success(response.message);
             reRender();
@@ -87,40 +100,37 @@ const ManageCate = () => {
 
   const handleUpdate = async (data) => {
     const groupData = { ...data };
-    if (data.title) {
-      data.title = categories?.find((el) => el.title === data.title)?.title;
-    }
-    groupData.image = data?.image?.length === 0 ? review.image : data.image[0];
-    data.brand = data.brand[0].split(",").map((item) => item.trim());
     const formData = new FormData();
+
     for (let i of Object.entries(groupData)) {
-      formData.append(i[0], i[1]);
+      if (i[0] === "images") {
+        if (i[1] instanceof FileList && i[1].length > 0) {
+          const imagesToUpload = Array.from(i[1]);
+          for (let image of imagesToUpload) {
+            formData.append("images", image);
+          }
+        }
+      } else {
+        formData.append(i[0], i[1]);
+      }
     }
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
-    const response = await apiUpdateCategory(formData, editCate?._id);
-    dispatch(showModal({ isShowModal: false, modalChildren: null }));
+
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
+    const response = await apiUpdateImgStore(formData, editCate?._id);
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
     if (response.success) {
       toast.success(response.message);
       reRender();
-      setEditCate(false);
+      setEditCate(null);
     } else {
       toast.error(response.message);
     }
   };
 
   useEffect(() => {
-    if (watch("image") instanceof FileList && watch("image").length > 0)
-      handleReviewImage(watch("image")[0]);
-  }, [watch("image")]);
-
-  useEffect(() => {
     if (editCate) {
       reset({
         title: editCate.title,
-        brand: editCate.brand,
-      });
-      setReview({
-        image: editCate?.image || "",
       });
     }
   }, [editCate]);
@@ -128,6 +138,12 @@ const ManageCate = () => {
   useEffect(() => {
     fetchCategories();
   }, [update]);
+
+  useEffect(() => {
+    if (watch("images") instanceof FileList && watch("images").length > 0) {
+      handleReviewImages(watch("images"));
+    }
+  }, [watch("images")]);
 
   return (
     <div className="w-full p-4 relative overflow-auto">
@@ -140,13 +156,13 @@ const ManageCate = () => {
           <thead className="bg-[#362f4b] text-white ">
             <tr>
               <th className="p-4 rounded-tl-md ">#</th>
-              <th className="w-[400px]">Tên nhóm sản phẩm</th>
-              <th>Các hãng liên quan</th>
+              <th className="w-[130px]">Tên nhóm ảnh</th>
+              <th className="w-[800px]">Các ảnh trong nhóm</th>
               <th className="rounded-tr-md">Thao tác</th>
             </tr>
           </thead>
           <tbody className="text-center border-[#362f4b] border ">
-            {categories?.map((element, index) => (
+            {imgBlock?.map((element, index) => (
               <>
                 <tr
                   key={element?._id}
@@ -157,19 +173,15 @@ const ManageCate = () => {
                       (params.get("page") - 1) * 10 + index + 1}
                     {!params.get("page") && index + 1}
                   </td>
-                  <td className="text-left flex items-center">
-                    <img
-                      src={element.image}
-                      alt=""
-                      className="w-[60px] h-[60px]"
-                    />
-                    {element.title}
-                  </td>
-                  <td className="text-left ">
-                    {element?.brand?.map((element) => (
-                      <span className="px-2 border border-black rounded mr-2">
-                        {element}
-                      </span>
+                  <td className="text-left">{element.title}</td>
+                  <td className="flex flex-wrap gap-2">
+                    {element?.images?.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt="products"
+                        className="w-[180px] object-contain border border-black"
+                      />
                     ))}
                   </td>
                   <td>
@@ -191,7 +203,7 @@ const ManageCate = () => {
                   <>
                     <tr>
                       <td></td>
-                      <td className="py-2 px-2">
+                      <td className="py-2 px-2 w-[180px]">
                         <span>
                           <ReactInputForm
                             register={register}
@@ -206,41 +218,40 @@ const ManageCate = () => {
                         </span>
                       </td>
                       <td className="py-2 px-2">
-                        <span>
-                          <ReactInputForm
-                            register={register}
-                            errors={errors}
-                            id={"brand"}
-                            validate={{
-                              required: "Vui lòng nhập",
-                            }}
-                            defaultValue={editCate?.brand}
-                            fullWidth
-                          />
-                        </span>
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>
-                        <input type="file" id="image" {...register("image")} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>
-                        {review.image && (
-                          <div className="my-4">
-                            <img
-                              src={review.image}
-                              alt="imagee"
-                              className="w-[200px] object-contain"
-                            />
+                        {review.images.length > 0 && (
+                          <div className="my-4 flex w-full gap-3 flex-wrap">
+                            {review.images?.map((element, index) => (
+                              <div className="w-fit">
+                                <img
+                                  key={index}
+                                  src={element}
+                                  alt="products"
+                                  className="w-[180px] object-contain"
+                                />
+                              </div>
+                            ))}
                           </div>
                         )}
                       </td>
+                      <td></td>
                     </tr>
+                    <tr className="w-[180px]">
+                      <td></td>
+                      <td>
+                        <input
+                          type="file"
+                          id="imgInput"
+                          multiple
+                          {...register("images", {
+                            required: "Chọn ít nhất 1 ảnh",
+                          })}
+                          className="w-fit"
+                        />
+                      </td>
+
+                      <td></td>
+                    </tr>
+
                     <tr className="border">
                       <td></td>
                       <td className="text-left">
@@ -264,4 +275,4 @@ const ManageCate = () => {
   );
 };
 
-export default ManageCate;
+export default ManageImgStore;

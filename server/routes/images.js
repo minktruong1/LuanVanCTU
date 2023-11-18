@@ -1,20 +1,30 @@
 const router = require("express").Router();
-const controllers = require("../controllers/image.js");
+const controllers = require("../controllers/imageStore.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
 router.post(
   "/",
-  [verifyLoginToken, isAdmin],
-  upload.array("images", 10), // Tối đa 10 ảnh
+  upload.fields([
+    {
+      name: "images",
+      maxCount: 10,
+    },
+  ]),
   controllers.createImage
 );
 
 router.get("/", controllers.getAllImages);
+router.get("/getDetail/:title", controllers.getDetailImages);
 router.put(
   "/:imageId",
   [verifyLoginToken, isAdmin],
-  upload.array("images", 10), // Tối đa 10 ảnh
+  upload.fields([
+    {
+      name: "images",
+      maxCount: 10,
+    },
+  ]),
   controllers.updateImage
 );
 

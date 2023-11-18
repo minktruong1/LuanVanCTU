@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import icons from "../ultils/icons.js";
 import Slider from "react-slick";
 
@@ -29,17 +29,31 @@ const imagesLink = [
 ];
 
 const Banner = () => {
+  const [banner, setBanner] = useState(null);
+
+  const fetchBanner = async (url, setter) => {
+    const response = await fetch(
+      `http://localhost:5000/api/imagestore/getDetail/banner`
+    );
+    const data = await response.json();
+    setBanner(data.imageStore[0].images);
+  };
+
+  useEffect(() => {
+    fetchBanner();
+  }, []);
+
   return (
     <div className="">
       <Slider {...reactSlickSetting} className="custom">
-        {imagesLink?.map((element) => (
+        {banner?.map((element, index) => (
           <div
-            key={element.id}
+            key={index}
             className="h-[188px] md:w-full md:h-[320px] rounded overflow-hidden"
           >
             <img
               alt=""
-              src={element.link}
+              src={element}
               className="w-full h-full object-cover"
             ></img>
           </div>

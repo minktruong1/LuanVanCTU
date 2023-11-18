@@ -19,6 +19,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { MobileSidebar } from "../components";
 import useDebounce from "../hooks/useDebounce.js";
 import { formatVND } from "../ultils/helpers.js";
+import { apiGetDetailImgStore } from "../apis/imgStore.js";
 
 const {
   TfiHeadphoneAlt,
@@ -32,6 +33,7 @@ const {
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { isLogin, currentData, currentCart, message } = useSelector(
     (state) => state.user
   );
@@ -46,6 +48,7 @@ const Header = () => {
   const [searchResult, setSearchResult] = useState([]);
 
   const [search, setSearch] = useState("");
+  const [logo, setLogo] = useState(null);
 
   const queryDebounce = useDebounce(search, 500);
 
@@ -65,6 +68,14 @@ const Header = () => {
     );
     const data = await response.json();
     setSearchResult(data);
+  };
+
+  const fetchLogoImg = async () => {
+    const response = await fetch(
+      `http://localhost:5000/api/imagestore/getDetail/logo`
+    );
+    const data = await response.json();
+    setLogo(data.imageStore[0].images);
   };
 
   const handleSearch = () => {
@@ -118,6 +129,8 @@ const Header = () => {
   }, [queryDebounce]);
 
   useEffect(() => {
+    fetchLogoImg();
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -137,7 +150,7 @@ const Header = () => {
             onClick={navigateAndReload}
             className="hidden lg:flex cursor-pointer"
           >
-            <span className="text-4xl font-extrabold text-white">TMĐT</span>
+            <img alt="logo" src={logo} className="w-[120px] h-[80px]" />
           </span>
           <div
             onClick={() =>

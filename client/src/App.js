@@ -29,10 +29,12 @@ import {
   CreateBlog,
   CreateCategory,
   CreateCoupon,
+  CreateImgStore,
   CreateProduct,
   ManageBlog,
   ManageCate,
   ManageCoupon,
+  ManageImgStore,
   ManageOrders,
   ManageProducts,
   ManageUsers,
@@ -126,6 +128,8 @@ function App() {
           <Route path={path.MANAGE_COUPON} element={<ManageCoupon />} />
           <Route path={path.CREATE_COUPON} element={<CreateCoupon />} />
           <Route path={path.CREATE_CATEGORY} element={<CreateCategory />} />
+          <Route path={path.CREATE_IMG_STORE} element={<CreateImgStore />} />
+          <Route path={path.MANAGE_IMG_STORE} element={<ManageImgStore />} />
         </Route>
 
         <Route path={path.CUSTOMER} element={<CustomerLayout />}>

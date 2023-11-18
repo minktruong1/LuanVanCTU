@@ -189,6 +189,21 @@ export const adminSidebar = [
       },
     ],
   },
+  {
+    id: 8,
+    type: "PARENT",
+    text: "Quản Kho ảnh",
+    submenu: [
+      {
+        text: "Thêm kho ảnh",
+        path: `/${path.ADMIN}/${path.CREATE_IMG_STORE}`,
+      },
+      {
+        text: "Danh sách kho ảnh",
+        path: `/${path.ADMIN}/${path.MANAGE_IMG_STORE}`,
+      },
+    ],
+  },
 ];
 
 export const customerSidebar = [

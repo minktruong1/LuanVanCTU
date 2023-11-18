@@ -9,12 +9,28 @@ import CategoriesList from "../../components/CategoriesList.js";
 import BlogsMap from "../../components/BlogsMap.js";
 import { useSelector } from "react-redux";
 import ProductSuggestion from "../../components/ProductSuggestion.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [poster, setPoster] = useState(null);
+  const [leftPoster, setLeftPoster] = useState(null);
+
+  const fetchData = async (url, setter) => {
+    const response = await fetch(
+      `http://localhost:5000/api/imagestore/getDetail/${url}`
+    );
+    const data = await response.json();
+    setter(data.imageStore[0].images);
+  };
+
   useEffect(() => {
+    fetchData("mini-poster", setPoster);
+    fetchData("left-poster", setLeftPoster);
     window.scrollTo(0, 0);
   }, []);
+
+  const renderMiniPosters = (data) =>
+    data?.map((element, index) => <MiniPoster key={index} src={element} />);
   return (
     <div
       className="w-full px-2"
@@ -35,9 +51,8 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="hidden xl:flex md:flex-col  w-[300px]">
-                <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
-                <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
+              <div className="hidden xl:flex md:flex-col w-[300px]">
+                {renderMiniPosters(leftPoster)}
               </div>
             </div>
           </div>
@@ -45,10 +60,7 @@ const Home = () => {
       </div>
 
       <div className="hidden md:flex md:flex-row w-full mt-4 ">
-        <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
-        <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
-        <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
-        <MiniPoster src="https://file.hstatic.net/200000722513/file/banner_slider_-_right_1_04cb85fcde584ec0a0818d9e5e212282.png" />
+        {renderMiniPosters(poster)}
       </div>
       <div className="w-full hidden md:block">
         <SpecialOffer />

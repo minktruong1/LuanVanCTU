@@ -4,6 +4,7 @@ import Masonry from "react-masonry-css";
 import { Product } from "../../components";
 import { useSelector } from "react-redux";
 import emptyCart from "../../assets/empty-cart.png";
+import { Helmet } from "react-helmet";
 
 const breakpointColumnsObj = {
   default: 5,
@@ -51,6 +52,9 @@ const FavoriteProducts = () => {
           ))}
         </Masonry>
       </div>
+      <Helmet>
+        <title>Sản phẩm yêu thích</title>
+      </Helmet>
     </div>
   );
 };

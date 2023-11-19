@@ -1,8 +1,10 @@
 import React from "react";
-import { Button, ReactInputForm } from "../../components";
+import { Button, Loading, ReactInputForm } from "../../components";
 import { useForm } from "react-hook-form";
 import { apiCreateCoupon } from "../../apis/coupon";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../store/app/appSlice";
 
 const CreateCoupon = () => {
   const {
@@ -11,9 +13,13 @@ const CreateCoupon = () => {
     reset,
     handleSubmit,
   } = useForm();
+  const dispatch = useDispatch();
 
   const handleCreateCoupon = async (data) => {
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiCreateCoupon(data);
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+
     if (response.success) {
       toast.success(response.message);
       reset();

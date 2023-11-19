@@ -15,6 +15,7 @@ import { AiOutlineWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import useDebounce from "../../hooks/useDebounce";
 import { Loading } from "../../components";
+import { Helmet } from "react-helmet";
 
 const { MdLocationPin } = icons;
 
@@ -472,6 +473,9 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <Helmet>
+        <title>Thanh toán đơn hàng</title>
+      </Helmet>
     </div>
   );
 };

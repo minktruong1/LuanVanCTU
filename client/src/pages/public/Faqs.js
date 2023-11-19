@@ -1,6 +1,7 @@
 import React from "react";
 import FaqQuestion from "../../components/FaqQuestion";
 import { Breadcrumb } from "../../components";
+import { Helmet } from "react-helmet";
 
 const content = [
   {
@@ -51,6 +52,9 @@ const Faqs = () => {
           ))}
         </div>
       </div>
+      <Helmet>
+        <title>Giải đáp thắc mắc</title>
+      </Helmet>
     </div>
   );
 };

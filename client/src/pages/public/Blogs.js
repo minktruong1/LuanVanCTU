@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { BlogItem, Breadcrumb } from "../../components";
 import emptyData from "../../assets/no-data.png";
+import { Helmet } from "react-helmet";
 
 const Blogs = () => {
   window.scrollTo(0, 0);
@@ -24,6 +25,9 @@ const Blogs = () => {
           </>
         )}
       </div>
+      <Helmet>
+        <title>Tin tức công nghệ</title>
+      </Helmet>
     </div>
   );
 };

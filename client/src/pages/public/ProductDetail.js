@@ -30,6 +30,7 @@ import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { apiGetCurrentAccount } from "../../store/users/asyncActions";
+import { Helmet } from "react-helmet";
 
 const { GiCheckMark } = icons;
 
@@ -340,6 +341,9 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <Helmet>
+        <title>{product?.title}</title>
+      </Helmet>
     </>
   );
 };

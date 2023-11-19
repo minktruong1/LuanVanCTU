@@ -9,6 +9,7 @@ import { formatVND } from "../../ultils/helpers";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
 import sweetAlert from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const { MdArrowBackIosNew } = icons;
 
@@ -133,6 +134,9 @@ const MainCart = () => {
           </div>
         </div>
       </div>
+      <Helmet>
+        <title>Giỏ hàng cá nhân</title>
+      </Helmet>
     </div>
   );
 };

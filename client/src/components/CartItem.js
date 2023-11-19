@@ -91,10 +91,13 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
         </Link>
         <span
           onClick={() => handleRemoveItem(element?.product?._id)}
-          className="flex place-content-center text-[14px] items-center cursor-pointer text-[#6d6e72] hover:text-main"
+          className={clsx(
+            "flex place-content-center text-[14px] items-center cursor-pointer text-[#6d6e72] hover:text-main",
+            outOfStock && "z-10 text-main"
+          )}
         >
           <BiTrash />
-          <span className="ml-1">Xóa</span>
+          <span className={clsx("ml-1")}>Xóa</span>
         </span>
       </div>
       <div className="col-span-4">

@@ -11,6 +11,7 @@ import {
   AiOutlineLike,
 } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 const BlogDetail = () => {
   const [blog, setBlog] = useState(null);
@@ -126,6 +127,9 @@ const BlogDetail = () => {
           </div>
         </div>
       </div>
+      <Helmet>
+        <title>{blog?.title}</title>
+      </Helmet>
     </div>
   );
 };

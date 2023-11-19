@@ -9,6 +9,7 @@ import path from "../../ultils/path";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/users/userSlice";
+import { Helmet } from "react-helmet";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -125,6 +126,9 @@ const ChangePassword = () => {
           </div>
         </div>
       </form>
+      <Helmet>
+        <title>Đổi mật khẩu</title>
+      </Helmet>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Pagination, ReactInputForm } from "../../components";
+import { Loading, Pagination, ReactInputForm } from "../../components";
 import { useForm } from "react-hook-form";
 import { apiDeleteProduct, apiGetProducts } from "../../apis";
 import {
@@ -15,6 +15,8 @@ import UpdateProduct from "./UpdateProduct";
 import sweetAlert from "sweetalert2";
 import { toast } from "react-toastify";
 import { formatVND } from "../../ultils/helpers";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../store/app/appSlice";
 
 const ManageProducts = () => {
   const {
@@ -24,6 +26,8 @@ const ManageProducts = () => {
   } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const [params] = useSearchParams();
   const [products, setProducts] = useState(null);
   const [productCount, setProductCount] = useState(0);
@@ -53,7 +57,10 @@ const ManageProducts = () => {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
+          dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
           const response = await apiDeleteProduct(pid);
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
+
           if (response.success) {
             toast.success(response.message);
           } else {

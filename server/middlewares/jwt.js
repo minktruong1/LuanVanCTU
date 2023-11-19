@@ -7,7 +7,7 @@ const tokenGeneration = (uid, role) =>
       role,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "5h" }
+    { expiresIn: "1h" }
   );
 
 const tokenRefreshGeneration = (uid) =>
@@ -16,7 +16,7 @@ const tokenRefreshGeneration = (uid) =>
       _id: uid,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "2h" }
+    { expiresIn: "3d" }
   );
 
 module.exports = {

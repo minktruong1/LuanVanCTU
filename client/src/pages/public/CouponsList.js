@@ -4,6 +4,7 @@ import { Breadcrumb } from "../../components";
 import clsx from "clsx";
 import moment from "moment";
 import { formatVND } from "../../ultils/helpers";
+import { Helmet } from "react-helmet";
 
 const CouponsList = () => {
   const [couponsList, setCouponsList] = useState(null);
@@ -57,6 +58,9 @@ const CouponsList = () => {
           ))}
         </div>
       </div>
+      <Helmet>
+        <title>Danh sách mã giảm giá</title>
+      </Helmet>
     </div>
   );
 };

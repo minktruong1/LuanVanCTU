@@ -24,6 +24,7 @@ const UpdateBlog = ({ editBlogTab, setEditBlogTab }) => {
     handleSubmit,
     watch,
   } = useForm();
+  const dispatch = useDispatch();
 
   const [review, setReview] = useState({
     image: "",
@@ -32,8 +33,6 @@ const UpdateBlog = ({ editBlogTab, setEditBlogTab }) => {
   const [payload, setPayload] = useState({
     description: "",
   });
-
-  const dispatch = useDispatch();
 
   const [invalidFields, setInvalidFields] = useState([]);
 
@@ -89,12 +88,15 @@ const UpdateBlog = ({ editBlogTab, setEditBlogTab }) => {
     sweetAlert
       .fire({
         title: "Xác nhận",
-        text: "Bạn muốn xóa sản phẩm này?",
+        text: "Bạn muốn xóa bài viết này?",
         showCancelButton: true,
       })
       .then(async (result) => {
         if (result.isConfirmed) {
+          dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
           const response = await apiAdminDeleteBlog(bid);
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
+
           if (response.success) {
             toast.success(response.message);
             setEditBlogTab(null);

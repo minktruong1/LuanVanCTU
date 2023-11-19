@@ -16,6 +16,7 @@ import {
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
 import { sorts } from "../../ultils/contants";
+import { Helmet } from "react-helmet";
 
 const breakpointColumnsObj = {
   default: 5,
@@ -148,6 +149,9 @@ const Products = () => {
       <div className="flex justify-center">
         <Pagination totalCount={products?.counts} />
       </div>
+      <Helmet>
+        <title>Tất cả sản phẩm</title>
+      </Helmet>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Button } from "../../components";
+import { Button, Loading } from "../../components";
 import icons from "../../ultils/icons";
 import { apiLogin } from "../../apis";
 import sweetAlert from "sweetalert2";
@@ -11,6 +11,8 @@ import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { loginSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
+import { showModal } from "../../store/app/appSlice";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,7 +20,10 @@ const Login = () => {
   const [searchParams] = useSearchParams();
 
   const onSubmit = async (values) => {
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const responseLogin = await apiLogin(values);
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+
     if (responseLogin.success) {
       dispatch(
         login({
@@ -113,6 +118,9 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <Helmet>
+        <title>Trang đăng nhập</title>
+      </Helmet>
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { forgotPasswordSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 import { showModal } from "../../store/app/appSlice";
+import { Helmet } from "react-helmet";
 
 const ForgotPassword = () => {
   window.scrollTo(0, 0);
@@ -70,6 +71,9 @@ const ForgotPassword = () => {
           </form>
         </div>
       </div>
+      <Helmet>
+        <title>Quên mật khẩu</title>
+      </Helmet>
     </div>
   );
 };

@@ -139,7 +139,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-screen bg-main flex items-center justify-center sticky top-0 z-40 px-2">
+      <div className="w-screen bg-main flex items-center justify-center fixed top-0 z-40 px-2">
         <div
           className="h-[88px] py-[20px] flex justify-between items-center "
           style={{

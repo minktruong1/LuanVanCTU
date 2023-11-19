@@ -23,6 +23,7 @@ import { showModal } from "../../store/app/appSlice";
 import { useForm } from "react-hook-form";
 import useDebounce from "../../hooks/useDebounce";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 
 const tabs = [
   { id: 1, name: "Tất cả" },
@@ -375,6 +376,9 @@ const OrderHistory = () => {
           </>
         )}
       </div>
+      <Helmet>
+        <title>Lịch sử đơn hàng</title>
+      </Helmet>
     </>
   );
 };

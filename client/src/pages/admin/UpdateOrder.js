@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { formatVND } from "../../ultils/helpers";
-import { AdminSelector, Button, ReactInputForm } from "../../components";
+import {
+  AdminSelector,
+  Button,
+  Loading,
+  ReactInputForm,
+} from "../../components";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { apiUpdateOrderStatus } from "../../apis";
 import { PiExportBold } from "react-icons/pi";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../store/app/appSlice";
 
 const status = [
   { id: 1, text: "Đang xử lý", value: "Đang xử lý" },
@@ -23,11 +30,15 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
     handleSubmit,
     reset,
   } = useForm();
+  const dispatch = useDispatch();
 
   const handleUpdateOrder = async (data) => {
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiUpdateOrderStatus(editOrderTab?._id, {
       status: data.status,
     });
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+
     if (response.success) {
       toast.success(response.message);
     } else {

@@ -9,6 +9,7 @@ import {
   Navigation,
   MobileToolbar,
 } from "../../components";
+import { Helmet } from "react-helmet";
 
 const CustomerLayout = () => {
   const { isLogin, currentData } = useSelector((state) => state.user);
@@ -34,6 +35,9 @@ const CustomerLayout = () => {
         </div>
         <Footer />
         <MobileToolbar />
+        <Helmet>
+          <title>Thông tin cá nhân</title>
+        </Helmet>
       </div>
     </>
   );

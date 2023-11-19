@@ -8,6 +8,7 @@ import { resetPasswordSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 import path from "../../ultils/path";
+import { Helmet } from "react-helmet";
 
 const RsPassword = () => {
   window.scrollTo(0, 0);
@@ -91,6 +92,9 @@ const RsPassword = () => {
           </form>
         </div>
       </div>
+      <Helmet>
+        <title>Đặt lại mật khẩu</title>
+      </Helmet>
     </div>
   );
 };

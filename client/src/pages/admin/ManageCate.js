@@ -74,7 +74,10 @@ const ManageCate = () => {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
+          dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
           const response = await apiDeleteCategory(cateid);
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
+
           if (response.success) {
             toast.success(response.message);
             reRender();
@@ -96,9 +99,9 @@ const ManageCate = () => {
     for (let i of Object.entries(groupData)) {
       formData.append(i[0], i[1]);
     }
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiUpdateCategory(formData, editCate?._id);
-    dispatch(showModal({ isShowModal: false, modalChildren: null }));
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
     if (response.success) {
       toast.success(response.message);
       reRender();

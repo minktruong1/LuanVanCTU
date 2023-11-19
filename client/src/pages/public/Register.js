@@ -10,6 +10,7 @@ import { registerSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { showModal } from "../../store/app/appSlice";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -242,6 +243,9 @@ const Register = () => {
           </form>
         </div>
       </div>
+      <Helmet>
+        <title>Trang đăng ký</title>
+      </Helmet>
     </div>
   );
 };

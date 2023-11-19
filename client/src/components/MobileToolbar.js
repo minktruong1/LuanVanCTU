@@ -59,7 +59,7 @@ const MobileToolbar = () => {
   };
 
   return (
-    <div className="bg-white  bottom-0 fixed left-0 right-0 border-[2px] border-t-main text-[10px] z-50 block md:hidden">
+    <div className="bg-white bottom-0 fixed left-0 right-0 border-[2px] border-t-main text-[10px] z-50 block md:hidden">
       <ul className="flex justify-center items-center">
         {toolbarItem?.map((element) => (
           <li

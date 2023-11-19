@@ -71,6 +71,9 @@ const ManageImgStore = () => {
 
   const handleSelectUpdate = async (data) => {
     setEditCate(data);
+    setReview({
+      images: [],
+    });
   };
 
   const handleDelete = (imgid) => {
@@ -242,9 +245,7 @@ const ManageImgStore = () => {
                           type="file"
                           id="imgInput"
                           multiple
-                          {...register("images", {
-                            required: "Chọn ít nhất 1 ảnh",
-                          })}
+                          {...register("images")}
                           className="w-fit"
                         />
                       </td>

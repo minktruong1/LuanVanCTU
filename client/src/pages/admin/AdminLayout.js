@@ -4,6 +4,7 @@ import path from "../../ultils/path";
 import { useSelector } from "react-redux";
 import { AdminHeader, AdminSidebar } from "../../components";
 import clsx from "clsx";
+import { Helmet } from "react-helmet";
 
 const AdminLayout = () => {
   const { isLogin, currentData } = useSelector((state) => state.user);
@@ -27,6 +28,9 @@ const AdminLayout = () => {
         <AdminHeader />
         <Outlet />
       </div>
+      <Helmet>
+        <title>Trang quản lý</title>
+      </Helmet>
     </div>
   );
 };

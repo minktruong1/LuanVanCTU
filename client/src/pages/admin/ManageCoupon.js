@@ -12,12 +12,14 @@ import {
 } from "react-router-dom";
 import clsx from "clsx";
 import moment from "moment";
-import { Button, Pagination, ReactInputForm } from "../../components";
+import { Button, Loading, Pagination, ReactInputForm } from "../../components";
 import { formatVND } from "../../ultils/helpers";
 import sweetAlert from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import useDebounce from "../../hooks/useDebounce";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../store/app/appSlice";
 
 const ManageCoupon = () => {
   const {
@@ -34,6 +36,8 @@ const ManageCoupon = () => {
     directDiscount: "",
     expire: "",
   });
+  const dispatch = useDispatch();
+
   const [params] = useSearchParams();
   const [coupons, setCoupons] = useState(null);
   const [couponCount, setCouponCount] = useState(0);
@@ -57,7 +61,10 @@ const ManageCoupon = () => {
   }, [update]);
 
   const handleUpdate = async (data) => {
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiUpdateCoupon(data, editCoupon._id);
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+
     if (response.success) {
       setEditCoupon(null);
       reRender();
@@ -78,7 +85,10 @@ const ManageCoupon = () => {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
+          dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
           const response = await apiDeleteCoupon(cid);
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
+
           if (response.success) {
             reRender();
             toast.success(response.message);

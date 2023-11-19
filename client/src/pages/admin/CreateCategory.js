@@ -136,7 +136,7 @@ const CreateCategory = () => {
                   required: "Vui lòng nhập",
                 }}
                 fullWidth
-                placeholder="Các hãng trong nhóm"
+                placeholder="Nhập theo dạng: hang1,hang2,..."
               />
             </div>
           </div>

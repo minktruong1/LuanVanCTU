@@ -57,7 +57,11 @@ const registerUser = asyncHandler(async (req, res) => {
         </script>
       `;
 
-      await sendMail({ email, html, subject: "Confirm register" });
+      await sendMail({
+        email,
+        html,
+        subject: "Xác nhận đăng ký tài khoản tại cửa hàng phụ kiện máy tính",
+      });
     }
 
     setTimeout(async () => {
@@ -66,7 +70,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
     return res.json({
       success: newUser ? true : false,
-      message: newUser ? "Hãy kiểm tra hộp thư" : "Lỗi đăng ký",
+      message: newUser
+        ? "Hãy kiểm tra hộp thư để lấy mã đăng ký"
+        : "Lỗi đăng ký",
     });
   }
 });

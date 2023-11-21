@@ -8,6 +8,7 @@ import {
   Select,
   Button,
   AdminSelector,
+  Loading,
 } from "../../components";
 import useDebounce from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
@@ -16,6 +17,8 @@ import clsx from "clsx";
 import { toast } from "react-toastify";
 import sweetAlert from "sweetalert2";
 import { userRole, userStatus } from "../../ultils/contants";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../store/app/appSlice";
 
 const ManageUsers = () => {
   const {
@@ -30,6 +33,7 @@ const ManageUsers = () => {
     role: "",
     mobile: "",
   });
+  const dispatch = useDispatch();
 
   const [users, setUsers] = useState(null);
   const [queries, setQueries] = useState({
@@ -61,7 +65,9 @@ const ManageUsers = () => {
   }, [queriesDebounce, params, update]);
 
   const handleUpdate = async (data) => {
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiUpdateUser(data, editUser._id);
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
     if (response.success) {
       setEditUser(null);
       reRender();
@@ -80,7 +86,9 @@ const ManageUsers = () => {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
+          dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
           const response = await apiDeleteUser(uid);
+          dispatch(showModal({ isShowModal: false, modalContent: null }));
           if (response.success) {
             reRender();
             toast.success(response.message);
@@ -256,7 +264,7 @@ const ManageUsers = () => {
                           {moment(element.createdAt).format("DD/MM/YYYY")}
                         </td>
                       </tr>
-                      <tr className="border border-t-0">
+                      <tr className="border border-t-0 h-[80px]">
                         <td></td>
                         <td className="">
                           <span

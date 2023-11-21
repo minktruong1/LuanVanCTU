@@ -20,7 +20,7 @@ const CustomerLayout = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center pt-[88px]">
         <Header />
         <Navigation />
         <div className="w-full flex flex-col items-center bg-webBackground py-4">

@@ -22,7 +22,7 @@ const CouponsList = () => {
   }, []);
 
   return (
-    <div className="w-[calc(100%-20px)] md:w-main ">
+    <div className="w-[calc(100%-20px)] md:w-main">
       <Breadcrumb />
       <div className="bg-white rounded p-6">
         <div className="flex justify-center text-2xl mb-4">

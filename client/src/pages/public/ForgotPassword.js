@@ -21,9 +21,19 @@ const ForgotPassword = () => {
     const response = await apiForgotPassword(email);
     dispatch(showModal({ isShowModal: false, modalContent: null }));
     if (response.success) {
-      toast.success(response.message);
+      sweetAlert.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Hãy kiểm tra hộp thư để nhận link đặt lại mật khẩu",
+        confirmButtonText: "Đồng ý",
+      });
     } else {
-      toast.info(response.message);
+      sweetAlert.fire({
+        icon: "error",
+        title: "Đã có lỗi xảy ra",
+        text: "Hãy kiểm tra lại email đã nhập",
+        confirmButtonText: "Đồng ý",
+      });
     }
   };
 

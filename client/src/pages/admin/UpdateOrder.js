@@ -102,7 +102,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
           </div>
 
           <div className="grid grid-rows-1">
-            <div className="grid grid-cols-10 my-6 font-semibold">
+            <div className="grid grid-cols-12 my-6 font-semibold">
               <div className="col-span-4">
                 <span>Sản phẩm</span>
               </div>
@@ -115,10 +115,11 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
               <div className="col-span-2 flex justify-end">
                 <span>Thành tiền</span>
               </div>
+              <div className="col-span-2"></div>
             </div>
 
             {editOrderTab?.productList?.map((element) => (
-              <div className="grid grid-cols-10">
+              <div className="grid grid-cols-12">
                 <div className="col-span-4 flex ">
                   <span>{element.title}</span>
                 </div>
@@ -133,14 +134,30 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
                     {`${formatVND(element.price * element.quantity)}đ`}
                   </span>
                 </div>
+                <div className="col-span-2"></div>
               </div>
             ))}
-            <div className="grid grid-rows-1 my-6 font-semibold">
-              <div className="text-right text-lg">
-                <span>
-                  {`Tổng tiền: ${formatVND(editOrderTab?.totalPrice)}đ`}
-                </span>
+            <div className="grid grid-cols-12 my-6 font-semibold">
+              <div className="col-span-10">
+                <div className="text-right text-lg">
+                  <span>
+                    {`Tổng tiền: ${formatVND(editOrderTab?.totalPrice)}đ`}
+                  </span>
+                </div>
+                <div className="text-right text-lg">
+                  <span>
+                    {`Đã giảm: ${formatVND(
+                      editOrderTab?.totalPrice - editOrderTab?.lastPrice
+                    )}đ`}
+                  </span>
+                </div>
+                <div className="text-right text-lg">
+                  <span>
+                    {`Thanh toán: ${formatVND(editOrderTab?.lastPrice)}đ`}
+                  </span>
+                </div>
               </div>
+              <div className="col-span-2"></div>
             </div>
           </div>
         </div>

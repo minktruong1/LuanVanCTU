@@ -70,7 +70,7 @@ const Checkout = () => {
     lastPriceCounting -
       +shipPrice -
       Math.round(
-        currentCart.reduce(
+        currentCart?.reduce(
           (totalProfit, cartItem) =>
             cartItem.buyInPrice * cartItem.quantity + totalProfit,
           0
@@ -170,6 +170,9 @@ const Checkout = () => {
 
   const handleCheckout = async (payload) => {
     if (!currentData?.address) {
+      return;
+    }
+    if (!paymentMethod) {
       return;
     }
 

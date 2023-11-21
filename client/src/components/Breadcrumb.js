@@ -9,6 +9,7 @@ const Breadcrumb = ({ title, category }) => {
   const routes = [
     { path: "/", breadcrumb: "Trang chủ" },
     { path: "/blogs", breadcrumb: "Tin tức" },
+    { path: "/payment_instruction", breadcrumb: "Hướng dẫn thanh toán" },
     { path: "/blogs/:bid/:title", breadcrumb: title },
     { path: "/categories/all-products", breadcrumb: "Tất cả sản phẩm" },
     { path: "/main-cart", breadcrumb: "Giỏ hàng" },

@@ -19,7 +19,7 @@ const CartPopup = () => {
   };
 
   return (
-    <div className="bg-white text-black w-[350px]  drop-shadow-xl z-50">
+    <div className="bg-white text-black w-[350px] drop-shadow-xl z-50">
       <div className="absolute w-[20px] h-[20px] bg-white content-none rotate-45 top-[-10px] right-[40px]"></div>
       <div>
         {currentCart === null || currentCart.length === 0 ? (

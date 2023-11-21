@@ -104,7 +104,7 @@ const Product = ({ productData, isNew, isHot }) => {
           <Link
             to={`/categories/${productData?.category?.toLowerCase()}/${
               productData?._id
-            }/${productData?.title}`}
+            }/${productData?.slug}`}
             className="w-full truncate"
           >
             {productData?.title}

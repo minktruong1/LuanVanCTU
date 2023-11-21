@@ -290,7 +290,7 @@ const Header = () => {
                 <div className="hidden md:block top-[38px] w-[90px] right-[20px] absolute h-[30px] opacity-0"></div>
               </Link>
               {isShowCartPopup && (
-                <div className="absolute top-[68px] right-[8px] cursor-default hidden  md:block">
+                <div className="absolute top-[76px] right-[8px] cursor-default hidden  md:block">
                   <CartPopup />
                 </div>
               )}
@@ -313,7 +313,7 @@ const Header = () => {
                     <div className="bg-black top-[38px] right-0 absolute w-[120px] h-[32px] opacity-0"></div>
                   </div>
                   {isShowUserDirection && (
-                    <div className="absolute top-[52px] right-0 ">
+                    <div className="absolute top-[56px] right-0 ">
                       <UserDirectionPopup />
                     </div>
                   )}

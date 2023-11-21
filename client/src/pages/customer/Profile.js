@@ -73,7 +73,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="p-[16px] grid grid-rows-1 md:w-[580px]">
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-6">
           <label className="flex-3 text-right">Họ</label>
           <div className="flex-7 ml-8">
             <ReactInputForm
@@ -88,7 +88,7 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-6">
           <label className="flex-3 text-right">Tên</label>
           <div className="flex-7 ml-8">
             <ReactInputForm
@@ -104,7 +104,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-6">
           <label className="flex-3 text-right">Số điện thoại</label>
           <div className="flex-7 ml-8">
             <ReactInputForm
@@ -124,11 +124,11 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-6">
           <label className="flex-3 text-right">Email</label>
           <div className="flex-7 ml-8">{currentData?.email}</div>
         </div>
-        <div className="flex items-center mb-4 relative">
+        <div className="flex items-center mb-6 relative">
           <label className="flex-3 text-right">Địa chỉ</label>
           {updateUserAddress ? (
             <div className="flex-7 ml-8">

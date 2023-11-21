@@ -25,11 +25,7 @@ const Register = () => {
     dispatch(showModal({ isShowModal: false, modalContent: null }));
     if (responseRegis.success) {
       sweetAlert
-        .fire(
-          "Hãy kiểm tra email của bạn để hoàn tất việc tạo tài khoản.",
-          responseRegis.message,
-          "success"
-        )
+        .fire("Còn 1 bước nữa", responseRegis.message, "success")
         .then(() => {
           setIsRegisterConfirm(true);
         });

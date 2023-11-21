@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { toast } from "react-toastify";
 import path from "../../ultils/path";
 import { Helmet } from "react-helmet";
+import sweetAlert from "sweetalert2";
 
 const RsPassword = () => {
   window.scrollTo(0, 0);
@@ -20,9 +21,19 @@ const RsPassword = () => {
     const response = await apiResetPassword({ password, token });
 
     if (response.success) {
-      toast.success(response.message);
+      sweetAlert
+        .fire({
+          title: "Thông báo",
+          text: "Hoàn thành việc đặt lại mật khẩu, bạn sẽ được chuyển tới trang đăng nhập",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 3000,
+        })
+        .then((rs) => {
+          navigate(`/${path.LOGIN}`);
+        });
     } else {
-      toast.info(response.message);
+      sweetAlert.fire("Lỗi đăng ký", response.message, "error");
     }
     navigate(`/${path.LOGIN}`);
   };
@@ -43,7 +54,7 @@ const RsPassword = () => {
         <div className="w-full">
           <form onSubmit={handleSubmit} className="grid grid-rows-1">
             <h1 className="flex justify-center uppercase mb-[12px] text-xl font-medium ">
-              Đổi mật khẩu mới
+              Đặt lại mật khẩu mới
             </h1>
             <div className="grid grid-rows-1">
               <label>Mật khẩu</label>

@@ -9,7 +9,7 @@ import {
 import clsx from "clsx";
 import { BiSearch } from "react-icons/bi";
 import emptyImg from "../../assets/no-data.png";
-import { Button, RatingModal, ReactInputForm } from "../../components";
+import { Button, Loading, RatingModal, ReactInputForm } from "../../components";
 import { formatVND } from "../../ultils/helpers";
 import {
   createSearchParams,
@@ -119,6 +119,8 @@ const OrderHistory = () => {
       alert("Hãy nhập nội dung đánh giá");
       return;
     }
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiReview({
       star: point,
       comment: comment,
@@ -126,10 +128,11 @@ const OrderHistory = () => {
       updatedAt: Date.now(),
     });
     dispatch(showModal({ isShowModal: false, modalContent: null }));
+
     if (response.success) {
       apiUpdateReviewProductStatus({ oid, oIid });
-      toast.success("Đánh giá sản phẩm thành công");
       reRender();
+      toast.success("Đánh giá sản phẩm thành công");
     }
   };
 

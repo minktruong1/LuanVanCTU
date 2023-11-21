@@ -63,7 +63,9 @@ const ChangePassword = () => {
       </div>
       <form onSubmit={handleSubmit} className="grid grid-rows-1 gap-4">
         <div className="grid grid-cols-10">
-          <span className="col-span-3 text-right">Mật khẩu cũ</span>
+          <span className="col-span-3 text-right leading-10 pr-2">
+            Mật khẩu cũ
+          </span>
           <div className="col-span-4">
             <div className="grid grid-rows-1">
               <input
@@ -82,7 +84,9 @@ const ChangePassword = () => {
           </div>
         </div>
         <div className="grid grid-cols-10">
-          <span className="col-span-3 text-right">Mật khẩu mới</span>
+          <span className="col-span-3 text-right leading-10 pr-2">
+            Mật khẩu mới
+          </span>
           <div className="col-span-4">
             <div className="grid grid-rows-1">
               <input
@@ -101,7 +105,9 @@ const ChangePassword = () => {
           </div>
         </div>
         <div className="grid grid-cols-10">
-          <span className="col-span-3 text-right">Xác nhận mật khẩu mới</span>
+          <span className="col-span-3 text-right leading-10 pr-2">
+            Xác nhận mật khẩu mới
+          </span>
           <div className="col-span-4">
             <div className="grid grid-rows-1">
               <input

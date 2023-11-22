@@ -78,9 +78,9 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
       )}
       <div className="grid grid-rows-1 gap-3 place-content-center">
         <Link
-          to={`/${element.category?.toLowerCase()}/${element?.product._id}/${
-            element?.product.slug
-          }`}
+          to={`/categories/${element.category?.toLowerCase()}/${
+            element?.product._id
+          }/${element?.product.slug}`}
           className="line-clamp-1"
         >
           <img
@@ -104,7 +104,7 @@ const CartItem = ({ element, firstQuantity = 1 }) => {
         <div className="grid grid-rows-1 md:grid-cols-3">
           <div className="md:col-span-2">
             <Link
-              to={`/${element.category?.toLowerCase()}/${
+              to={`/categories/${element.category?.toLowerCase()}/${
                 element?.product._id
               }/${element?.product.slug}`}
               className="md:line-clamp-1 "

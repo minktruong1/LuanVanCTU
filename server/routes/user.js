@@ -4,7 +4,6 @@ const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
 router.post("/register", controllers.registerUser);
-
 router.put("/register-confirm/:token", controllers.registerCheck);
 router.post("/login", controllers.loginUser);
 router.get("/current", [verifyLoginToken], controllers.getUser);
@@ -21,6 +20,11 @@ router.delete(
   [verifyLoginToken],
   controllers.removeProductFromCart
 );
+
+//recommend product
+router.get("/recommendfornew/", controllers.getRandomForNewUser);
+router.get("/recommend/", [verifyLoginToken], controllers.setRecommendList);
+router.get("/iscart/", [verifyLoginToken], controllers.isCartProduct);
 
 router.put("/pushProduct", controllers.pushCheckedProduct);
 router.get("/", controllers.getAllUsers);

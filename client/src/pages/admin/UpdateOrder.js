@@ -100,6 +100,16 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
               {editOrderTab.buyer?.mobile}
             </span>
           </div>
+          <div className="grid grid-cols-8">
+            <span className="col-span-1 text-[#6d6e72]">Lời nhắn:</span>
+            <span className="col-span-7 font-semibold">
+              {editOrderTab?.note !== "" ? (
+                editOrderTab?.note
+              ) : (
+                <span>Không</span>
+              )}
+            </span>
+          </div>
 
           <div className="grid grid-rows-1">
             <div className="grid grid-cols-12 my-6 font-semibold">
@@ -112,10 +122,10 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
               <div className="col-span-2 flex justify-center">
                 <span>Số lượng</span>
               </div>
-              <div className="col-span-2 flex justify-end">
+              <div className="col-span-3 flex justify-end">
                 <span>Thành tiền</span>
               </div>
-              <div className="col-span-2"></div>
+              <div className="col-span-1"></div>
             </div>
 
             {editOrderTab?.productList?.map((element) => (
@@ -129,16 +139,21 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
                 <div className="col-span-2 flex justify-center">
                   <span>{element.quantity}</span>
                 </div>
-                <div className="col-span-2 flex justify-end">
+                <div className="col-span-3 flex justify-end">
                   <span>
                     {`${formatVND(element.price * element.quantity)}đ`}
                   </span>
                 </div>
-                <div className="col-span-2"></div>
+                <div className="col-span-1"></div>
               </div>
             ))}
             <div className="grid grid-cols-12 my-6 font-semibold">
-              <div className="col-span-10">
+              <div className="col-span-11">
+                <div className="text-right text-lg">
+                  <span>
+                    {`Phí vận chuyển: ${formatVND(editOrderTab?.shipPrice)}đ`}
+                  </span>
+                </div>
                 <div className="text-right text-lg">
                   <span>
                     {`Tổng tiền: ${formatVND(editOrderTab?.totalPrice)}đ`}
@@ -157,7 +172,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
                   </span>
                 </div>
               </div>
-              <div className="col-span-2"></div>
+              <div className="col-span-1"></div>
             </div>
           </div>
         </div>

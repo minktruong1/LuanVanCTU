@@ -78,7 +78,7 @@ const CreateCategory = () => {
             </label>
             <div
               className={clsx(
-                "w-fit p-2 relative border ",
+                "p-2 relative border w-[200px]",
                 review.image && "border-main"
               )}
             >

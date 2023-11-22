@@ -68,13 +68,17 @@ const ProfitDashboard = () => {
       <div>
         <ChartLine
           OderDatasets1={Object.values(profit)}
-          DataFor={`yearProfit`}
+          DataFor={`year`}
+          DataType={`profit`}
+          label={`yearProfit`}
         />
       </div>
       <div>
         <ChartLine
           OderDatasets1={Object.values(quarterlyProfit)}
-          DataFor={`quarterProfit`}
+          DataFor={`quarter`}
+          DataType={`profit`}
+          label={`quarterProfit`}
         />
       </div>
     </div>

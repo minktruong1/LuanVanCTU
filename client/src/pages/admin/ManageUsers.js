@@ -112,7 +112,7 @@ const ManageUsers = () => {
   return (
     <div className="w-full overflow-auto">
       <div className="h-[75px] flex justify-between items-center text-2xl font-bold px-4 border-b mt-[60px]">
-        <h1>Manage Users</h1>
+        <h1>Quản lý tài khoản</h1>
       </div>
       <div className="w-full p-4">
         <div className="flex py-4">

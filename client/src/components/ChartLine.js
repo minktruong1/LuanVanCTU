@@ -26,9 +26,11 @@ const ChartLine = ({
   OderDatasets2,
   OderDatasets3,
   DataFor,
+  DataType,
+  label,
 }) => {
   const options =
-    DataFor === "yearProfit"
+    label === "yearProfit"
       ? {
           responsive: true,
           plugins: {
@@ -45,7 +47,7 @@ const ChartLine = ({
             },
           },
         }
-      : DataFor === "quarterProfit"
+      : label === "quarterProfit"
       ? {
           responsive: true,
           plugins: {
@@ -62,7 +64,8 @@ const ChartLine = ({
             },
           },
         }
-      : {
+      : label === "yearOrder"
+      ? {
           responsive: true,
           plugins: {
             legend: {
@@ -71,16 +74,34 @@ const ChartLine = ({
             title: {
               display: true,
               position: "bottom",
-              text: "Biểu đồ số đơn hàng nhận được trong năm",
+              text: "Biểu đồ số đơn hàng nhận được theo năm",
               font: {
                 size: 18,
               },
             },
           },
-        };
+        }
+      : label === "quarterOrder"
+      ? {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              position: "bottom",
+              text: "Biểu đồ số đơn hàng nhận được theo quý",
+              font: {
+                size: 18,
+              },
+            },
+          },
+        }
+      : {};
 
   const labels =
-    DataFor === "quarterProfit"
+    DataFor === "quarter"
       ? ["Quý 1", "Quý 2", "Quý 3", "Quý 4"]
       : [
           "Tháng 1",
@@ -97,7 +118,7 @@ const ChartLine = ({
           "Tháng 12",
         ];
   const datasets =
-    DataFor === "yearProfit" || DataFor === "quarterProfit"
+    DataType === "profit"
       ? [
           {
             label: "VNĐ",
@@ -106,7 +127,8 @@ const ChartLine = ({
             backgroundColor: "rgba(75, 192, 192, 0.5)",
           },
         ]
-      : [
+      : DataType === "order"
+      ? [
           {
             label: "Hủy",
             data: OderDatasets1,
@@ -125,7 +147,8 @@ const ChartLine = ({
             borderColor: "rgb(54, 162, 235)",
             backgroundColor: "rgba(54, 162, 235, 0.5)",
           },
-        ];
+        ]
+      : [];
 
   const data = {
     labels,

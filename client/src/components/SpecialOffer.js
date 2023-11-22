@@ -43,7 +43,7 @@ const SpecialOffer = () => {
   //fetch daily deal offer
   const fetchDailyDeal = async () => {
     const response = await apiGetProducts({
-      limit: 3,
+      limit: 5,
       page: Math.round(Math.random() * 3),
     });
     if (response.success) {

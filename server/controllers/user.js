@@ -149,7 +149,7 @@ const getUser = asyncHandler(async (req, res) => {
       path: "wishList",
       populate: {
         path: "product",
-        select: "title images price quantity category reviewPoint",
+        select: "title slug images price quantity category reviewPoint",
       },
     })
     .populate({
@@ -574,6 +574,116 @@ const changePassword = asyncHandler(async (req, res) => {
   });
 });
 
+const getRandomForNewUser = asyncHandler(async (req, res) => {
+  try {
+    // Lấy 10 sản phẩm ngẫu nhiên
+    const randomProducts = await Product.aggregate([{ $sample: { size: 10 } }]);
+
+    res.status(200).json({
+      success: randomProducts ? true : false,
+      recommendProduct: randomProducts
+        ? randomProducts
+        : "Lỗi cập nhật recommendList",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+const setRecommendList = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    // Lấy 10 sản phẩm ngẫu nhiên
+    const randomProducts = await Product.aggregate([{ $sample: { size: 10 } }]);
+
+    // Trích xuất các đối tượng sản phẩm từ kết quả
+    const recommendList = randomProducts.map((product) => ({
+      product: product._id,
+      slug: product.slug,
+      category: product.category,
+      price: product.price,
+      buyInPrice: product.buyInPrice,
+      title: product.title,
+      images: product.images,
+      reviewPoint: product.reviewPoint,
+    }));
+
+    // Cập nhật recommendList của người dùng
+    const user = await User.findByIdAndUpdate(
+      _id,
+      { recommendList },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: user ? true : false,
+      recommendProduct: user
+        ? user.recommendList
+        : "Lỗi cập nhật recommendList",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+const isCartProduct = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    // Lấy giỏ hàng của người dùng
+    const user = await User.findById(_id).select("cart recommendList");
+
+    if (!user || !user.cart) {
+      return res.status(400).json({
+        success: false,
+        message: "Không tìm thấy giỏ hàng hoặc giỏ hàng rỗng",
+      });
+    }
+
+    // Lấy danh sách title của sản phẩm trong giỏ hàng
+    const cartTitles = user.cart.map((item) => item.title);
+
+    // Lấy danh sách sản phẩm có title gần nhất (loại trừ những sản phẩm trong giỏ hàng)
+    const similarProducts = await Product.find({
+      title: { $nin: cartTitles }, // Không chọn những sản phẩm trong giỏ hàng
+    })
+      .sort({ title: 1 }) // Sắp xếp theo title để lấy gần nhất
+      .limit(10);
+
+    // Xoá hết các sản phẩm trong recommendList
+    user.recommendList = [];
+
+    // Thêm các sản phẩm mới vào recommendList
+    user.recommendList = similarProducts.map((product) => ({
+      product: product._id,
+      slug: product.slug,
+      category: product.category,
+      price: product.price,
+      buyInPrice: product.buyInPrice,
+      title: product.title,
+      images: product.images,
+      reviewPoint: product.reviewPoint,
+    }));
+    console.log(user.recommendList);
+
+    // Lưu thay đổi vào cơ sở dữ liệu
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      recommendProduct: user
+        ? user.recommendList
+        : "Lỗi cập nhật recommendList",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -593,4 +703,7 @@ module.exports = {
   addProductToWishList,
   pushCheckedProduct,
   changePassword,
+  setRecommendList,
+  isCartProduct,
+  getRandomForNewUser,
 };

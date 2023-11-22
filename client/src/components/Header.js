@@ -198,9 +198,9 @@ const Header = () => {
                           <div className="grid grid-rows-1">
                             <Link
                               onClick={() => clearSearchData()}
-                              to={`/${element?.category?.toLowerCase()}/${
+                              to={`/categories/${element?.category?.toLowerCase()}/${
                                 element?._id
-                              }/${element?.title}`}
+                              }/${element?.slug}`}
                               className="cursor-pointer hover:text-main duration-500"
                             >
                               {element.title}
@@ -212,9 +212,9 @@ const Header = () => {
                         </div>
                         <Link
                           onClick={() => clearSearchData()}
-                          to={`/${element?.category?.toLowerCase()}/${
+                          to={`/categories/${element?.category?.toLowerCase()}/${
                             element?._id
-                          }/${element?.title}`}
+                          }/${element?.slug}`}
                           className="col-span-3 place-self-end"
                         >
                           <img

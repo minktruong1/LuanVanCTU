@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
+  Link,
   createSearchParams,
   useParams,
   useSearchParams,
@@ -57,7 +58,19 @@ const ProductDetail = () => {
 
   const { currentData } = useSelector((state) => state.user);
   const { blogList } = useSelector((state) => state.blogReducer);
-  console.log(blogList);
+
+  const getRandom4Blogs = (array, number) => {
+    if (!array || array.length === 0) {
+      return [];
+    }
+
+    const clonedArray = array.slice(); // Tạo một bản sao của mảng
+
+    const shuffled = clonedArray.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, number);
+  };
+  const randomBlogs = getRandom4Blogs(blogList, 4);
+
   const fetchProductData = async () => {
     const response = await apiGetProductDetail(pid);
     if (response.success) {
@@ -303,17 +316,25 @@ const ProductDetail = () => {
                   </h2>
 
                   <div className="grid grid-rows-1 gap-4">
-                    {blogList?.map((element, index) => (
+                    {randomBlogs?.map((element, index) => (
                       <div key={index} className="grid grid-cols-12 gap-2">
-                        <div className="col-span-4">
+                        <Link
+                          to={`/blogs/${element?._id}/${element?.slug}`}
+                          className="col-span-4"
+                        >
                           <img
                             alt="blog"
                             className="rounded"
                             src={element.image}
                           />
-                        </div>
+                        </Link>
                         <div className="col-span-8 truncate">
-                          {element.title}
+                          <Link
+                            to={`/blogs/${element?._id}/${element?.slug}`}
+                            className=" hover:text-main "
+                          >
+                            {element.title}
+                          </Link>
                         </div>
                       </div>
                     ))}

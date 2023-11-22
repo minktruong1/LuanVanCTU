@@ -8,7 +8,7 @@ const CategoriesList = () => {
   return (
     <>
       <div className="bg-white w-[calc(100%-20px)] md:w-full ">
-        <div className="p-[12px] text-xl hidden md:block">Danh mục</div>
+        <div className="p-4 text-xl hidden md:block">Danh mục</div>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {categories?.map((element) => (
             <Link

@@ -25,6 +25,13 @@ const OrderDashboard = () => {
     December: 0,
   };
 
+  const initialOrderQuarterData = {
+    Q1: 0,
+    Q2: 0,
+    Q3: 0,
+    Q4: 0,
+  };
+
   const [failOrder, setFailOrder] = useState({
     ...initialOrderMonthData,
   });
@@ -33,6 +40,16 @@ const OrderDashboard = () => {
   });
   const [totalOrder, setTotalOrder] = useState({ ...initialOrderMonthData });
 
+  const [failOrderQuarter, setFailOrderQuarter] = useState({
+    ...initialOrderQuarterData,
+  });
+  const [successOrderQuarter, setSuccessOrderQuarter] = useState({
+    ...initialOrderQuarterData,
+  });
+  const [totalOrderQuarter, setTotalOrderQuarter] = useState({
+    ...initialOrderQuarterData,
+  });
+
   const updateMonthlyCounts = (order, month) => {
     if (order.status === "Hủy") {
       failOrder[month]++;
@@ -40,6 +57,15 @@ const OrderDashboard = () => {
       successOrder[month]++;
     }
     totalOrder[month]++;
+  };
+
+  const updateQuarterlyCounts = (order, quarter) => {
+    if (order.status === "Hủy") {
+      failOrderQuarter[quarter]++;
+    } else if (order.status === "Hoàn thành") {
+      successOrderQuarter[quarter]++;
+    }
+    totalOrderQuarter[quarter]++;
   };
 
   const fetchOrders = async () => {
@@ -56,9 +82,11 @@ const OrderDashboard = () => {
 
       orders.forEach((order) => {
         const month = new Date(order.createdAt).getMonth();
+        const quarter = Math.floor(month / 3) + 1;
 
         counts[order.status]++;
         updateMonthlyCounts(order, Object.keys(initialOrderMonthData)[month]);
+        updateQuarterlyCounts(order, `Q${quarter}`);
       });
 
       setOrderCounts(counts);
@@ -79,6 +107,19 @@ const OrderDashboard = () => {
           OderDatasets1={Object.values(failOrder)}
           OderDatasets2={Object.values(successOrder)}
           OderDatasets3={Object.values(totalOrder)}
+          DataFor={`year`}
+          DataType={`order`}
+          label={`yearOrder`}
+        />
+      </div>
+      <div>
+        <ChartLine
+          OderDatasets1={Object.values(failOrderQuarter)}
+          OderDatasets2={Object.values(successOrderQuarter)}
+          OderDatasets3={Object.values(totalOrderQuarter)}
+          DataFor={`quarter`}
+          DataType={`order`}
+          label={`quarterOrder`}
         />
       </div>
       <div>

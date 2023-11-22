@@ -101,7 +101,6 @@ const Products = () => {
       });
     }
   }, [sort]);
-
   return (
     <div className="w-[calc(100%-20px)] xl:w-main">
       <Breadcrumb category={category} />
@@ -139,7 +138,7 @@ const Products = () => {
             {products?.products?.map((element) => (
               <Product
                 key={element._id}
-                pid={element.id}
+                pid={element._id}
                 productData={element}
               />
             ))}

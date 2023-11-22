@@ -16,7 +16,7 @@ import path from "../ultils/path";
 
 const { AiOutlineHeart, AiFillHeart } = icons;
 
-const Product = ({ productData, isNew, isHot }) => {
+const Product = ({ productData, pid, isNew, isHot }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,7 +46,7 @@ const Product = ({ productData, isNew, isHot }) => {
         });
     }
     const response = await apiFavProduct({
-      pid: productData?._id,
+      pid: pid,
       category: productData?.category,
       buyInPrice: productData?.buyInPrice,
       price: productData?.price,
@@ -68,14 +68,13 @@ const Product = ({ productData, isNew, isHot }) => {
       setFavorite(true);
     }
   }, [currentData, productData._id]);
-
   return (
     <div>
       <div className="items-center m-2 bg-white text-base border p-4 ">
         <Link
-          to={`/categories/${productData?.category?.toLowerCase()}/${
-            productData?._id
-          }/${productData?.slug}`}
+          to={`/categories/${productData?.category?.toLowerCase()}/${pid}/${
+            productData?.slug
+          }`}
           className="relative"
         >
           <div className="overflow-hidden flex justify-center">
@@ -102,9 +101,9 @@ const Product = ({ productData, isNew, isHot }) => {
         </Link>
         <div className="flex flex-col gap-2 mt-[12px] items-start w-full ">
           <Link
-            to={`/categories/${productData?.category?.toLowerCase()}/${
-              productData?._id
-            }/${productData?.slug}`}
+            to={`/categories/${productData?.category?.toLowerCase()}/${pid}/${
+              productData?.slug
+            }`}
             className="w-full truncate"
           >
             {productData?.title}

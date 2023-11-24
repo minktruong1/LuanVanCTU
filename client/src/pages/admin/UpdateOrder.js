@@ -63,6 +63,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     reset({
       status: editOrderTab?.status || "",
     });
@@ -103,11 +104,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
           <div className="grid grid-cols-8">
             <span className="col-span-1 text-[#6d6e72]">Lời nhắn:</span>
             <span className="col-span-7 font-semibold">
-              {editOrderTab?.note !== "" ? (
-                editOrderTab?.note
-              ) : (
-                <span>Không</span>
-              )}
+              {editOrderTab?.note || "Không"}
             </span>
           </div>
 
@@ -151,7 +148,9 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
               <div className="col-span-11">
                 <div className="text-right text-lg">
                   <span>
-                    {`Phí vận chuyển: ${formatVND(editOrderTab?.shipPrice)}đ`}
+                    {`Phí vận chuyển: ${formatVND(
+                      editOrderTab?.shipPrice || 0
+                    )}đ`}
                   </span>
                 </div>
                 <div className="text-right text-lg">

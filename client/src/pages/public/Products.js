@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import {
   Breadcrumb,
+  Button,
   InputSelector,
   Pagination,
   Product,
@@ -17,6 +18,7 @@ import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
 import { sorts } from "../../ultils/contants";
 import { Helmet } from "react-helmet";
+import emptyImg from "../../assets/no-data.png";
 
 const breakpointColumnsObj = {
   default: 5,
@@ -101,6 +103,7 @@ const Products = () => {
       });
     }
   }, [sort]);
+  console.log(products);
   return (
     <div className="w-[calc(100%-20px)] xl:w-main">
       <Breadcrumb category={category} />
@@ -130,19 +133,35 @@ const Products = () => {
           </div>
         </div>
         <div>
-          <Masonry
-            breakpointCols={breakpointColumnsObj}
-            className="my-masonry-grid flex mb-[20px]"
-            columnClassName="my-masonry-grid_column "
-          >
-            {products?.products?.map((element) => (
-              <Product
-                key={element._id}
-                pid={element._id}
-                productData={element}
-              />
-            ))}
-          </Masonry>
+          {products?.counts === 0 ? (
+            <div className="flex justify-center bg-white p-4">
+              <div className="grid grid-rows-1">
+                <img alt="" src={emptyImg} />
+                <div className="flex justify-center">
+                  <span>Chưa có sản phẩm.</span>
+                </div>
+                <div className="flex justify-center">
+                  <Button handleOnClick={() => navigate(`/`)}>
+                    Trở về trang chủ
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid flex mb-[20px]"
+              columnClassName="my-masonry-grid_column "
+            >
+              {products?.products?.map((element) => (
+                <Product
+                  key={element._id}
+                  pid={element._id}
+                  productData={element}
+                />
+              ))}
+            </Masonry>
+          )}
         </div>
       </div>
       <div className="flex justify-center">

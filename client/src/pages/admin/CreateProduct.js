@@ -245,7 +245,7 @@ const CreateProduct = () => {
             setInvalidFields={setInvalidFields}
           />
           <div className="mt-8">
-            <Button type="submit">Create</Button>
+            <Button type="submit">Tạo</Button>
           </div>
         </form>
       </div>

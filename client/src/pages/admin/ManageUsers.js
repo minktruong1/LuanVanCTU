@@ -273,7 +273,7 @@ const ManageUsers = () => {
                           >
                             Trở về
                           </span>
-                          {editUser && <Button type="submit">Update</Button>}
+                          {editUser && <Button type="submit">Cập nhật</Button>}
                         </td>
                       </tr>
                     </>

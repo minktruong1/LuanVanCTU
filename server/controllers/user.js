@@ -278,7 +278,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   if (!user) {
     throw new Error("Không tìm thấy người dùng");
   }
-  const resetToken = user.createPasswordChangedToken();
+  const resetToken = user.createChangePasswordToken();
   await user.save();
 
   const html = `
@@ -641,40 +641,36 @@ const isCartProduct = asyncHandler(async (req, res) => {
       });
     }
 
-    // Lấy danh sách title của sản phẩm trong giỏ hàng
-    const cartTitles = user.cart.map((item) => item.title);
-
-    // Lấy danh sách sản phẩm có title gần nhất (loại trừ những sản phẩm trong giỏ hàng)
-    const similarProducts = await Product.find({
-      title: { $nin: cartTitles }, // Không chọn những sản phẩm trong giỏ hàng
-    })
-      .sort({ title: 1 }) // Sắp xếp theo title để lấy gần nhất
-      .limit(10);
+    // Lấy danh sách ID của sản phẩm trong giỏ hàng
+    const cartProductIds = user.cart.map((item) => item.product);
 
     // Xoá hết các sản phẩm trong recommendList
     user.recommendList = [];
 
+    // Lấy ngẫu nhiên 10 sản phẩm từ Product, loại bỏ các sản phẩm đã có trong giỏ hàng
+    const randomProducts = await Product.aggregate([
+      { $match: { _id: { $nin: cartProductIds } } },
+      { $sample: { size: 10 } },
+    ]);
+
     // Thêm các sản phẩm mới vào recommendList
-    user.recommendList = similarProducts.map((product) => ({
+    user.recommendList = randomProducts.map((product) => ({
       product: product._id,
-      slug: product.slug,
       category: product.category,
+      slug: product.slug,
+      reviewPoint: product.reviewPoint,
       price: product.price,
       buyInPrice: product.buyInPrice,
       title: product.title,
       images: product.images,
-      reviewPoint: product.reviewPoint,
     }));
-    console.log(user.recommendList);
 
     // Lưu thay đổi vào cơ sở dữ liệu
     await user.save();
 
     res.status(200).json({
       success: true,
-      recommendProduct: user
-        ? user.recommendList
-        : "Lỗi cập nhật recommendList",
+      recommendProduct: user.recommendList,
     });
   } catch (error) {
     res.status(500).json({

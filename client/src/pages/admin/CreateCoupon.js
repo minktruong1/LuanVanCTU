@@ -108,7 +108,7 @@ const CreateCoupon = () => {
           </div>
 
           <div className="mt-[50px]">
-            <Button type="submit">Create</Button>
+            <Button type="submit">Tạo</Button>
           </div>
         </form>
       </div>

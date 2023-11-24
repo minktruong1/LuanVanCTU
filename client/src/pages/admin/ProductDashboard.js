@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { apiGetProducts } from "../../apis/product";
-import { ChartPie, ChartVertical } from "../../components";
+import { ChartVertical } from "../../components";
 import { apiAdminGetUserOrders } from "../../apis";
 
 const ProductDashboard = () => {
@@ -9,37 +9,10 @@ const ProductDashboard = () => {
     datasets: [],
   });
 
-  const [orderCounts, setOrderCounts] = useState({
-    "Hoàn thành": 0,
-    "Đang xử lý": 0,
-    "Đang vận chuyển": 0,
-    Hủy: 0,
-  });
-
-  const fetchOrders = async () => {
-    const response = await apiAdminGetUserOrders();
-    if (response.success) {
-      const orders = response.orders;
-
-      // Đếm số lượng theo từng trạng thái
-      const counts = {
-        "Hoàn thành": 0,
-        "Đang xử lý": 0,
-        "Đang vận chuyển": 0,
-        Hủy: 0,
-      };
-
-      orders.forEach((order) => {
-        counts[order.status]++;
-      });
-
-      setOrderCounts(counts);
-    }
-  };
-
   const fetchTopSoldOut = async () => {
     const response = await apiGetProducts({ sort: "-sold", limit: 5 });
     if (response.success) {
+      console.log(response);
       setTopSoldOut({
         labels: response?.products.map((element) => element.title),
         datasets: response?.products.map((element) => element.sold),
@@ -49,7 +22,6 @@ const ProductDashboard = () => {
 
   useEffect(() => {
     fetchTopSoldOut();
-    fetchOrders();
   }, []);
 
   return (

@@ -111,7 +111,7 @@ userSchema.methods = {
   isCorrectPassword: async function (password) {
     return await bcrypt.compare(password, this.password);
   },
-  createPasswordChangedToken: function () {
+  createChangePasswordToken: function () {
     const resetToken = crypto.randomBytes(32).toString("hex");
     this.passwordResetToken = crypto
       .createHash("sha256")

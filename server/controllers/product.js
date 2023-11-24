@@ -53,10 +53,11 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
     const cateQuery = cateArray.map((element) => ({
       category: {
-        $regex: element,
+        $regex: `^${element}$`,
         $options: "i",
       },
     }));
+
     categoryQueryFields = { $or: cateQuery };
   }
 

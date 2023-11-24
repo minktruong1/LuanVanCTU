@@ -172,7 +172,6 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (product !== null) {
       if (
         product?._id !== pid ||

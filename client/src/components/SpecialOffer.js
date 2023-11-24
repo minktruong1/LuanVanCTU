@@ -101,7 +101,7 @@ const SpecialOffer = () => {
     if (targetTab === 2) setProducts(topSeller);
     if (targetTab === 3) setProducts(justOnSellProducts);
   }, [targetTab, dailyDeal]);
-
+  console.log(products);
   return (
     <>
       <div className="flex text-[20px] gap-8 pt-8 pb-8 h-[440px]">

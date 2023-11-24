@@ -7,7 +7,6 @@ import {
   apiUpdateReviewProductStatus,
 } from "../../apis";
 import clsx from "clsx";
-import { BiSearch } from "react-icons/bi";
 import emptyImg from "../../assets/no-data.png";
 import { Button, Loading, RatingModal, ReactInputForm } from "../../components";
 import { formatVND } from "../../ultils/helpers";

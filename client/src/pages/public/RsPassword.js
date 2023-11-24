@@ -97,7 +97,7 @@ const RsPassword = () => {
 
             <div className="mt-4">
               <Button type="submit" widthFull>
-                Gửi yêu cầu
+                Xác nhận
               </Button>
             </div>
           </form>

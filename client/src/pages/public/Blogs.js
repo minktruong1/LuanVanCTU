@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BlogItem, Breadcrumb } from "../../components";
 import emptyData from "../../assets/no-data.png";
 import { Helmet } from "react-helmet";
 
 const Blogs = () => {
-  window.scrollTo(0, 0);
-
   const { blogList } = useSelector((state) => state.blogReducer);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main  ">

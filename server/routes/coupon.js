@@ -1,12 +1,16 @@
 const router = require("express").Router();
-const controllers = require("../controllers/coupon.js");
+const couponController = require("../controllers/coupon.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 
-router.post("/", [verifyLoginToken, isAdmin], controllers.createCoupon);
-router.get("/", controllers.getAllCoupons);
-router.post("/detail", controllers.getCouponDetail);
-router.get("/user-get", controllers.userGetCoupon);
-router.put("/:cid", [verifyLoginToken, isAdmin], controllers.updateCoupon);
-router.delete("/:cid", [verifyLoginToken, isAdmin], controllers.deleteCoupon);
+router.post("/", [verifyLoginToken, isAdmin], couponController.createCoupon);
+router.get("/", couponController.getAllCoupons);
+router.post("/detail", couponController.getCouponDetail);
+router.get("/user-get", couponController.userGetCoupon);
+router.put("/:cid", [verifyLoginToken, isAdmin], couponController.updateCoupon);
+router.delete(
+  "/:cid",
+  [verifyLoginToken, isAdmin],
+  couponController.deleteCoupon
+);
 
 module.exports = router;

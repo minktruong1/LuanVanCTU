@@ -20,6 +20,7 @@ var userSchema = new mongoose.Schema(
     },
     address: {
       type: String,
+      default: "",
     },
     avatar: {
       type: String,

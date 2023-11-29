@@ -159,9 +159,6 @@ const Checkout = () => {
             .then((rs) => {
               navigate(`/`);
               window.location.reload();
-              setTimeout(() => {
-                window.scrollTo(0, 0);
-              }, 100);
             });
         }, 1500);
       }
@@ -196,9 +193,6 @@ const Checkout = () => {
           .then((rs) => {
             navigate(`/`);
             window.location.reload();
-            setTimeout(() => {
-              window.scrollTo(0, 0);
-            }, 100);
           });
       }, 1500);
     } else {
@@ -239,6 +233,8 @@ const Checkout = () => {
   if (!isLogin || !currentData) {
     return <Navigate to={`/`} replace={true} />;
   }
+
+  console.log(currentData.address);
   return (
     <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 gap-3 my-8 text-sm md:text-base">
       <div className="grid grid-rows-1 bg-white rounded-b">

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controllers = require("../controllers/imageStore.js");
+const imageStoreController = require("../controllers/imageStore.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
@@ -11,11 +11,11 @@ router.post(
       maxCount: 10,
     },
   ]),
-  controllers.createImage
+  imageStoreController.createImage
 );
 
-router.get("/", controllers.getAllImages);
-router.get("/getDetail/:title", controllers.getDetailImages);
+router.get("/", imageStoreController.getAllImages);
+router.get("/getDetail/:title", imageStoreController.getDetailImages);
 router.put(
   "/:imageId",
   [verifyLoginToken, isAdmin],
@@ -25,13 +25,13 @@ router.put(
       maxCount: 10,
     },
   ]),
-  controllers.updateImage
+  imageStoreController.updateImage
 );
 
 router.delete(
   "/:imageId",
   [verifyLoginToken, isAdmin],
-  controllers.deleteImage
+  imageStoreController.deleteImage
 );
 
 module.exports = router;

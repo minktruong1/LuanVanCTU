@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../../components";
 import { apiResetPassword } from "../../apis";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,8 +12,6 @@ import { Helmet } from "react-helmet";
 import sweetAlert from "sweetalert2";
 
 const RsPassword = () => {
-  window.scrollTo(0, 0);
-
   const navigate = useNavigate();
   const { token } = useParams();
 
@@ -47,7 +45,9 @@ const RsPassword = () => {
       validationSchema: resetPasswordSchema,
       onSubmit,
     });
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="flex justify-center w-[calc(100%-20px)] ">
       <div className="flex bg-white w-full md:w-[550px] justify-center p-4 md:p-8 mt-[30px] mb-[30px]">

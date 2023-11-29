@@ -56,6 +56,7 @@ const ProductSuggestion = () => {
     }
   }, [currentData]);
 
+  console.log(products);
   return (
     <div className="bg-white w-[calc(100%-20px)] md:w-full my-2 p-2">
       <h1 className="p-2 text-xl">Gợi ý sản phẩm</h1>

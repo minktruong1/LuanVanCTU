@@ -89,12 +89,12 @@ const ManageOrders = () => {
 
   useEffect(() => {
     const searchParams = Object.fromEntries([...params]);
-    fetchOrders({ ...searchParams });
+    fetchOrders({ ...searchParams, sort: "-createdAt" });
     fetchForOrdersCount();
   }, [params, editOrderTab]);
 
   return (
-    <div className="w-full p-4 relative overflow-auto">
+    <div className="w-full p-4 relative overflow-auto min-h-screen">
       {editOrderTab && (
         <div className="absolute inset-0 min-h-screen bg-webBackground z-20 w-[1300px] md:w-full">
           <UpdateOrder

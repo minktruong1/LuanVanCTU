@@ -130,8 +130,8 @@ const OrderHistory = () => {
 
     if (response.success) {
       apiUpdateReviewProductStatus({ oid, oIid });
-      reRender();
       toast.success("Đánh giá sản phẩm thành công");
+      reRender();
     }
   };
 

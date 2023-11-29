@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controllers = require("../controllers/blog.js");
+const blogController = require("../controllers/blog.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
@@ -12,11 +12,11 @@ router.post(
       maxCount: 1,
     },
   ]),
-  controllers.createBlog
+  blogController.createBlog
 );
-router.get("/", controllers.userGetAllBlog);
-router.get("/all", controllers.adminGetBlogList);
-router.get("/:bid", controllers.getBlog);
+router.get("/", blogController.userGetAllBlog);
+router.get("/all", blogController.adminGetBlogList);
+router.get("/:bid", blogController.getBlog);
 router.put(
   "/:bid",
   [verifyLoginToken, isAdmin],
@@ -26,15 +26,15 @@ router.put(
       maxCount: 1,
     },
   ]),
-  controllers.updateBlog
+  blogController.updateBlog
 );
-router.put("/like/:bid", verifyLoginToken, controllers.likeBlog);
-router.put("/dislike/:bid", verifyLoginToken, controllers.dislikeBlog);
+router.put("/like/:bid", verifyLoginToken, blogController.likeBlog);
+router.put("/dislike/:bid", verifyLoginToken, blogController.dislikeBlog);
 router.put(
   "/uploadimg/:bid",
   upload.single("image"),
-  controllers.uploadBlogImg
+  blogController.uploadBlogImg
 );
-router.delete("/:bid", controllers.deleteBlog);
+router.delete("/:bid", blogController.deleteBlog);
 
 module.exports = router;

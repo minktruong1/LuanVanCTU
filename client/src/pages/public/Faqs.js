@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FaqQuestion from "../../components/FaqQuestion";
 import { Breadcrumb } from "../../components";
 import { Helmet } from "react-helmet";
@@ -37,7 +37,9 @@ const content = [
 ];
 
 const Faqs = () => {
-  window.scrollTo(0, 0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="w-[calc(100%-20px)] md:w-main ">

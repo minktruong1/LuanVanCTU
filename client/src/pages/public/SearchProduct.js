@@ -12,8 +12,6 @@ const breakpointColumnsObj = {
 };
 
 const SearchProduct = () => {
-  window.scrollTo(0, 0);
-
   const [products, setProducts] = useState(null);
   const [params] = useSearchParams();
   const [keyword, setKeyword] = useState(null);
@@ -31,6 +29,11 @@ const SearchProduct = () => {
     setKeyword(title);
     fetchProductByKeyword({ ...queries });
   }, [params]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="w-[calc(100%-20px)] md:w-main ">
       <Breadcrumb />

@@ -45,7 +45,6 @@ const reactSlickSetting = {
 };
 
 const ProductDetail = () => {
-  window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,6 +54,7 @@ const ProductDetail = () => {
   const [chooseImage, setChooseImage] = useState(null);
   const [updateRatingBar] = useState(false);
   const [notFound, setNotFound] = useState(null);
+  const [randomBlogs, setRandomBlogs] = useState([]);
 
   const { currentData } = useSelector((state) => state.user);
   const { blogList } = useSelector((state) => state.blogReducer);
@@ -69,7 +69,6 @@ const ProductDetail = () => {
     const shuffled = clonedArray.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, number);
   };
-  const randomBlogs = getRandom4Blogs(blogList, 4);
 
   const fetchProductData = async () => {
     const response = await apiGetProductDetail(pid);
@@ -186,6 +185,15 @@ const ProductDetail = () => {
       apiCheckedProduct({ _id: currentData._id, pid: pid });
     }
   }, [currentData, product]);
+
+  useEffect(() => {
+    const randomBlogsResult = getRandom4Blogs(blogList, 4);
+    setRandomBlogs(randomBlogsResult);
+  }, [blogList]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -323,7 +331,7 @@ const ProductDetail = () => {
                         >
                           <img
                             alt="blog"
-                            className="rounded"
+                            className="rounded md:h-[80px]"
                             src={element.image}
                           />
                         </Link>

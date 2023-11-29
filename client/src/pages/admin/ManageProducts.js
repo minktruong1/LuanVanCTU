@@ -91,7 +91,7 @@ const ManageProducts = () => {
   }, [params, editProductTab]);
 
   return (
-    <div className="w-full flex flex-col relative overflow-auto ">
+    <div className="w-full flex flex-col relative overflow-auto min-h-screen">
       {editProductTab && (
         <div className="absolute inset-0 min-h-screen bg-webBackground z-20 w-[1300px] md:w-full">
           <UpdateProduct

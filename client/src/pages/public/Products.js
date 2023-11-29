@@ -28,7 +28,6 @@ const breakpointColumnsObj = {
 };
 
 const Products = () => {
-  window.scrollTo(0, 0);
   const navigate = useNavigate();
   const [products, setProducts] = useState(null);
   const [activeBox, setActiveBox] = useState(null);
@@ -74,7 +73,6 @@ const Products = () => {
     delete queries.to;
 
     fetchProductByCate({ ...priceFilterQuery, ...queries });
-    window.scrollTo(0, 0);
   }, [params]);
 
   const changeActiveBox = useCallback(
@@ -103,7 +101,11 @@ const Products = () => {
       });
     }
   }, [sort]);
-  console.log(products);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="w-[calc(100%-20px)] xl:w-main">
       <Breadcrumb category={category} />

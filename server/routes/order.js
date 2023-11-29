@@ -1,20 +1,24 @@
 const router = require("express").Router();
-const controllers = require("../controllers/order.js");
+const orderController = require("../controllers/order.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 
-router.post("/", verifyLoginToken, controllers.createOrder);
-router.put("/status/:oid", [verifyLoginToken], controllers.updateOrderStatus);
+router.post("/", verifyLoginToken, orderController.createOrder);
+router.put(
+  "/status/:oid",
+  [verifyLoginToken],
+  orderController.updateOrderStatus
+);
 router.put(
   "/review",
   [verifyLoginToken],
-  controllers.updateProductReviewStatus
+  orderController.updateProductReviewStatus
 );
-router.get("/", verifyLoginToken, controllers.userGetOrder);
-router.get("/all", [verifyLoginToken, isAdmin], controllers.getOrderList);
+router.get("/", verifyLoginToken, orderController.userGetOrder);
+router.get("/all", [verifyLoginToken, isAdmin], orderController.getOrderList);
 router.get(
   "/all-count",
   [verifyLoginToken, isAdmin],
-  controllers.getOrderForCount
+  orderController.getOrderForCount
 );
 
 module.exports = router;

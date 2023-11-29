@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { apiDislikeBlog, apiGetBlogDetail, apiLikeBlog } from "../../apis";
 import moment from "moment";
 import { Breadcrumb } from "../../components";
@@ -12,10 +17,14 @@ import {
 } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import sweetAlert from "sweetalert2";
+import path from "../../ultils/path";
 
 const BlogDetail = () => {
   const [blog, setBlog] = useState(null);
   const { bid, title } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [countLike, setCountLike] = useState(0);
   const [countDislike, setCountDislike] = useState(0);
   const [hadLike, setHadLike] = useState(false);
@@ -54,6 +63,27 @@ const BlogDetail = () => {
   };
 
   const handleLikeBlog = async () => {
+    if (!currentData) {
+      return sweetAlert
+        .fire({
+          title: "Thông báo",
+          text: "Hãy đăng nhập để tiếp tục",
+          icon: "info",
+          cancelButtonAriaLabel: "Hủy",
+          showCancelButton: true,
+          confirmButtonText: "Tới trang đăng nhập",
+        })
+        .then((rs) => {
+          if (rs.isConfirmed) {
+            navigate({
+              pathname: `/${path.LOGIN}`,
+              search: createSearchParams({
+                redirect: location.pathname,
+              }).toString(),
+            });
+          }
+        });
+    }
     const response = await apiLikeBlog(bid);
     if (response.success) {
       reRender();
@@ -61,6 +91,27 @@ const BlogDetail = () => {
   };
 
   const handleDislikeBlog = async () => {
+    if (!currentData) {
+      return sweetAlert
+        .fire({
+          title: "Thông báo",
+          text: "Hãy đăng nhập để tiếp tục",
+          icon: "info",
+          cancelButtonAriaLabel: "Hủy",
+          showCancelButton: true,
+          confirmButtonText: "Tới trang đăng nhập",
+        })
+        .then((rs) => {
+          if (rs.isConfirmed) {
+            navigate({
+              pathname: `/${path.LOGIN}`,
+              search: createSearchParams({
+                redirect: location.pathname,
+              }).toString(),
+            });
+          }
+        });
+    }
     const response = await apiDislikeBlog(bid);
     if (response.success) {
       reRender();

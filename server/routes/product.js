@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controllers = require("../controllers/product.js");
+const productController = require("../controllers/product.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
@@ -12,10 +12,10 @@ router.post(
       maxCount: 10,
     },
   ]),
-  controllers.createProduct
+  productController.createProduct
 );
-router.get("/", controllers.getAllProducts);
-router.put("/reviews", verifyLoginToken, controllers.reviews);
+router.get("/", productController.getAllProducts);
+router.put("/reviews", verifyLoginToken, productController.reviews);
 
 router.put(
   "/:pid",
@@ -26,10 +26,14 @@ router.put(
       maxCount: 10,
     },
   ]),
-  controllers.updateProduct
+  productController.updateProduct
 );
 
-router.delete("/:pid", [verifyLoginToken, isAdmin], controllers.deleteProduct);
-router.get("/:pid", controllers.getProduct);
+router.delete(
+  "/:pid",
+  [verifyLoginToken, isAdmin],
+  productController.deleteProduct
+);
+router.get("/:pid", productController.getProduct);
 
 module.exports = router;

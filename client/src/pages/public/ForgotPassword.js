@@ -13,7 +13,6 @@ import { showModal } from "../../store/app/appSlice";
 import { Helmet } from "react-helmet";
 
 const ForgotPassword = () => {
-  window.scrollTo(0, 0);
   const dispatch = useDispatch();
 
   const onSubmit = async (email) => {
@@ -45,6 +44,10 @@ const ForgotPassword = () => {
       validationSchema: forgotPasswordSchema,
       onSubmit,
     });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex justify-center w-[calc(100%-20px)] ">

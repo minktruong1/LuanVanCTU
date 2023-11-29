@@ -1,40 +1,52 @@
 const router = require("express").Router();
-const controllers = require("../controllers/user.js");
+const userController = require("../controllers/user.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
-router.post("/register", controllers.registerUser);
-router.put("/register-confirm/:token", controllers.registerCheck);
-router.post("/login", controllers.loginUser);
-router.get("/current", [verifyLoginToken], controllers.getUser);
-router.post("/refreshtoken", controllers.refreshLoginToken);
-router.get("/logout", controllers.logout);
-router.post("/forgotpassword", controllers.forgotPassword);
-router.put("/changepassword", [verifyLoginToken], controllers.changePassword);
-router.put("/resetpassword", controllers.resetPassword);
-router.put("/address", [verifyLoginToken], controllers.updateUserAddress);
-router.put("/cart", [verifyLoginToken], controllers.addProductIntoUserCart);
-router.put("/wishlist", [verifyLoginToken], controllers.addProductToWishList);
+router.post("/register", userController.registerUser);
+router.put("/register-confirm/:token", userController.registerCheck);
+router.post("/login", userController.loginUser);
+router.get("/current", [verifyLoginToken], userController.getUser);
+router.post("/refreshtoken", userController.refreshLoginToken);
+router.get("/logout", userController.logout);
+router.post("/forgotpassword", userController.forgotPassword);
+router.put(
+  "/changepassword",
+  [verifyLoginToken],
+  userController.changePassword
+);
+router.put("/resetpassword", userController.resetPassword);
+router.put("/address", [verifyLoginToken], userController.updateUserAddress);
+router.put("/cart", [verifyLoginToken], userController.addProductIntoUserCart);
+router.put(
+  "/wishlist",
+  [verifyLoginToken],
+  userController.addProductToWishList
+);
 router.delete(
   "/remove-product/:pid",
   [verifyLoginToken],
-  controllers.removeProductFromCart
+  userController.removeProductFromCart
 );
 
 //recommend product
-router.get("/recommendfornew/", controllers.getRandomForNewUser);
-router.get("/recommend/", [verifyLoginToken], controllers.setRecommendList);
-router.get("/iscart/", [verifyLoginToken], controllers.isCartProduct);
+router.get("/recommendfornew/", userController.getRandomForNewUser);
+router.get("/recommend/", [verifyLoginToken], userController.setRecommendList);
+router.get("/iscart/", [verifyLoginToken], userController.isCartProduct);
 
-router.put("/pushProduct", controllers.pushCheckedProduct);
-router.get("/", controllers.getAllUsers);
-router.delete("/:uid", [verifyLoginToken, isAdmin], controllers.deleteUser);
+router.put("/pushProduct", userController.pushCheckedProduct);
+router.get("/", userController.getAllUsers);
+router.delete("/:uid", [verifyLoginToken, isAdmin], userController.deleteUser);
 router.put(
   "/current",
   [verifyLoginToken],
   upload.single("avatar"),
-  controllers.updateUserByUser
+  userController.updateUserByUser
 );
-router.put("/:uid", [verifyLoginToken, isAdmin], controllers.updateUserByAdmin);
+router.put(
+  "/:uid",
+  [verifyLoginToken, isAdmin],
+  userController.updateUserByAdmin
+);
 
 module.exports = router;

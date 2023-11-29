@@ -29,7 +29,7 @@ const Login = () => {
         login({
           isLogin: true,
           token: responseLogin.loginToken,
-          userData: responseLogin.userData,
+          // userData: responseLogin.userData,
         })
       );
       searchParams.get("redirect")

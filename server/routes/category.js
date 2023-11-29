@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controllers = require("../controllers/category.js");
+const categoryController = require("../controllers/category.js");
 const { verifyLoginToken, isAdmin } = require("../middlewares/verifyToken.js");
 const upload = require("../config/cloudinary.config.js");
 
@@ -12,10 +12,10 @@ router.post(
       maxCount: 1,
     },
   ]),
-  controllers.createCategory
+  categoryController.createCategory
 );
 
-router.get("/", controllers.getAllCategories);
+router.get("/", categoryController.getAllCategories);
 router.put(
   "/:cateid",
   [verifyLoginToken, isAdmin],
@@ -25,12 +25,12 @@ router.put(
       maxCount: 1,
     },
   ]),
-  controllers.updateCategory
+  categoryController.updateCategory
 );
 router.delete(
   "/:cateid",
   [verifyLoginToken, isAdmin],
-  controllers.deleteCategory
+  categoryController.deleteCategory
 );
 
 module.exports = router;

@@ -115,7 +115,7 @@ const ManageUsers = () => {
         <h1>Quản lý tài khoản</h1>
       </div>
       <div className="w-full p-4">
-        <div className="flex py-4">
+        <div className="flex justify-between py-4">
           <InputField
             nameKey={"queryCollect"}
             value={queries.queryCollect}

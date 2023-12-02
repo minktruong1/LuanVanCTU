@@ -1,15 +1,18 @@
 import React, { memo, Fragment, useState } from "react";
 import { adminSidebar } from "../ultils/contants";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { MdBackup } from "react-icons/md";
+import { apiExportProducts } from "../apis/exportData";
 
 const activeStyling = "px-4 py-2 flex items-center gap-2 bg-[#26baee] ";
 const unActiveStyling = "px-4 py-2 flex items-center gap-2 hover:bg-[#26baee]";
 
 const AdminSidebar = () => {
   const [active, setActive] = useState([]);
+  const navigate = useNavigate();
 
   const { isShowAdminSidebar } = useSelector((state) => state.appReducer);
 
@@ -21,10 +24,14 @@ const AdminSidebar = () => {
     }
   };
 
+  const handleExport = async () => {
+    window.open("http://localhost:5000/api/export/all");
+  };
+
   return (
     <div
       className={clsx(
-        "bg-[#9fe8fa] text-black fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30 overflow-x-auto",
+        "bg-[#9fe8fa] text-black fixed top-0 bottom-0 left-0 h-full py-4 duration-300 z-30 overflow-x-auto text-lg",
         isShowAdminSidebar ? "w-fit" : "translate-x-[-100%]"
       )}
     >
@@ -34,7 +41,7 @@ const AdminSidebar = () => {
       >
         <span className={clsx("text-4xl font-extrabold")}>QUAN LY</span>
       </Link>
-      <div className={clsx("text-lg")}>
+      <div>
         {adminSidebar.map((element) => (
           <Fragment key={element.id}>
             {element.type === "SINGLE" && (
@@ -84,6 +91,15 @@ const AdminSidebar = () => {
             )}
           </Fragment>
         ))}
+      </div>
+      <div className="px-4 py-2">
+        <div
+          onClick={() => handleExport()}
+          className="uppercase flex items-center cursor-pointer"
+        >
+          <MdBackup size={26} />
+          <span className="ml-2">Backup dữ liệu</span>
+        </div>
       </div>
     </div>
   );

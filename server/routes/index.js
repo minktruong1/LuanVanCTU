@@ -7,6 +7,7 @@ const orderRoute = require("./order.js");
 const VNpayRoute = require("./VNpay.js");
 const searchRoute = require("./searchProduct.js");
 const imagesRoute = require("./images.js");
+const exportRoute = require("./exportData.js");
 
 const { notFound, errorHandler } = require("../middlewares/prettyError.js");
 
@@ -20,6 +21,7 @@ const initRoutes = (app) => {
   app.use("/api/vnpay", VNpayRoute);
   app.use("/api/search", searchRoute);
   app.use("/api/imagestore", imagesRoute);
+  app.use("/api/export", exportRoute);
 
   app.use(notFound);
   app.use(errorHandler);

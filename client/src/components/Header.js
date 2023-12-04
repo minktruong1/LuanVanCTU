@@ -183,6 +183,7 @@ const Header = () => {
               >
                 <BiSearch />
               </button>
+
               {isInputFocused && searchResult?.length > 0 && (
                 <div
                   ref={searchResultRef}

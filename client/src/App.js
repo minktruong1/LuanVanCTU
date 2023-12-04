@@ -37,10 +37,12 @@ import {
   ManageImgStore,
   ManageOrders,
   ManageProducts,
+  ManagePurchaseInfo,
   ManageUsers,
   OrderDashboard,
   ProductDashboard,
   ProfitDashboard,
+  PurchaseDashboard,
 } from "./pages/admin/";
 
 import {
@@ -129,6 +131,14 @@ function App() {
           <Route path={path.CREATE_COUPON} element={<CreateCoupon />} />
           <Route path={path.CREATE_CATEGORY} element={<CreateCategory />} />
           <Route path={path.CREATE_IMG_STORE} element={<CreateImgStore />} />
+          <Route
+            path={path.MANAGE_PURCHASE_INFO}
+            element={<ManagePurchaseInfo />}
+          />
+          <Route
+            path={path.PURCHASE_DASHBOARD}
+            element={<PurchaseDashboard />}
+          />
           <Route path={path.MANAGE_IMG_STORE} element={<ManageImgStore />} />
         </Route>
 

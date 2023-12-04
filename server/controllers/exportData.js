@@ -21,6 +21,7 @@ const models = {
   ImageStore: require("../models/imageStore.js"),
   Order: require("../models/order.js"),
   User: require("../models/user.js"),
+  PurchaseInfo: require("../models/purchaseInfo.js"),
 };
 
 const exportController = {

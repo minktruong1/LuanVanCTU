@@ -194,7 +194,6 @@ const ProductDetail = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   return (
     <>
       <div
@@ -399,6 +398,7 @@ const ProductDetail = () => {
                             star={element.star}
                             updatedAt={element.updatedAt}
                             comment={element.comment}
+                            image={element.owner?.avatar}
                             name={`${element.owner?.lastName} ${element.owner?.firstName}`}
                           />
                         ))}

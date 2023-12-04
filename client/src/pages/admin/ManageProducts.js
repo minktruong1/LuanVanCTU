@@ -62,11 +62,11 @@ const ManageProducts = () => {
           dispatch(showModal({ isShowModal: false, modalContent: null }));
 
           if (response.success) {
+            render();
             toast.success(response.message);
           } else {
             toast.error(response.message);
           }
-          render();
         }
       });
   };

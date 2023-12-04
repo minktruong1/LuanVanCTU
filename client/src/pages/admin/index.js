@@ -18,3 +18,5 @@ export { default as CreateCategory } from "./CreateCategory";
 export { default as ProfitDashboard } from "./ProfitDashboard";
 export { default as CreateImgStore } from "./CreateImgStore";
 export { default as ManageImgStore } from "./ManageImgStore";
+export { default as PurchaseDashboard } from "./PurchaseDashboard";
+export { default as ManagePurchaseInfo } from "./ManagePurchaseInfo";

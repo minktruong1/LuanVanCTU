@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/product.js");
+const PurchaseInfo = require("../models/purchaseInfo.js");
+const moment = require("moment");
 const slugify = require("slugify");
 
 const productController = {
@@ -24,11 +26,60 @@ const productController = {
 
     req.body.slug = slugify(title);
 
-    const response = await Product.create(req.body);
+    const newProduct = await Product.create(req.body);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let purchaseInfo = await PurchaseInfo.findOne({
+      createdAt: { $gte: today },
+    });
+
+    const getDate = moment().format("DD/MM/YYYY");
+
+    // Nếu không có PurchaseInfo được tạo trong ngày hiện tại, tạo một PurchaseInfo mới
+    if (!purchaseInfo) {
+      purchaseInfo = await PurchaseInfo.create({
+        title: `Phiếu nhập hàng ${getDate}`,
+        productList: [
+          {
+            product: newProduct._id,
+            category: newProduct.category,
+            brand: newProduct.brand,
+            title: newProduct.title,
+            quantity: newProduct.quantity, // Set quantity as needed
+            images: newProduct.images,
+            price: newProduct.price,
+            buyInPrice: newProduct.buyInPrice,
+          },
+        ],
+        productCount: 1, // Đếm số lượng sản phẩm trong productList, bắt đầu từ 1
+        totalPay: newProduct.buyInPrice * newProduct.quantity, // Set totalPay as needed
+      });
+    } else {
+      // Nếu đã có PurchaseInfo được tạo trong ngày, thêm sản phẩm vào productList của PurchaseInfo đó
+      purchaseInfo.productList.push({
+        product: newProduct._id,
+        category: newProduct.category,
+        brand: newProduct.brand,
+        title: newProduct.title,
+        quantity: newProduct.quantity,
+        images: newProduct.images,
+        price: newProduct.price,
+        buyInPrice: newProduct.buyInPrice,
+      });
+
+      // Tính lại productCount sau khi thêm sản phẩm mới vào productList
+      purchaseInfo.productCount = purchaseInfo.productList.length;
+
+      // Tính lại totalPay sau khi thêm sản phẩm mới vào productList
+      purchaseInfo.totalPay += newProduct.buyInPrice * newProduct.quantity;
+      await purchaseInfo.save();
+    }
 
     return res.status(200).json({
-      success: response ? true : false,
-      message: response ? "Tạo sản phẩm mới thành công" : "Lỗi tạo sản phẩm",
+      success: true,
+      message: "Tạo sản phẩm mới và cập nhật PurchaseInfo thành công",
     });
   }),
 
@@ -135,23 +186,100 @@ const productController = {
 
   updateProduct: asyncHandler(async (req, res) => {
     const { pid } = req.params;
+    const { quantity } = req.body;
     const files = req?.files;
 
+    // Lấy thông tin sản phẩm cần cập nhật
+    const productToUpdate = await Product.findById(pid);
+
+    if (!productToUpdate) {
+      return res.status(404).json({
+        success: false,
+        message: "Sản phẩm không tồn tại",
+      });
+    }
+
+    // Lưu số lượng ban đầu trước khi cập nhật
+    const initialQuantity = productToUpdate.quantity;
+
+    // Cập nhật thông tin sản phẩm, bao gồm cả hình ảnh nếu có
+    let updatedProduct = { ...req.body };
+
     if (files?.images) {
-      req.body.images = files?.images?.map((element) => element.path);
+      updatedProduct.images = files.images.map((element) => element.path);
     }
 
-    if (req.body && req.body.title) {
-      req.body.slug = slugify(req.body.title);
+    if (updatedProduct.title) {
+      updatedProduct.slug = slugify(updatedProduct.title);
     }
 
-    const updateProduct = await Product.findByIdAndUpdate(pid, req.body, {
+    updatedProduct = await Product.findByIdAndUpdate(pid, updatedProduct, {
       new: true,
     });
 
+    if (!updatedProduct) {
+      return res.status(500).json({
+        success: false,
+        message: "Lỗi khi cập nhật sản phẩm",
+      });
+    }
+
+    // Nếu số lượng mới lớn hơn số lượng ban đầu, kiểm tra và thêm vào PurchaseInfo
+    if (quantity > initialQuantity) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // Tìm PurchaseInfo của ngày hiện tại
+      let purchaseInfo = await PurchaseInfo.findOne({
+        createdAt: { $gte: today },
+      });
+
+      // Nếu không có PurchaseInfo được tạo trong ngày hiện tại, tạo mới
+      if (!purchaseInfo) {
+        purchaseInfo = await PurchaseInfo.create({
+          title: `Phiếu nhập hàng ${moment().format("DD/MM/YYYY")}`,
+          productList: [
+            {
+              product: updatedProduct._id,
+              category: updatedProduct.category,
+              brand: updatedProduct.brand,
+              title: updatedProduct.title,
+              quantity: quantity - initialQuantity, // Số lượng mới trừ đi số lượng ban đầu
+              images: updatedProduct.images,
+              price: updatedProduct.price,
+              buyInPrice: updatedProduct.buyInPrice,
+            },
+          ],
+          productCount: 1, // Đếm số lượng sản phẩm trong productList, bắt đầu từ 1
+          totalPay: (quantity - initialQuantity) * updatedProduct.buyInPrice, // Tính totalPay mới
+        });
+      } else {
+        // Nếu đã có PurchaseInfo được tạo trong ngày, thêm sản phẩm vào productList của PurchaseInfo đó
+        purchaseInfo.productList.push({
+          product: updatedProduct._id,
+          category: updatedProduct.category,
+          brand: updatedProduct.brand,
+          title: updatedProduct.title,
+          quantity: quantity - initialQuantity, // Số lượng mới trừ đi số lượng ban đầu
+          images: updatedProduct.images,
+          price: updatedProduct.price,
+          buyInPrice: updatedProduct.buyInPrice,
+        });
+
+        // Tính lại productCount sau khi thêm sản phẩm mới vào productList
+        purchaseInfo.productCount = purchaseInfo.productList.length;
+
+        // Tính lại totalPay sau khi thêm sản phẩm mới vào productList
+        purchaseInfo.totalPay +=
+          (quantity - initialQuantity) * updatedProduct.buyInPrice;
+        await purchaseInfo.save();
+      }
+    }
+
     return res.status(200).json({
-      success: updateProduct ? true : false,
-      message: updateProduct ? "Cập nhật thành công" : "Lỗi cập nhật",
+      success: true,
+      message: "Cập nhật sản phẩm thành công",
+      updatedProduct,
     });
   }),
 

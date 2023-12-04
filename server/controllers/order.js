@@ -29,7 +29,12 @@ const orderController = {
 
       const couponDetail = await Coupon.findOne({
         code: { $regex: new RegExp("^" + couponCode + "$") },
-      }).select("_id name quantity code percentDiscount directDiscount");
+      }).select("_id name quantity code expire percentDiscount directDiscount");
+
+      const currentDate = new Date();
+      if (couponDetail?.expire < currentDate) {
+        throw new Error("Code đã hết hạn");
+      }
 
       if (couponDetail?.quantity === 0) {
         throw new Error("Code đã hết lượt");

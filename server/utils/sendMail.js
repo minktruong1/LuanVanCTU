@@ -13,7 +13,7 @@ const sendMail = asyncHandler(async ({ email, html, subject }) => {
   });
 
   let info = await transporter.sendMail({
-    from: '"Cua hang phu kien may tinh 👻" <no-reply@shopstore.com>', // sender address
+    from: '"Cua hang thiet bi dien tu " <no-reply@shopstore.com>', // sender address
     to: email, // list of receivers
     subject: subject, // Subject line
     html: html, // html body

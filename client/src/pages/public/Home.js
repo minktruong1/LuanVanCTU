@@ -7,7 +7,6 @@ import {
 } from "../../components/index.js";
 import CategoriesList from "../../components/CategoriesList.js";
 import BlogsMap from "../../components/BlogsMap.js";
-import { useSelector } from "react-redux";
 import ProductSuggestion from "../../components/ProductSuggestion.js";
 import { useEffect, useState } from "react";
 

@@ -35,7 +35,7 @@ var orderSchema = new mongoose.Schema(
       percentDiscount: Number,
       directDiscount: Number,
     },
-    note: String,
+    note: { type: String, default: "" },
     shipPrice: Number,
     totalPrice: Number,
     lastPrice: Number,

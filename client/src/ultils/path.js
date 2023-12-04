@@ -37,6 +37,8 @@ const path = {
   CREATE_CATEGORY: "create-category",
   CREATE_IMG_STORE: "create-imgstore",
   MANAGE_IMG_STORE: "manage-imgstore",
+  MANAGE_PURCHASE_INFO: "manage-purchase-info",
+  PURCHASE_DASHBOARD: "purchase-dashboard",
 
   //customer path
   CUSTOMER: "customer",

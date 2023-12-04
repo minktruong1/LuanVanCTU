@@ -110,6 +110,7 @@ const OrderDashboard = () => {
           DataFor={`year`}
           DataType={`order`}
           label={`yearOrder`}
+          name={`Biểu đồ thống kê trạng thái đơn hàng trong năm`}
         />
       </div>
       <div>
@@ -119,11 +120,14 @@ const OrderDashboard = () => {
           OderDatasets3={Object.values(totalOrderQuarter)}
           DataFor={`quarter`}
           DataType={`order`}
-          label={`quarterOrder`}
+          name={`Biểu đồ thống kê trạng thái đơn hàng theo quý`}
         />
       </div>
       <div>
-        <ChartPie OderDatasets={Object.values(orderCounts)} />
+        <ChartPie
+          OderDatasets={Object.values(orderCounts)}
+          name={`Biểu đồ thống kê trạng thái đơn hàng`}
+        />
       </div>
     </div>
   );

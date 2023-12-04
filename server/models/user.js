@@ -75,6 +75,7 @@ var userSchema = new mongoose.Schema(
     checkedProducts: [
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
+        slug: String,
         category: String,
         price: Number,
         buyInPrice: Number,

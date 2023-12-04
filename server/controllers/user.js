@@ -159,7 +159,7 @@ const userController = {
         path: "checkedProducts",
         populate: {
           path: "product",
-          select: "title images price quantity category reviewPoint",
+          select: "title images price quantity category reviewPoint slug",
         },
       });
     return res.status(200).json({
@@ -524,21 +524,20 @@ const userController = {
 
     const user = await User.findById(_id).select("checkedProducts");
 
-    // Check if the product is already in checkedProducts
+    // Neu da co san
     const index = user.checkedProducts.findIndex(
       (element) => element.product.toString() === pid
     );
 
     if (index !== -1) {
-      // If the product is already in the checkedProducts, remove it from its current position
       const [existingProduct] = user.checkedProducts.splice(index, 1);
-      user.checkedProducts.unshift(existingProduct); // Move the existing product to the beginning of the array
+      user.checkedProducts.unshift(existingProduct);
     } else {
-      // If the product is not in checkedProducts, add it to the beginning
       const productToAdd = await Product.findById(pid);
       if (productToAdd) {
         const newProduct = {
           product: productToAdd._id,
+          slug: productToAdd.slug,
           category: productToAdd.category,
           price: productToAdd.price,
           buyInPrice: productToAdd.buyInPrice,
@@ -551,7 +550,6 @@ const userController = {
       }
     }
 
-    // Limit checkedProducts array to 10 items
     if (user.checkedProducts.length > 10) {
       user.checkedProducts = user.checkedProducts.slice(0, 10);
     }

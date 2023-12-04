@@ -40,6 +40,7 @@ const Checkout = () => {
   const [shipPrice, setShipPrice] = useState(40000);
   const [couponCode, setCouponCode] = useState("");
   const [couponData, setCouponData] = useState(null);
+  const [validCoupon, setValidCoupon] = useState(true);
 
   const priceCounting = Math.round(
     +currentCart?.reduce(
@@ -85,7 +86,10 @@ const Checkout = () => {
   const queryDebounce = useDebounce(couponCode, 800);
 
   const handleSelectMethod = async (selectedMethod) => {
-    if (!currentData?.address) {
+    if (currentData?.address === "") {
+      return;
+    }
+    if (!validCoupon) {
       return;
     }
     setSelectedButton(selectedMethod.id);
@@ -108,10 +112,18 @@ const Checkout = () => {
   };
 
   const fetchCoupon = async (code) => {
+    dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiGetDetailCoupon({ code });
+    dispatch(showModal({ isShowModal: false, modalContent: null }));
     if (response.success) {
       setCouponData(response.coupon);
+      // setDisablePaypal(false);
+      setValidCoupon(true);
     } else {
+      // setDisablePaypal(true);
+      setValidCoupon(false);
+      setSelectedButton(null);
+      setPaymentMethod(null);
       setCouponData(response);
     }
   };
@@ -210,6 +222,8 @@ const Checkout = () => {
     if (couponCode !== "") {
       fetchCoupon(couponCode);
     } else {
+      // setDisablePaypal(false);
+      setValidCoupon(true);
       setCouponData(null);
     }
   }, [queryDebounce]);
@@ -234,7 +248,6 @@ const Checkout = () => {
     return <Navigate to={`/`} replace={true} />;
   }
 
-  console.log(currentData.address);
   return (
     <div className="w-[calc(100%-20px)] md:w-main grid grid-rows-1 gap-3 my-8 text-sm md:text-base">
       <div className="grid grid-rows-1 bg-white rounded-b">
@@ -350,6 +363,7 @@ const Checkout = () => {
                       "border p-2 mr-2 text-[#6d6e72] border-[#6d6e72]",
                       currentData?.address === "" &&
                         "cursor-not-allowed opacity-50",
+                      validCoupon ? "" : "cursor-not-allowed opacity-50",
                       selectedButton === element.id
                         ? "!border-main text-main"
                         : ""

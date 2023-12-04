@@ -115,6 +115,10 @@ export const adminSidebar = [
         text: "Về lợi nhuận",
         path: `/${path.ADMIN}/${path.PROFIT_DASHBOARD}`,
       },
+      {
+        text: "Về chi trả",
+        path: `/${path.ADMIN}/${path.PURCHASE_DASHBOARD}`,
+      },
     ],
   },
   {
@@ -203,6 +207,12 @@ export const adminSidebar = [
         path: `/${path.ADMIN}/${path.MANAGE_IMG_STORE}`,
       },
     ],
+  },
+  {
+    id: 9,
+    type: "SINGLE",
+    text: "Quản lý phiếu nhập",
+    path: `/${path.ADMIN}/${path.MANAGE_PURCHASE_INFO}`,
   },
 ];
 

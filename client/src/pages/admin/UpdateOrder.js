@@ -68,7 +68,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
       status: editOrderTab?.status || "",
     });
   }, []);
-
+  console.log(editOrderTab);
   return (
     <div className="w-[1200px] md:w-full p-4 overflow-auto">
       <div className="mt-[60px] text-lg">
@@ -104,7 +104,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
           <div className="grid grid-cols-8">
             <span className="col-span-1 text-[#6d6e72]">Lời nhắn:</span>
             <span className="col-span-7 font-semibold">
-              {editOrderTab?.note || "Không"}
+              {editOrderTab?.note || <span></span>}
             </span>
           </div>
 

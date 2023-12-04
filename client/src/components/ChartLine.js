@@ -27,78 +27,24 @@ const ChartLine = ({
   OderDatasets3,
   DataFor,
   DataType,
-  label,
+  name,
 }) => {
-  const options =
-    label === "yearProfit"
-      ? {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
-            },
-            title: {
-              display: true,
-              position: "bottom",
-              text: "Biểu đồ lợi nhuận trong năm",
-              font: {
-                size: 18,
-              },
-            },
-          },
-        }
-      : label === "quarterProfit"
-      ? {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
-            },
-            title: {
-              display: true,
-              position: "bottom",
-              text: "Biểu đồ lợi nhuận theo quý",
-              font: {
-                size: 18,
-              },
-            },
-          },
-        }
-      : label === "yearOrder"
-      ? {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
-            },
-            title: {
-              display: true,
-              position: "bottom",
-              text: "Biểu đồ số đơn hàng nhận được theo năm",
-              font: {
-                size: 18,
-              },
-            },
-          },
-        }
-      : label === "quarterOrder"
-      ? {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
-            },
-            title: {
-              display: true,
-              position: "bottom",
-              text: "Biểu đồ số đơn hàng nhận được theo quý",
-              font: {
-                size: 18,
-              },
-            },
-          },
-        }
-      : {};
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        position: "bottom",
+        text: name,
+        font: {
+          size: 18,
+        },
+      },
+    },
+  };
 
   const labels =
     DataFor === "quarter"
@@ -146,6 +92,15 @@ const ChartLine = ({
             data: OderDatasets3,
             borderColor: "rgb(54, 162, 235)",
             backgroundColor: "rgba(54, 162, 235, 0.5)",
+          },
+        ]
+      : DataType === "spending"
+      ? [
+          {
+            label: "VNĐ",
+            data: OderDatasets1,
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.5)",
           },
         ]
       : [];

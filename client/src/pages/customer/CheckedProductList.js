@@ -27,7 +27,7 @@ const CheckedProductList = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
-
+  console.log(products);
   return (
     <div className="w-full bg-white rounded">
       <div className="p-[16px] text-[24px] font-medium  ">
@@ -50,7 +50,11 @@ const CheckedProductList = () => {
           columnClassName="my-masonry-grid_column "
         >
           {products?.map((element) => (
-            <Product key={element._id} pid={element.id} productData={element} />
+            <Product
+              key={element._id}
+              pid={element._id}
+              productData={element}
+            />
           ))}
         </Masonry>
       </div>

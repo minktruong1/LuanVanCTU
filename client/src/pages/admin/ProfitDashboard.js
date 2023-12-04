@@ -71,6 +71,7 @@ const ProfitDashboard = () => {
           DataFor={`year`}
           DataType={`profit`}
           label={`yearProfit`}
+          name={`Biểu đồ thống kê lợi nhuận trong năm`}
         />
       </div>
       <div>
@@ -78,7 +79,7 @@ const ProfitDashboard = () => {
           OderDatasets1={Object.values(quarterlyProfit)}
           DataFor={`quarter`}
           DataType={`profit`}
-          label={`quarterProfit`}
+          name={`Biểu đồ thống kê lợi nhuận theo quý`}
         />
       </div>
     </div>

@@ -4,7 +4,7 @@ import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ChartPie = ({ OderDatasets }) => {
+const ChartPie = ({ OderDatasets, name }) => {
   const options = {
     responsive: true,
     plugins: {
@@ -13,7 +13,7 @@ const ChartPie = ({ OderDatasets }) => {
       },
       title: {
         display: true,
-        text: "Biểu đồ thống kê trạng thái đơn hàng",
+        text: name,
         position: "bottom",
         font: {
           size: 14,

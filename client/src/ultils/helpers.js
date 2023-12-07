@@ -47,10 +47,8 @@ export const timeExchange = (d) => {
 };
 
 export const formValidate = (payload, setInvalidFields) => {
-  //temp to count passed fields, if = 0 have permission to submit
   let invalids = 0;
 
-  //slice payload in to [['key'], ['value']]
   const formatPayload = Object.entries(payload);
   for (let array of formatPayload) {
     if (array[1].trim() === "") {

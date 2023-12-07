@@ -63,7 +63,7 @@ const blogController = {
     const response = await query.exec();
     return res.json({
       success: response ? true : false,
-      blogs: response ? response : "error when get all Blogs ",
+      blogs: response ? response : "error when get all Blogs",
     });
   }),
 

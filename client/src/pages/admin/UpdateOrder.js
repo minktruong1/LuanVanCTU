@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { formatVND } from "../../ultils/helpers";
 import {
@@ -31,6 +31,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
     reset,
   } = useForm();
   const dispatch = useDispatch();
+  const [isDone, setIsDone] = useState(false);
 
   const handleUpdateOrder = async (data) => {
     dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
@@ -64,6 +65,9 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (editOrderTab.status === "Hoàn thành") {
+      setIsDone(true);
+    }
     reset({
       status: editOrderTab?.status || "",
     });
@@ -161,7 +165,9 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
                 <div className="text-right text-lg">
                   <span>
                     {`Đã giảm: ${formatVND(
-                      editOrderTab?.totalPrice - editOrderTab?.lastPrice
+                      editOrderTab?.totalPrice -
+                        editOrderTab?.lastPrice +
+                        editOrderTab?.shipPrice
                     )}đ`}
                   </span>
                 </div>

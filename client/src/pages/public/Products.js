@@ -89,6 +89,20 @@ const Products = () => {
   const changeSortValue = useCallback(
     (value) => {
       setSort(value);
+
+      if (value === "") {
+        const params = new URLSearchParams(window.location.search);
+        params.delete("sort");
+        navigate({
+          pathname: `/categories/${category}`,
+          search: params.toString(),
+        });
+      } else {
+        navigate({
+          pathname: `/categories/${category}`,
+          search: createSearchParams({ sort: value }).toString(),
+        });
+      }
     },
     [sort]
   );
@@ -105,7 +119,7 @@ const Products = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  console.log(category);
   return (
     <div className="w-[calc(100%-20px)] xl:w-main">
       <Breadcrumb category={category} />
@@ -117,11 +131,13 @@ const Products = () => {
             changeActiveBox={changeActiveBox}
             type="input"
           />
-          <SearchItem
-            name="Loại"
-            onChoice={activeBox}
-            changeActiveBox={changeActiveBox}
-          />
+          {category === "all-products" && (
+            <SearchItem
+              name="Loại"
+              onChoice={activeBox}
+              changeActiveBox={changeActiveBox}
+            />
+          )}
         </div>
         <div className="p-[24px] pt-0 flex flex-col">
           <div className="flex justify-end">

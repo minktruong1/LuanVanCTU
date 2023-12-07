@@ -399,7 +399,12 @@ const ProductDetail = () => {
                             updatedAt={element.updatedAt}
                             comment={element.comment}
                             image={element.owner?.avatar}
-                            name={`${element.owner?.lastName} ${element.owner?.firstName}`}
+                            name={
+                              !element.owner?.lastName &&
+                              !element.owner?.firstName
+                                ? "Người dùng không tồn tại"
+                                : `${element.owner?.lastName} ${element.owner?.firstName}`
+                            }
                           />
                         ))}
                     </div>

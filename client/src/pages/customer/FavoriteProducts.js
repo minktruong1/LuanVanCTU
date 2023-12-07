@@ -25,7 +25,7 @@ const FavoriteProducts = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
-  console.log(products);
+
   return (
     <div className="w-full bg-white rounded">
       <div className="p-[16px] text-[24px] font-medium  ">

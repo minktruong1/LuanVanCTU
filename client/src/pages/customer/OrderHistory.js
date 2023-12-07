@@ -114,10 +114,6 @@ const OrderHistory = () => {
   };
 
   const handleCollectReview = async ({ comment, point, pid, oid, oIid }) => {
-    if (!comment && !point) {
-      alert("Hãy nhập nội dung đánh giá");
-      return;
-    }
     dispatch(showModal({ isShowModal: false, modalContent: null }));
     dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
     const response = await apiReview({
@@ -132,6 +128,8 @@ const OrderHistory = () => {
       apiUpdateReviewProductStatus({ oid, oIid });
       toast.success("Đánh giá sản phẩm thành công");
       reRender();
+    } else {
+      toast.error(response.message);
     }
   };
 
@@ -282,7 +280,9 @@ const OrderHistory = () => {
               <div key={order._id} className="mb-[24px] bg-white p-4">
                 <div className="grid grid-cols-2">
                   <div className="">
-                    <span>{`Mã số: ${order?._id}`}</span>
+                    <span>{`Đơn hàng ngày: ${moment(order?.createdAt).format(
+                      `DD-MM-YYYY`
+                    )}`}</span>
                   </div>
                   <div className="text-right">
                     <span>{order?.status}</span>
@@ -337,12 +337,16 @@ const OrderHistory = () => {
                   <div className="grid grid-cols-2">
                     <div>
                       {order?.status === "Đang xử lý" ? (
-                        <div
-                          onClick={() => handleCancel(order)}
-                          className="text-canClick underline cursor-pointer px-3"
-                        >
-                          Hủy
-                        </div>
+                        <>
+                          {order?.method === "cod" && (
+                            <div
+                              onClick={() => handleCancel(order)}
+                              className="text-canClick underline cursor-pointer px-3"
+                            >
+                              Hủy
+                            </div>
+                          )}
+                        </>
                       ) : order?.status === "Đang vận chuyển" ? (
                         <div
                           onClick={() => handleConfirm(order)}

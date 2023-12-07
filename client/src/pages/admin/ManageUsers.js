@@ -185,25 +185,7 @@ const ManageUsers = () => {
                     <>
                       <tr key={element._id} className="border-l border-r ">
                         <td className="py-2 px-2"></td>
-                        <td className="py-2 px-2">
-                          <span>
-                            <ReactInputForm
-                              register={register}
-                              errors={errors}
-                              id={"email"}
-                              validate={{
-                                required: "Vui lòng nhập",
-                                pattern: {
-                                  value:
-                                    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                  message: "Email không hợp lệ",
-                                },
-                              }}
-                              defaultValue={editUser?.email}
-                              fullWidth
-                            />
-                          </span>
-                        </td>
+                        <td className="py-2 px-2"></td>
                         <td className="py-2 px-2">
                           <span>
                             <ReactInputForm

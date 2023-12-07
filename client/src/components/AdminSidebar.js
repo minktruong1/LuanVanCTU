@@ -25,7 +25,13 @@ const AdminSidebar = () => {
   };
 
   const handleExport = async () => {
-    window.open("http://localhost:5000/api/export/all");
+    const enteredPassword = window.prompt("Nhập mật khẩu cấp 2:");
+
+    if (enteredPassword === "admin") {
+      window.open("http://localhost:5000/api/export/all");
+    } else {
+      alert("Mật khẩu cấp 2 không chính xác");
+    }
   };
 
   return (
@@ -98,7 +104,7 @@ const AdminSidebar = () => {
           className="uppercase flex items-center cursor-pointer"
         >
           <MdBackup size={26} />
-          <span className="ml-2">Backup dữ liệu</span>
+          <span className="ml-2">Lưu trữ dữ liệu</span>
         </div>
       </div>
     </div>

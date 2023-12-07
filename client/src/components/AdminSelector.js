@@ -21,7 +21,7 @@ const AdminSelector = ({
         {...register(id, validate)}
         className={clsx("form-select ", fullWidth && "w-full")}
       >
-        <option value="">--Chọn--</option>
+        <option value="">Chọn</option>
 
         {options?.map((element) => (
           <option value={element?.value}>{element?.text}</option>

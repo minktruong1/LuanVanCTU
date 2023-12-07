@@ -49,7 +49,11 @@ const SearchProduct = () => {
           columnClassName="my-masonry-grid_column "
         >
           {products?.map((product) => (
-            <Product key={product._id} pid={product.id} productData={product} />
+            <Product
+              key={product._id}
+              pid={product._id}
+              productData={product}
+            />
           ))}
         </Masonry>
       </div>

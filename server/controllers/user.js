@@ -546,7 +546,7 @@ const userController = {
         };
         user.checkedProducts.unshift(newProduct);
       } else {
-        throw new Error("Product not found");
+        throw new Error("Không tìm thấy sản phẩm");
       }
     }
 
@@ -584,7 +584,6 @@ const userController = {
 
   getRandomForNewUser: asyncHandler(async (req, res) => {
     try {
-      // Lấy 10 sản phẩm ngẫu nhiên
       const randomProducts = await Product.aggregate([
         { $sample: { size: 10 } },
       ]);
@@ -604,12 +603,10 @@ const userController = {
     try {
       const { _id } = req.user;
 
-      // Lấy 10 sản phẩm ngẫu nhiên
       const randomProducts = await Product.aggregate([
         { $sample: { size: 10 } },
       ]);
 
-      // Trích xuất các đối tượng sản phẩm từ kết quả
       const recommendList = randomProducts.map((product) => ({
         product: product._id,
         slug: product.slug,
@@ -621,7 +618,6 @@ const userController = {
         reviewPoint: product.reviewPoint,
       }));
 
-      // Cập nhật recommendList của người dùng
       const user = await User.findByIdAndUpdate(
         _id,
         { recommendList },
@@ -643,7 +639,6 @@ const userController = {
     try {
       const { _id } = req.user;
 
-      // Lấy giỏ hàng của người dùng
       const user = await User.findById(_id).select("cart recommendList");
 
       if (!user || !user.cart) {
@@ -653,19 +648,15 @@ const userController = {
         });
       }
 
-      // Lấy danh sách ID của sản phẩm trong giỏ hàng
       const cartProductIds = user.cart.map((item) => item.product);
 
-      // Xoá hết các sản phẩm trong recommendList
       user.recommendList = [];
 
-      // Lấy ngẫu nhiên 10 sản phẩm từ Product, loại bỏ các sản phẩm đã có trong giỏ hàng
       const randomProducts = await Product.aggregate([
         { $match: { _id: { $nin: cartProductIds } } },
         { $sample: { size: 10 } },
       ]);
 
-      // Thêm các sản phẩm mới vào recommendList
       user.recommendList = randomProducts.map((product) => ({
         product: product._id,
         category: product.category,
@@ -677,7 +668,6 @@ const userController = {
         images: product.images,
       }));
 
-      // Lưu thay đổi vào cơ sở dữ liệu
       await user.save();
 
       res.status(200).json({

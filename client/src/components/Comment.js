@@ -21,7 +21,7 @@ const Comment = ({
       </div>
       <div className="flex flex-col flex-auto ">
         <div className="flex items-center">
-          <span className="text-[13px]">{name}</span>
+          <span className="text-[15px]">{name}</span>
         </div>
         <div className="flex flex-col mt-[4px] mb-[4px]">
           <span className="flex items-center gap-1 ">

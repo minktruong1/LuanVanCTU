@@ -100,7 +100,23 @@ const orderController = {
     if (!status) {
       throw new Error("Missing status");
     }
+    if (status === "Đang vận chuyển") {
+      const findOrder = await Order.findById(oid);
 
+      for (const product of findOrder.productList) {
+        const productId = product.product;
+        const findProduct = await Product.findOne(productId);
+        if (!findProduct) {
+          return res.status(404).json({
+            success: false,
+            message: "Không tìm thấy dữ liệu sản phẩm",
+          });
+        }
+        if (findProduct.quantity < product.quantity) {
+          throw new Error("Không đủ hàng để vận chuyển");
+        }
+      }
+    }
     const order = await Order.findByIdAndUpdate(oid, { status }, { new: true });
 
     if (!order) {
@@ -112,18 +128,16 @@ const orderController = {
 
     // Check if the status is "Hoàn thành"
     if (status === "Hoàn thành") {
-      // Loop through each product in the order and update quantity and sold
       for (const product of order.productList) {
         const productId = product.product;
         const quantity = product.quantity;
 
-        // Update product quantity and sold count
         await Product.findByIdAndUpdate(
           productId,
           {
             $inc: {
-              quantity: -quantity, // Subtract quantity from inventory
-              sold: quantity, // Add quantity to sold count
+              quantity: -quantity,
+              sold: quantity,
             },
           },
           { new: true }

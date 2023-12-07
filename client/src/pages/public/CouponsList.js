@@ -20,7 +20,7 @@ const CouponsList = () => {
     window.scrollTo(0, 0);
     fetchCoupon();
   }, []);
-
+  console.log(couponsList);
   return (
     <div className="w-[calc(100%-20px)] md:w-main">
       <Breadcrumb />
@@ -46,7 +46,8 @@ const CouponsList = () => {
                 <span
                   className={clsx(
                     "",
-                    element?.quantity === 0 && "line-through"
+                    element?.quantity === 0 && "line-through",
+                    new Date(element?.expire) < new Date() && "line-through"
                   )}
                 >{`${element?.code}: còn lại ${
                   element?.quantity

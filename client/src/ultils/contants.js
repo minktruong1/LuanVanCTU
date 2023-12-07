@@ -66,12 +66,16 @@ export const sorts = [
     value: "-price",
     text: "Giá giảm dần",
   },
-
-  // {
-  //   id: 3,
-  //   value: "price",
-  //   text: "Giá tăng dần",
-  // },
+  {
+    id: 3,
+    value: "sold",
+    text: "Lượt mua tăng dần",
+  },
+  {
+    id: 4,
+    value: "-sold",
+    text: "Lượt mua giảm dần",
+  },
 ];
 
 export const starOptions = [

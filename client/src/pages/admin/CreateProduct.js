@@ -34,6 +34,7 @@ const CreateProduct = () => {
     images: [],
   });
 
+  const [shouldPushPurchase, setShouldPushPurchase] = useState(false);
   const [invalidFields, setInvalidFields] = useState([]);
 
   const changeValue = useCallback(
@@ -80,7 +81,9 @@ const CreateProduct = () => {
             formData.append("images", image);
           }
         }
-
+        if (shouldPushPurchase) {
+          formData.append("pushPurchase", shouldPushPurchase);
+        }
         dispatch(showModal({ isShowModal: true, modalContent: <Loading /> }));
         const response = await apiCreateProduct(formData);
         dispatch(showModal({ isShowModal: false, modalContent: null }));
@@ -213,7 +216,7 @@ const CreateProduct = () => {
           </div>
           <div className="w-full my-6 flex gap-4">
             <AdminSelector
-              label="Category"
+              label="Nhóm sản phẩm"
               options={categories?.map((element) => ({
                 value: element._id,
                 text: element.title,
@@ -226,7 +229,7 @@ const CreateProduct = () => {
               style="flex-1"
             />
             <AdminSelector
-              label="Brand"
+              label="Hãng"
               options={categories
                 ?.find((element) => element._id === watch("category"))
                 ?.brand?.map((element) => ({ value: element, text: element }))}
@@ -244,8 +247,17 @@ const CreateProduct = () => {
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
           />
-          <div className="mt-8">
+          <div className="mt-8 ">
             <Button type="submit">Tạo</Button>
+
+            <label className="ml-8">
+              <input
+                type="checkbox"
+                className="w-5 h-5"
+                onChange={(e) => setShouldPushPurchase(e.target.checked)}
+              />
+              Thêm dữ liệu vào phiếu nhập?
+            </label>
           </div>
         </form>
       </div>

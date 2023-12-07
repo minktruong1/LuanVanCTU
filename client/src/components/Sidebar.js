@@ -10,7 +10,7 @@ const Sidebar = () => {
   const { categories } = useSelector((state) => state.appReducer);
 
   return (
-    <div className="flex flex-col bg-white border rounded h-full">
+    <div className="flex flex-col bg-white border rounded max-h-full">
       {categories?.map((element, index) => (
         <Link
           key={slugifyByHand(element.title)}

@@ -8,7 +8,8 @@ const productController = {
   createProduct: asyncHandler(async (req, res) => {
     const { title, price, description, brand, category, buyInPrice } = req.body;
     const images = req.files?.images?.map((element) => element.path);
-
+    const pushPurchase = req.body.pushPurchase; // Lấy giá trị pushPurchase từ request body
+    console.log(req.body);
     if (
       !title &&
       !price &&
@@ -28,58 +29,58 @@ const productController = {
 
     const newProduct = await Product.create(req.body);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    if (pushPurchase) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-    let purchaseInfo = await PurchaseInfo.findOne({
-      createdAt: { $gte: today },
-    });
-
-    const getDate = moment().format("DD/MM/YYYY");
-
-    // Nếu không có PurchaseInfo được tạo trong ngày hiện tại, tạo một PurchaseInfo mới
-    if (!purchaseInfo) {
-      purchaseInfo = await PurchaseInfo.create({
-        title: `Phiếu nhập hàng ${getDate}`,
-        productList: [
-          {
-            product: newProduct._id,
-            category: newProduct.category,
-            brand: newProduct.brand,
-            title: newProduct.title,
-            quantity: newProduct.quantity, // Set quantity as needed
-            images: newProduct.images,
-            price: newProduct.price,
-            buyInPrice: newProduct.buyInPrice,
-          },
-        ],
-        productCount: 1, // Đếm số lượng sản phẩm trong productList, bắt đầu từ 1
-        totalPay: newProduct.buyInPrice * newProduct.quantity, // Set totalPay as needed
-      });
-    } else {
-      // Nếu đã có PurchaseInfo được tạo trong ngày, thêm sản phẩm vào productList của PurchaseInfo đó
-      purchaseInfo.productList.push({
-        product: newProduct._id,
-        category: newProduct.category,
-        brand: newProduct.brand,
-        title: newProduct.title,
-        quantity: newProduct.quantity,
-        images: newProduct.images,
-        price: newProduct.price,
-        buyInPrice: newProduct.buyInPrice,
+      let purchaseInfo = await PurchaseInfo.findOne({
+        createdAt: { $gte: today },
       });
 
-      // Tính lại productCount sau khi thêm sản phẩm mới vào productList
-      purchaseInfo.productCount = purchaseInfo.productList.length;
+      const getDate = moment().format("DD/MM/YYYY");
 
-      // Tính lại totalPay sau khi thêm sản phẩm mới vào productList
-      purchaseInfo.totalPay += newProduct.buyInPrice * newProduct.quantity;
-      await purchaseInfo.save();
+      if (!purchaseInfo) {
+        purchaseInfo = await PurchaseInfo.create({
+          title: `Phiếu nhập hàng ${getDate}`,
+          productList: [
+            {
+              product: newProduct._id,
+              category: newProduct.category,
+              brand: newProduct.brand,
+              title: newProduct.title,
+              quantity: newProduct.quantity,
+              images: newProduct.images,
+              price: newProduct.price,
+              buyInPrice: newProduct.buyInPrice,
+            },
+          ],
+          productCount: 1,
+          totalPay: newProduct.buyInPrice * newProduct.quantity,
+        });
+      } else {
+        purchaseInfo.productList.push({
+          product: newProduct._id,
+          category: newProduct.category,
+          brand: newProduct.brand,
+          title: newProduct.title,
+          quantity: newProduct.quantity,
+          images: newProduct.images,
+          price: newProduct.price,
+          buyInPrice: newProduct.buyInPrice,
+        });
+
+        purchaseInfo.productCount = purchaseInfo.productList.length;
+
+        purchaseInfo.totalPay += newProduct.buyInPrice * newProduct.quantity;
+        await purchaseInfo.save();
+      }
     }
 
     return res.status(200).json({
       success: true,
-      message: "Tạo sản phẩm mới và cập nhật PurchaseInfo thành công",
+      message: pushPurchase
+        ? "Tạo sản phẩm mới và thêm sản phẩm vào phiếu nhập thành công"
+        : "Tạo sản phẩm mới thành công",
     });
   }),
 
@@ -189,7 +190,6 @@ const productController = {
     const { quantity } = req.body;
     const files = req?.files;
 
-    // Lấy thông tin sản phẩm cần cập nhật
     const productToUpdate = await Product.findById(pid);
 
     if (!productToUpdate) {
@@ -199,10 +199,8 @@ const productController = {
       });
     }
 
-    // Lưu số lượng ban đầu trước khi cập nhật
     const initialQuantity = productToUpdate.quantity;
 
-    // Cập nhật thông tin sản phẩm, bao gồm cả hình ảnh nếu có
     let updatedProduct = { ...req.body };
 
     if (files?.images) {
@@ -224,17 +222,16 @@ const productController = {
       });
     }
 
-    // Nếu số lượng mới lớn hơn số lượng ban đầu, kiểm tra và thêm vào PurchaseInfo
+    let addedToPurchaseInfo = false;
+
     if (quantity > initialQuantity) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      // Tìm PurchaseInfo của ngày hiện tại
       let purchaseInfo = await PurchaseInfo.findOne({
         createdAt: { $gte: today },
       });
 
-      // Nếu không có PurchaseInfo được tạo trong ngày hiện tại, tạo mới
       if (!purchaseInfo) {
         purchaseInfo = await PurchaseInfo.create({
           title: `Phiếu nhập hàng ${moment().format("DD/MM/YYYY")}`,
@@ -244,41 +241,42 @@ const productController = {
               category: updatedProduct.category,
               brand: updatedProduct.brand,
               title: updatedProduct.title,
-              quantity: quantity - initialQuantity, // Số lượng mới trừ đi số lượng ban đầu
+              quantity: quantity - initialQuantity,
               images: updatedProduct.images,
               price: updatedProduct.price,
               buyInPrice: updatedProduct.buyInPrice,
             },
           ],
-          productCount: 1, // Đếm số lượng sản phẩm trong productList, bắt đầu từ 1
-          totalPay: (quantity - initialQuantity) * updatedProduct.buyInPrice, // Tính totalPay mới
+          productCount: 1,
+          totalPay: (quantity - initialQuantity) * updatedProduct.buyInPrice,
         });
+        addedToPurchaseInfo = true;
       } else {
-        // Nếu đã có PurchaseInfo được tạo trong ngày, thêm sản phẩm vào productList của PurchaseInfo đó
         purchaseInfo.productList.push({
           product: updatedProduct._id,
           category: updatedProduct.category,
           brand: updatedProduct.brand,
           title: updatedProduct.title,
-          quantity: quantity - initialQuantity, // Số lượng mới trừ đi số lượng ban đầu
+          quantity: quantity - initialQuantity,
           images: updatedProduct.images,
           price: updatedProduct.price,
           buyInPrice: updatedProduct.buyInPrice,
         });
 
-        // Tính lại productCount sau khi thêm sản phẩm mới vào productList
         purchaseInfo.productCount = purchaseInfo.productList.length;
 
-        // Tính lại totalPay sau khi thêm sản phẩm mới vào productList
         purchaseInfo.totalPay +=
           (quantity - initialQuantity) * updatedProduct.buyInPrice;
         await purchaseInfo.save();
+        addedToPurchaseInfo = true;
       }
     }
 
     return res.status(200).json({
       success: true,
-      message: "Cập nhật sản phẩm thành công",
+      message: addedToPurchaseInfo
+        ? "Cập nhật sản phẩm và thêm vào phiếu nhập thành công"
+        : "Cập nhật sản phẩm thành công",
       updatedProduct,
     });
   }),
@@ -295,37 +293,17 @@ const productController = {
   reviews: asyncHandler(async (req, res) => {
     const { _id } = req.user;
     const { star, comment, pid, updatedAt } = req.body;
-    if (!star || !pid) throw new Error("Missing input");
-    const productTarget = await Product.findById(pid);
-    const alreadyReview = productTarget?.reviews?.find(
-      (element) => element.owner.toString() === _id
-    );
-    // console.log({ alreadyReview });
-
-    //if already review, update previous review. Else post new review
-    if (alreadyReview) {
-      await Product.updateOne(
-        {
-          reviews: { $elemMatch: alreadyReview },
-        },
-        {
-          $set: {
-            "reviews.$.star": star,
-            "reviews.$.comment": comment,
-            "reviews.$.updatedAt": updatedAt,
-          },
-        },
-        { new: true }
-      );
-    } else {
-      const response = await Product.findByIdAndUpdate(
-        pid,
-        {
-          $push: { reviews: { star, comment, owner: _id, updatedAt } },
-        },
-        { new: true }
-      );
+    if (!star || !pid || !comment) {
+      throw new Error("Thiếu dữ liệu");
     }
+
+    const response = await Product.findByIdAndUpdate(
+      pid,
+      {
+        $push: { reviews: { star, comment, owner: _id, updatedAt } },
+      },
+      { new: true }
+    );
 
     //Counting reviews point
     const updatedProduct = await Product.findById(pid);
@@ -340,7 +318,7 @@ const productController = {
     await updatedProduct.save();
 
     return res.status(200).json({
-      success: true,
+      success: response ? true : false,
       updatedProduct,
     });
   }),

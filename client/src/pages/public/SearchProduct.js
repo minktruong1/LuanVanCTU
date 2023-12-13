@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
-import { Breadcrumb, Pagination, Product } from "../../components";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Breadcrumb, Product } from "../../components";
+import { useSearchParams } from "react-router-dom";
 
 const breakpointColumnsObj = {
   default: 5,

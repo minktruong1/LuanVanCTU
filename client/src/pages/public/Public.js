@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import { Footer, Header, MobileToolbar, Navigation } from "../../components";
-import { useNavigate } from "react-router-dom";
 
 const Public = () => {
   return (

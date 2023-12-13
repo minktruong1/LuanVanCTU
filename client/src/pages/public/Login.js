@@ -1,6 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Loading } from "../../components";
-import icons from "../../ultils/icons";
 import { apiLogin } from "../../apis";
 import sweetAlert from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";

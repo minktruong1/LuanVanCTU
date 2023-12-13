@@ -400,7 +400,7 @@ const userController = {
     const { pid, cid, category, quantity, price, title, images, buyInPrice } =
       req.body;
     if (!pid) {
-      throw new Error("Missing inputs");
+      throw new Error("Thiếu dữ liệu!");
     }
     const findProduct = await Product.findOne({ _id: pid });
     if (findProduct.quantity < quantity) {

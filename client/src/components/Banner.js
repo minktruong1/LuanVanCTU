@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import icons from "../ultils/icons.js";
 import Slider from "react-slick";
 
 const reactSlickSetting = {
@@ -12,21 +11,6 @@ const reactSlickSetting = {
   slidesToShow: 1,
   slidesToScroll: 1,
 };
-
-const imagesLink = [
-  {
-    id: 1,
-    link: "https://theme.hstatic.net/1000288298/1001020793/14/categorybanner_1_img.jpg?v=198",
-  },
-  {
-    id: 2,
-    link: "https://theme.hstatic.net/1000288298/1001020793/14/slide_1_img.jpg?v=198",
-  },
-  {
-    id: 3,
-    link: "https://theme.hstatic.net/200000637319/1000990988/14/categorybanner_2_img.jpg?v=279",
-  },
-];
 
 const Banner = () => {
   const [banner, setBanner] = useState(null);

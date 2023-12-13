@@ -22,7 +22,7 @@ import path from "../../ultils/path";
 
 const BlogDetail = () => {
   const [blog, setBlog] = useState(null);
-  const { bid, title } = useParams();
+  const { bid } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [countLike, setCountLike] = useState(0);

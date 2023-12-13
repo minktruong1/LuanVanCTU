@@ -8,8 +8,8 @@ const productController = {
   createProduct: asyncHandler(async (req, res) => {
     const { title, price, description, brand, category, buyInPrice } = req.body;
     const images = req.files?.images?.map((element) => element.path);
-    const pushPurchase = req.body.pushPurchase; // Lấy giá trị pushPurchase từ request body
-    console.log(req.body);
+    const pushPurchase = req.body.pushPurchase;
+
     if (
       !title &&
       !price &&

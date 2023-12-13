@@ -58,26 +58,19 @@ const Register = () => {
     setRegisterToken("");
   };
 
-  const {
-    values,
-    handleBlur,
-    errors,
-    touched,
-    isSubmitting,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobile: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: registerSchema,
-    onSubmit,
-  });
+  const { values, handleBlur, errors, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobile: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: registerSchema,
+      onSubmit,
+    });
 
   useEffect(() => {
     window.scrollTo(0, 0);

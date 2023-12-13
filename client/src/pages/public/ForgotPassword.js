@@ -1,14 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Loading } from "../../components";
-import { apiForgotPassword, apiLogin } from "../../apis";
+import { apiForgotPassword } from "../../apis";
 import sweetAlert from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { forgotPasswordSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
-import { toast } from "react-toastify";
 import { showModal } from "../../store/app/appSlice";
 import { Helmet } from "react-helmet";
 

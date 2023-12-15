@@ -2,7 +2,8 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL:
-    process.env.REACT_APP_API_URI || "https://mern-api-minktruong1.vercel.app/",
+    process.env.REACT_APP_API_URI ||
+    "https://mern-api-minktruong1.vercel.app/api",
 });
 // Thêm một bộ đón chặn request
 instance.interceptors.request.use(

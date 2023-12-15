@@ -13,7 +13,7 @@ const purchaseInfoRoute = require("./purchaseInfo.js");
 const { notFound, errorHandler } = require("../middlewares/prettyError.js");
 
 const initRoutes = (app) => {
-  app.get("/", (req, res) => {
+  app.get("/api", (req, res) => {
     res.json("Hello");
   });
 

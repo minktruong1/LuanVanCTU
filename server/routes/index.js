@@ -13,6 +13,10 @@ const purchaseInfoRoute = require("./purchaseInfo.js");
 const { notFound, errorHandler } = require("../middlewares/prettyError.js");
 
 const initRoutes = (app) => {
+  app.get("/", (req, res) => {
+    res.json("Hello");
+  });
+
   app.use("/api/user", userRoute);
   app.use("/api/product", productRoute);
   app.use("/api/category", categoryRoute);

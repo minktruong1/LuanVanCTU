@@ -9,9 +9,7 @@ const cors = require("cors");
 const app = express();
 app.use(
   cors({
-    origin:
-      process.env.CLIENT_URL ||
-      "https://mern-frontend-git-main-minktruong1.vercel.app/",
+    origin: process.env.CLIENT_URL || "https://mern-api-wo4c.onrender.com/api",
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
   })

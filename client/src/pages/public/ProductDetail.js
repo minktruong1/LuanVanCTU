@@ -1,14 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Link,
-  createSearchParams,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, createSearchParams, useParams } from "react-router-dom";
 import {
   apiGetProductDetail,
   apiUpdateCart,
-  apiReview,
   apiCheckedProduct,
 } from "../../apis";
 import {
@@ -17,13 +11,11 @@ import {
   Comment,
   QuantitySelector,
   RatingBar,
-  RatingModal,
 } from "../../components";
 import Slider from "react-slick";
 import { formatVND, pointToStar } from "../../ultils/helpers";
 import icons from "../../ultils/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { showModal } from "../../store/app/appSlice";
 import path from "../../ultils/path";
 import sweetAlert from "sweetalert2";
 import { useNavigate } from "react-router-dom";

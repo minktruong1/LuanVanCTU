@@ -1,7 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiGetProducts } from "../../apis/product";
 import { ChartVertical } from "../../components";
-import { apiAdminGetUserOrders } from "../../apis";
 
 const ProductDashboard = () => {
   const [topSoldOut, setTopSoldOut] = useState({

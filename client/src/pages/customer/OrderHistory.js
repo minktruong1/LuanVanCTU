@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   apiGetUserOrders,
   apiReview,
@@ -47,12 +47,6 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState(null);
 
   const [targetTab, setTargetTab] = useState(1);
-  const [collect, setCollect] = useState(null);
-  const [done, setDone] = useState(null);
-  const [process, setProcess] = useState(null);
-  const [ship, setShip] = useState(null);
-  const [cancel, setCancel] = useState(null);
-  const [calculated, setCalculated] = useState(false);
   const [update, setUpdate] = useState(false);
 
   const reRender = useCallback(() => {
@@ -63,26 +57,6 @@ const OrderHistory = () => {
     const response = await apiGetUserOrders(params);
     if (response.success) {
       setOrders(response.orders);
-      if (!calculated) {
-        setCollect(response?.counts);
-        setCancel(
-          response?.orders?.filter((order) => order?.status === "Hủy").length
-        );
-        setDone(
-          response?.orders?.filter((order) => order?.status === "Hoàn thành")
-            ?.length
-        );
-        setProcess(
-          response?.orders?.filter((order) => order?.status === "Đang xử lý")
-            ?.length
-        );
-        setShip(
-          response?.orders.filter(
-            (order) => order?.status === "Đang vận chuyển"
-          )?.length
-        );
-        setCalculated(true);
-      }
     }
   };
 

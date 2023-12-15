@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { showAdminSidebar } from "../store/app/appSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import clsx from "clsx";
 
 const AdminHeader = () => {

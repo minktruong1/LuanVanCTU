@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { formatVND } from "../../ultils/helpers";
-import {
-  AdminSelector,
-  Button,
-  Loading,
-  ReactInputForm,
-} from "../../components";
+import { AdminSelector, Button, Loading } from "../../components";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { apiUpdateOrderStatus } from "../../apis";
@@ -72,7 +67,7 @@ const UpdateOrder = ({ editOrderTab, setEditOrderTab }) => {
       status: editOrderTab?.status || "",
     });
   }, []);
-  console.log(editOrderTab);
+
   return (
     <div className="w-[1200px] md:w-full p-4 overflow-auto">
       <div className="mt-[60px] text-lg">

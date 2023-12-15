@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { apiAdminGetUserOrders, apiGetAllPurchaseInfo } from "../../apis";
-import { ChartLine, ChartPie } from "../../components";
+import { apiGetAllPurchaseInfo } from "../../apis";
+import { ChartLine } from "../../components";
 
 const PurchaseDashboard = () => {
   const initialOrderMonthData = {
@@ -16,13 +16,6 @@ const PurchaseDashboard = () => {
     October: 0,
     November: 0,
     December: 0,
-  };
-
-  const initialOrderQuarterData = {
-    Q1: 0,
-    Q2: 0,
-    Q3: 0,
-    Q4: 0,
   };
 
   const [spending, setSpending] = useState({

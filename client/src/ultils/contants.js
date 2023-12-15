@@ -1,19 +1,13 @@
 import path from "./path";
 import icons from "./icons.js";
-import { FaChartBar, FaShoppingBag } from "react-icons/fa";
+import { FaShoppingBag } from "react-icons/fa";
 import { BiSolidUser } from "react-icons/bi";
 import { BsBagHeartFill, BsYoutube } from "react-icons/bs";
 import { AiFillEye } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 
-const {
-  TiTags,
-  BsNewspaper,
-  MdOutlinePayment,
-  BsShieldCheck,
-  FaQuestionCircle,
-  FaListUl,
-} = icons;
+const { TiTags, BsNewspaper, MdOutlinePayment, FaQuestionCircle, FaListUl } =
+  icons;
 
 export const navigation = [
   {

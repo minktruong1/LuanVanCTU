@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import path from "../ultils/path";
 
 const BlogsMap = () => {

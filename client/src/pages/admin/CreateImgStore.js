@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ReactInputForm, Button, Loading } from "../../components/index";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { formValidate, getBase64 } from "../../ultils/helpers";
+import { getBase64 } from "../../ultils/helpers";
 import icons from "../../ultils/icons";
 import clsx from "clsx";
 import { apiCreateImgStore } from "../../apis";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Collapse, Divider } from "antd";
+import { Collapse } from "antd";
 
 const FaqQuestion = ({ ques, answer }) => {
   return (

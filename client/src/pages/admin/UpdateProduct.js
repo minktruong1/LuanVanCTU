@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../store/app/appSlice";
-import { apiUpdateProduct, apiDeleteProduct } from "../../apis";
+import { apiUpdateProduct } from "../../apis";
 import icons from "../../ultils/icons";
 
 const { MdArrowBackIosNew } = icons;

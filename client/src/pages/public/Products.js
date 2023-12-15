@@ -4,7 +4,6 @@ import {
   useSearchParams,
   useNavigate,
   createSearchParams,
-  useLocation,
 } from "react-router-dom";
 import {
   Breadcrumb,

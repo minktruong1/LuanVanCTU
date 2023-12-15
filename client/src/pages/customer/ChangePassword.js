@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "../../components";
 import { useFormik } from "formik";
 import { changePasswordSchema } from "../../hooks/formikSchema";
 import { apiChangePassword } from "../../apis";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import sweetAlert from "sweetalert2";
 import path from "../../ultils/path";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../store/users/userSlice";
 import { Helmet } from "react-helmet";
 
@@ -38,23 +38,16 @@ const ChangePassword = () => {
     }
   };
 
-  const {
-    values,
-    handleBlur,
-    errors,
-    touched,
-    isSubmitting,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      oldPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
-    validationSchema: changePasswordSchema,
-    onSubmit,
-  });
+  const { values, handleBlur, errors, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      },
+      validationSchema: changePasswordSchema,
+      onSubmit,
+    });
 
   return (
     <div className="w-full bg-white rounded p-4">

@@ -39,7 +39,6 @@ const ManageOrders = () => {
   const [ship, setShip] = useState(null);
   const [cancel, setCancel] = useState(null);
 
-  const [calculated, setCalculated] = useState(false);
   const [editOrderTab, setEditOrderTab] = useState(null);
 
   const queryDebounce = useDebounce(watch("query"), 800);

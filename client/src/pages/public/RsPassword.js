@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { Button } from "../../components";
 import { apiResetPassword } from "../../apis";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { resetPasswordSchema } from "../../hooks/formikSchema";
 import clsx from "clsx";
-import { toast } from "react-toastify";
 import path from "../../ultils/path";
 import { Helmet } from "react-helmet";
 import sweetAlert from "sweetalert2";

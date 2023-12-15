@@ -1,9 +1,9 @@
 import React, { memo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import icons from "../ultils/icons";
 import { showModal } from "../store/app/appSlice";
 import { starOptions } from "../ultils/contants";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 import Button from "./Button";
 
 const { FaTimes } = icons;

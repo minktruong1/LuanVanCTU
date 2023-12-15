@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { apiDeleteCategory, apiUpdateCategory } from "../../apis/category";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { useSearchParams } from "react-router-dom";
@@ -13,7 +11,6 @@ import sweetAlert from "sweetalert2";
 import {
   apiDeleteImgStore,
   apiGetAllImgStore,
-  apiGetCategories,
   apiUpdateImgStore,
 } from "../../apis";
 

@@ -1,11 +1,10 @@
 import React, { memo, Fragment, useState } from "react";
 import { adminSidebar } from "../ultils/contants";
-import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { MdBackup } from "react-icons/md";
-import { apiExportProducts } from "../apis/exportData";
 
 const activeStyling = "px-4 py-2 flex items-center gap-2 bg-[#26baee] ";
 const unActiveStyling = "px-4 py-2 flex items-center gap-2 hover:bg-[#26baee]";

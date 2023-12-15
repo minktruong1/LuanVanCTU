@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiAdminGetUserOrders } from "../../apis";
-import { ChartLine, ChartPie } from "../../components";
+import { ChartLine } from "../../components";
 
 const ProfitDashboard = () => {
   const initialOrderMonthData = {

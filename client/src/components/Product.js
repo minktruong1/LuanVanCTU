@@ -10,18 +10,17 @@ import {
 import icons from "../ultils/icons";
 import { apiFavProduct } from "../apis";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import sweetAlert from "sweetalert2";
 import path from "../ultils/path";
 
 const { AiOutlineHeart, AiFillHeart } = icons;
 
 const Product = ({ productData, pid, isNew, isHot }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [favorite, setFavorite] = useState(false);
-  const { isLogin, currentData } = useSelector((state) => state.user);
+  const { currentData } = useSelector((state) => state.user);
 
   const handleFavorite = async () => {
     if (!currentData) {

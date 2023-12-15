@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { apiGetProducts } from "../apis/product.js";
-import { CountDown, CustomSlider } from "./index.js";
-import moment from "moment";
-import { timeExchange } from "../ultils/helpers.js";
+import { CustomSlider } from "./index.js";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const tabs = [
   { id: 1, name: "Bán chạy" },

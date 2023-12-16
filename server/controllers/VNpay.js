@@ -35,7 +35,8 @@ const createOrder = async (req, res, next) => {
     const tmnCode = process.env.VNP_TMN_CODE;
     const secretKey = process.env.VNP_HASH_SECRET;
     const vnpUrl = process.env.VNP_API_URL;
-    let returnUrl = "http://localhost:3000/checkout";
+    let returnUrl =
+      process.env.CLIENT_URL || "https://mern-frontend-minktruong1.vercel.app";
     let amount = req.body.amount;
     let locale = req.body.language || "vn";
 

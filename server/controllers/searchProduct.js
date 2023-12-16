@@ -7,7 +7,10 @@ const searchProduct = async (req, res) => {
       title: { $regex: searchQuery, $options: "i" },
     }).sort({ reviewPoint: -1 });
 
-    res.json(products);
+    return res.status(200).json({
+      success: products ? true : false,
+      searchProduct: products ? products : "Error when get product",
+    });
   } catch (err) {
     res.status(500).json({ error: "Lỗi tìm kiếm sản phẩm." });
   }

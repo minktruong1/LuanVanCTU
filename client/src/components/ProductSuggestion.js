@@ -30,7 +30,6 @@ const ProductSuggestion = () => {
     const response = await apiGenerateRandomRecommend();
     if (response.success) {
       setProducts(response.recommendProduct);
-      console.log(response.recommendProduct);
     }
   };
 

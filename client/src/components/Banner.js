@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { apiGetDetailImgStore } from "../apis";
 
 const reactSlickSetting = {
   dot: true,
@@ -16,11 +17,10 @@ const Banner = () => {
   const [banner, setBanner] = useState(null);
 
   const fetchBanner = async (url, setter) => {
-    const response = await fetch(
-      `http://localhost:5000/api/imagestore/getDetail/banner`
-    );
-    const data = await response.json();
-    setBanner(data.imageStore[0].images);
+    const response = await apiGetDetailImgStore("banner");
+    if (response.success) {
+      setBanner(response.imageStore[0].images);
+    }
   };
 
   useEffect(() => {

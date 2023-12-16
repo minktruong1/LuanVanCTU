@@ -9,17 +9,17 @@ import CategoriesList from "../../components/CategoriesList.js";
 import BlogsMap from "../../components/BlogsMap.js";
 import ProductSuggestion from "../../components/ProductSuggestion.js";
 import { useEffect, useState } from "react";
+import { apiGetDetailImgStore } from "../../apis/imgStore.js";
 
 const Home = () => {
   const [poster, setPoster] = useState(null);
   const [leftPoster, setLeftPoster] = useState(null);
 
   const fetchData = async (url, setter) => {
-    const response = await fetch(
-      `http://localhost:5000/api/imagestore/getDetail/${url}`
-    );
-    const data = await response.json();
-    setter(data.imageStore[0].images);
+    const response = await apiGetDetailImgStore(url);
+    if (response.success) {
+      setter(response.imageStore[0].images);
+    }
   };
 
   useEffect(() => {

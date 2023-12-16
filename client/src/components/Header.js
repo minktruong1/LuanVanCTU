@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import logo from "../assets/logo.png";
 import icons from "../ultils/icons.js";
 import { Link, useNavigate } from "react-router-dom";
 import path from "../ultils/path";
@@ -19,6 +18,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { MobileSidebar } from "../components";
 import useDebounce from "../hooks/useDebounce.js";
 import { formatVND } from "../ultils/helpers.js";
+import { apiSearchProductHeader } from "../apis/searchProduct.js";
 import { apiGetDetailImgStore } from "../apis/imgStore.js";
 
 const {
@@ -62,19 +62,17 @@ const Header = () => {
   };
 
   const fetchProduct = async () => {
-    const response = await fetch(
-      `http://localhost:5000/api/search/searchproduct/${search}`
-    );
-    const data = await response.json();
-    setSearchResult(data);
+    const response = await apiSearchProductHeader(search);
+    if (response.success) {
+      setSearchResult(response.searchProduct);
+    }
   };
 
   const fetchLogoImg = async () => {
-    const response = await fetch(
-      `http://localhost:5000/api/imagestore/getDetail/logo`
-    );
-    const data = await response.json();
-    setLogo(data.imageStore[0].images);
+    const response = await apiGetDetailImgStore("logo");
+    if (response.success) {
+      setLogo(response.imageStore[0].images);
+    }
   };
 
   const handleSearch = () => {
@@ -135,7 +133,6 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   return (
     <>
       <div className="w-screen bg-main flex items-center justify-center fixed top-0 z-40 px-2">

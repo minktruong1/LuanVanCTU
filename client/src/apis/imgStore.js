@@ -20,12 +20,11 @@ export const apiGetAllImgStore = () =>
     method: "GET",
   });
 
-// export const apiGetDetailImgStore = (data) =>
-//   axios({
-//     url: "/imagestore/getDetail",
-//     method: "GET",
-//     data,
-//   });
+export const apiGetDetailImgStore = (title) =>
+  axios({
+    url: "/imagestore/getDetail/" + title,
+    method: "GET",
+  });
 
 export const apiDeleteImgStore = (imgid) =>
   axios({

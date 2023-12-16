@@ -9,7 +9,8 @@ const cors = require("cors");
 const app = express();
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://mern-frontend-silk.vercel.app/",
+    origin:
+      process.env.CLIENT_URL || "https://mern-frontend-minktruong1.vercel.app/",
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
   })

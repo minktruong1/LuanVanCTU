@@ -11,7 +11,6 @@ const unActiveStyling = "px-4 py-2 flex items-center gap-2 hover:bg-[#26baee]";
 
 const AdminSidebar = () => {
   const [active, setActive] = useState([]);
-  const navigate = useNavigate();
 
   const { isShowAdminSidebar } = useSelector((state) => state.appReducer);
 

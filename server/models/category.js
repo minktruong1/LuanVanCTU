@@ -16,7 +16,6 @@ var categorySchema = new mongoose.Schema(
     },
     brand: {
       type: Array,
-      unique: true,
     },
     image: {
       type: String,

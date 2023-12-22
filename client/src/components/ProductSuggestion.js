@@ -61,11 +61,7 @@ const ProductSuggestion = () => {
         columnClassName="my-masonry-grid_column "
       >
         {products?.map((product) => (
-          <Product
-            key={product._id}
-            pid={product.product}
-            productData={product}
-          />
+          <Product key={product._id} pid={product._id} productData={product} />
         ))}
       </Masonry>
     </div>

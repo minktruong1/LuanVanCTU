@@ -13,6 +13,7 @@ const CouponsList = () => {
     const response = await apiUserGetCoupon();
     if (response.success) {
       setCouponsList(response.coupons);
+      console.log(response);
     }
   };
 
